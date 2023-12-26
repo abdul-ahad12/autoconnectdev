@@ -38,10 +38,10 @@ class MongoDBConnector {
   async find<T extends Document>(
     model: Model<T>,
     conditions: object
-  ): Promise<T[]> {
+  ): Promise<T[] | undefined> {
     try {
       const result = await model.find(conditions);
-      return result;
+      return result.length ? result : undefined;
     } catch (err) {
       console.error("Error executing query:", err);
       throw new Error(`Error executing query: ${err}`);
