@@ -34,7 +34,6 @@ class MongoDBConnector {
     deleteModel(name);
   }
 
-  // Example: Method for basic query
   async find<T extends Document>(
     model: Model<T>,
     conditions: object
@@ -42,6 +41,30 @@ class MongoDBConnector {
     try {
       const result = await model.find(conditions);
       return result.length ? result : undefined;
+    } catch (err) {
+      console.error("Error executing query:", err);
+      throw new Error(`Error executing query: ${err}`);
+    }
+  }
+
+  //Use only while development
+  async deleteAllRecords<T extends Document>(model: Model<T>): Promise<any> {
+    try {
+      const result = await model.deleteMany();
+      return result;
+    } catch (err) {
+      console.error("Error executing query:", err);
+      throw new Error(`Error executing query: ${err}`);
+    }
+  }
+
+  async deleteOneRecord<T extends Document>(
+    model: Model<T>,
+    conditions: object
+  ): Promise<any> {
+    try {
+      const result = await model.deleteOne(conditions);
+      return result;
     } catch (err) {
       console.error("Error executing query:", err);
       throw new Error(`Error executing query: ${err}`);

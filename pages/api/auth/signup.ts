@@ -4,8 +4,7 @@ import { User, UserModel } from "../../../lib/models/user";
 import bcrypt from "bcrypt";
 import dotevn from "dotenv";
 import { issueToken } from "../../../lib/auth";
-import { set } from "mongoose";
-import { getCookie, setCookie } from "../../../lib/cookie";
+import { setTokensCookies } from "../../../lib/cookie";
 dotevn.config();
 
 export default async function handler(
@@ -17,7 +16,7 @@ export default async function handler(
   const userAlreaduExists = await dbConnector.find(UserModel, {
     email: user.email,
   });
-  if (userAlreaduExists.length > 0) {
+  if (userAlreaduExists) {
     res.status(400).json({ message: "User already exists" });
     return;
   }
@@ -27,15 +26,11 @@ export default async function handler(
   user.password = hashedPassword;
 
   const result = await UserModel.create(user);
-  const { token, refreshToken } = issueToken({ id: user._id, role: user.role });
-  console.log("Token: " + token);
+  const { accessToken, refreshToken } = issueToken({
+    id: user._id,
+    role: user.role,
+  });
 
-  setCookie(res, "token", token, { maxAge: 60 * 60 * 24 * 7 });
-  setCookie(res, "refreshToken", refreshToken, { maxAge: 60 * 60 * 24 * 7 });
-
-  const temp = getCookie(req, "token");
-  console.log("Access token:  " + temp);
-
-  console.log(result);
-  res.status(200).json({ result });
+  setTokensCookies(res, accessToken, refreshToken);
+  res.status(200).json({ accessToken, refreshToken, user: result });
 }

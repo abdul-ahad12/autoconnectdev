@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 import { MongoDBConnector } from "../database";
 
-enum UserRole {
+enum UserRoles {
   ADMIN = "ADMIN",
   CUSTOMER = "CUSTOMER",
   MODERATOR = "MODERATOR",
@@ -13,7 +13,7 @@ export interface User extends Document {
   password: string;
   phoneNumber: string;
   email: string;
-  role: UserRole;
+  role: UserRoles;
 }
 
 // Create a Mongoose schema for the User
@@ -25,8 +25,8 @@ const userSchema: Schema<User> = new mongoose.Schema(
     email: { type: String, required: true },
     role: {
       type: String,
-      enum: Object.values(UserRole), // Use enum values for validation
-      default: UserRole.CUSTOMER, // Set default role
+      enum: Object.values(UserRoles),
+      default: UserRoles.CUSTOMER,
     },
   },
   {
@@ -34,7 +34,11 @@ const userSchema: Schema<User> = new mongoose.Schema(
   }
 );
 
-// Create a model based on the schema
-const UserModel = new MongoDBConnector().getModel<User>("User", userSchema);
+let UserModel: mongoose.Model<User> | mongoose.Model<User, {}>;
+if (!mongoose.models.User) {
+  UserModel = new MongoDBConnector().getModel<User>("User", userSchema);
+} else {
+  UserModel = mongoose.models.User as Model<User>;
+}
 
-export { UserModel };
+export { UserModel, UserRoles };

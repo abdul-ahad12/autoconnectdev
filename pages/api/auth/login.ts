@@ -4,8 +4,7 @@ import { User, UserModel } from "../../../lib/models/user";
 import bcrypt from "bcrypt";
 import dotevn from "dotenv";
 import { issueToken } from "../../../lib/auth";
-import { set } from "mongoose";
-import { getCookie, setCookie } from "../../../lib/cookie";
+import { setCookie } from "../../../lib/cookie";
 dotevn.config();
 
 export default async function handler(
@@ -33,17 +32,19 @@ export default async function handler(
         return;
       }
       if (result) {
-        const { token, refreshToken } = issueToken({
+        const { accessToken, refreshToken } = issueToken({
           id: user._id,
           role: user.role,
         });
 
-        setCookie(res, "token", token, { maxAge: 60 * 60 * 24 * 7 });
-        setCookie(res, "refreshToken", refreshToken, {
+        setCookie(res, "access-token", accessToken, {
+          maxAge: 60 * 60 * 24 * 7,
+        });
+        setCookie(res, "refresh-token", refreshToken, {
           maxAge: 60 * 60 * 24 * 7,
         });
 
-        res.status(200).json({ result });
+        res.status(200).json({ accessToken, refreshToken, user: result });
       } else {
         res.status(400).json({ message: "Wrong password" });
         return;
