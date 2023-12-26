@@ -11,7 +11,7 @@ function sendError(res, msg: string) {
   return res.status(403).json({ message: msg });
 }
 
-async function authorize(
+function authorize(
   req: NextApiRequest,
   res: NextApiResponse,
   next,
