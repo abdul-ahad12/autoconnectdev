@@ -1,13 +1,13 @@
 import React from "react";
 
-const TitleDesc = ({ title, titleColor, desc, left,white }) => {
+const TitleDesc = ({ title, titleColor, desc, left,white,bold}) => {
   return (
     <div
-      className={`flex ${white?"text-graycolor":"text-primary"} flex-col  ${
+      className={`flex ${bold && "font-bold "} ${white?"text-graycolor":"text-primary"} flex-col  ${
         left ? "items-start text-left" : "items-center text-center"
       }`}
     >
-      <div className="capitalize text-[2rem] lg:text-[min(3vw,3rem)] font-[Bebas]">
+      <div className={`capitalize   ${bold ? "font-[Poppins] text-[1.5rem] lg:text-[min(2.4vw,2.4rem)]":"font-[Bebas] lg:text-[min(3vw,3rem)] text-[2rem] "}`}>
         {title}
         <span className="text-secondary ml-2">{titleColor}</span>
       </div>

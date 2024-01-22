@@ -7,3 +7,9 @@ body{
     background-color: #F2F1F0;
     font-family:"Poppins" ;
 }
+
+.input-class{
+    padding: 6px 9px;
+    font-size: 1rem;
+    border-radius: 8px;
+}

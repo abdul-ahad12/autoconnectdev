@@ -12,7 +12,8 @@ module.exports = {
         secondary: "#F2994A",
         graycolor: "#F2F1F0",
         graycolor2: "#909090",
-        customwhite:"#fbfbfb"
+        customwhite: "#fbfbfb",
+        yellowcolor: "#EF990F",
       },
       screens: {
         base: "0px",
@@ -24,8 +25,10 @@ module.exports = {
         "2xl": "1536px",
         "3xl": "2000px",
       },
+      fontSize: {
+        unique: "lg:min(0.8rem,0.8vw)",
+      },
     },
-    
   },
   plugins: [],
 };
