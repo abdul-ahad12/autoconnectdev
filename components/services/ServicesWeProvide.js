@@ -143,7 +143,7 @@ const ServicesWeProvide = () => {
             <div className="p-[2rem] flex flex-col gap-3 items-center rounded-b-lg">
               {dummyservices.map((data, idx) => {
                 return (
-                  <div className="w-full bg-graycolor flex justify-between text-[0.8rem] rounded-lg p-[1rem] font-bold">
+                  <div key={idx} className="w-full bg-graycolor flex justify-between text-[0.8rem] rounded-lg p-[1rem] font-bold">
                     <div> {data}</div>
                     <img className="w-4" src="/icons/delete.svg" />
                   </div>
