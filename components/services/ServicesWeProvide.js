@@ -100,7 +100,7 @@ const ServicesWeProvide = () => {
           <div className="w-[60%] grid grid-cols-2 gap-x-[4vw] gap-y-3">
             {services.map((data, idx) => {
               return (
-                <div className="p-[7px] flex gap-5 justify-between w-full rounded-lg hover:shadow-xl transition ease duration-150  shadow-lg">
+                <div key={idx} className="p-[7px] flex gap-5 justify-between w-full rounded-lg hover:shadow-xl transition ease duration-150  shadow-lg">
                   <div className="flex gap-3">
                     {" "}
                     <img src={data.img} className="rounded-lg" />
