@@ -77,7 +77,7 @@ const Bookmechanic = () => {
               {/* mode of delivery select fields */}
               <div className="flex flex-col gap-3">
                 {typeofdelivery.map((data, idx) => (
-                  <div className="p-[1rem] flex justify-between w-full rounded-lg shadow-md ">
+                  <div key={idx} className="p-[1rem] flex justify-between w-full rounded-lg shadow-md ">
                     <div className="flex gap-4 items-center">
                       <img className="h-full" src={data.img} />
                       <div className="flex flex-col  text-primary">

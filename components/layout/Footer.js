@@ -144,7 +144,7 @@ const Footer = () => {
         {/* social links */}
         <div className="flex gap-[6vw] py-[7rem]">
           {socials.map((data, idx) => (
-            <Link href={data.url}>
+            <Link key={idx} href={data.url}>
               <img className="h-6" src={data.src} />
             </Link>
           ))}
