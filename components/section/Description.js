@@ -11,7 +11,7 @@ const Description = ({ text, size, center }) => {
           : size === "small"
           ? "lg:text-[min(1.1rem,1.1vw)]"
           : size === "inputlabel"
-          ? "lg:text-[0.7rem]"
+          ? "lg:text-[0.8rem]"
           : "lg:text-[min(0.8rem,0.8vw)]"
       }  text-graycolor2`}
     >

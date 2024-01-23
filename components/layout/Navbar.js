@@ -43,8 +43,8 @@ const Navbar = () => {
         {/* buttons */}
 
         <div className="base:hidden lg:flex gap-6 row-span-full items-center justify-end col-start-1 col-end-13">
-          <div>Sign In</div>
-          <CusButton type={"primary"} text={"Sign Up"} href={"#"} />
+          <Link href={"/login"}>Sign In</Link>
+          <CusButton type={"primary"} text={"Sign Up"} href={"/signup"} />
         </div>
       </div>
     </div>
