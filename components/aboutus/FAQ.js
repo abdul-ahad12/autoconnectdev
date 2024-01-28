@@ -50,7 +50,7 @@ const FAQ = () => {
           className="w-[80%] bg-customwhite px-3 rounded-lg my-16"
         >
           {content.map((data, idx) => (
-            <AccordionItem value={`item-${idx + 1}`}>
+            <AccordionItem key={idx} value={`item-${idx + 1}`}>
               <AccordionTrigger className="text-[1.2rem] font-medium">{data.question}</AccordionTrigger>
               <AccordionContent className="text-graycolor2 text-[0.8rem]">{data.answer}</AccordionContent>
             </AccordionItem>

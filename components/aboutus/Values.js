@@ -26,7 +26,7 @@ const Values = () => {
     <div className="w-full flex justify-center bg-customwhite rounded-lg py-[5rem]">
       <div className="w-[90%] grid grid-cols-3 gap-10">
         {content.map((data,idx) => (
-          <div className="shadow-md flex justify-center items-center flex-col py-[2rem] text-center">
+          <div key={idx} className="shadow-md flex justify-center items-center flex-col py-[2rem] text-center">
             <img className="h-[6rem]" src={data.img} />
             <div className="font-[Bebas] text-[2.2rem] text-primary py-4">
               OUR <span className="text-secondary">{data.title}</span>
