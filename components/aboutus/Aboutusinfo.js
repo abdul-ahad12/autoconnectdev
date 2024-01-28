@@ -4,7 +4,7 @@ import Description from "../section/Description";
 
 const Aboutusinfo = () => {
   return (
-    <div className="w-[100%] flex justify-center py-[4rem]">
+    <div className="w-[100%] flex justify-center py-[4rem] bg-customwhite">
       <div className="w-[90%] flex lg:flex-row base:flex-col">
 
         {/* left component */}

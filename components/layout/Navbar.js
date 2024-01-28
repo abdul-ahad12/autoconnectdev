@@ -14,11 +14,11 @@ const Navbar = () => {
     },
     {
       title: "FAQ's",
-      href: "#",
+      href: "/aboutus#faqs",
     },
     {
       title: "Contact Us",
-      href: "#",
+      href: "/aboutus#contactus",
     },
   ];
 

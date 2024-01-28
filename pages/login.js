@@ -16,11 +16,11 @@ const Signup = () => {
           <div> Login</div>
           <form className="flex flex-col gap-5 py-8">
             <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"Email Address"} />
+              <Description  text={"Email Address"} />
               <input className="input-class border w-full border-graycolor2" />
             </div>
             <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"Password"} />
+              <Description  text={"Password"} />
               <input className="input-class border w-full border-graycolor2" />
             </div>
             <div className="flex w-full justify-center">

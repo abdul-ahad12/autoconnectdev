@@ -74,7 +74,7 @@ const CarServices = () => {
               className="w-full lg:h-[17vw] flex justify-center relative flex-col px-[3rem] py-[4rem] lg:p-[3vw] bg-white items-center rounded-[2rem]  shadow-xl hover:shadow-lg transition ease duration-150"
             >
               <img src={data.img} alt={data.title} />
-              <div className="absolute base:bottom-3 lg:bottom-6 mt-[1rem] text-[1.30rem] font-semibold">
+              <div className="absolute base:bottom-3 lg:bottom-6 mt-[1rem] text-[1.1rem] font-medium">
                 {data.title}
               </div>
             </div>

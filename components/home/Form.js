@@ -29,7 +29,7 @@ const Form = () => {
           </div>
           {/* Vehicle Type */}
           <div className="flex flex-col gap-1">
-            <Description text={"Location"} />
+            <Description text={"Vehicle type"} />
             <div className="items-center flex gap-2">
               {" "}
               <svg
@@ -49,7 +49,7 @@ const Form = () => {
           </div>
           {/* Fuel Type  */}
           <div className="flex flex-col gap-1">
-            <Description text={"Location"} />
+            <Description text={"Fuel Type"} />
             <div className="items-center flex gap-2">
               {" "}
               <svg
