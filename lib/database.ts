@@ -1,10 +1,4 @@
-import mongoose, {
-  ConnectOptions,
-  Document,
-  Model,
-  Schema,
-  deleteModel,
-} from "mongoose";
+import mongoose, { ConnectOptions, Document, Model, Schema, deleteModel } from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -34,10 +28,17 @@ class MongoDBConnector {
     deleteModel(name);
   }
 
-  async find<T extends Document>(
-    model: Model<T>,
-    conditions: object
-  ): Promise<T[] | undefined> {
+  async findById<T extends Document>(model: Model<T>, id: string): Promise<T | null> {
+    try {
+      const result = await model.findById(id);
+      return result;
+    } catch (err) {
+      console.error("Error executing query:", err);
+      throw new Error(`Error executing query: ${err}`);
+    }
+  }
+
+  async find<T extends Document>(model: Model<T>, conditions: object): Promise<T[] | undefined> {
     try {
       const result = await model.find(conditions);
       return result.length ? result : undefined;
@@ -47,7 +48,6 @@ class MongoDBConnector {
     }
   }
 
-  //Use only while development
   async deleteAllRecords<T extends Document>(model: Model<T>): Promise<any> {
     try {
       const result = await model.deleteMany();
@@ -58,10 +58,7 @@ class MongoDBConnector {
     }
   }
 
-  async deleteOneRecord<T extends Document>(
-    model: Model<T>,
-    conditions: object
-  ): Promise<any> {
+  async deleteOneRecord<T extends Document>(model: Model<T>, conditions: object): Promise<any> {
     try {
       const result = await model.deleteOne(conditions);
       return result;
@@ -80,10 +77,7 @@ class MongoDBConnector {
     }
   }
 
-  async seedInitialData<T extends Document>(
-    model: Model<T>,
-    data: T[]
-  ): Promise<void> {
+  async seedInitialData<T extends Document>(model: Model<T>, data: T[]): Promise<void> {
     try {
       await model.insertMany(data);
       console.log("Initial data seeded successfully");

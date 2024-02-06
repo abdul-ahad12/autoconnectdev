@@ -5,6 +5,7 @@ enum UserRoles {
   ADMIN = "ADMIN",
   CUSTOMER = "CUSTOMER",
   MODERATOR = "MODERATOR",
+  MECHANIC = "MECHANIC",
 }
 
 // Define an interface for the User document
