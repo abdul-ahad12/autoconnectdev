@@ -12,7 +12,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const dbConnector = new MongoDBConnector();
-  const user: User = req.body.user;
+  const user: User = req.body;
   console.log(user);
 
   const userAlreadyExists = await dbConnector.find(UserModel, {

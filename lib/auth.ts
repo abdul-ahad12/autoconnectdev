@@ -89,10 +89,12 @@ function authorize(
 }
 
 function issueToken(user) {
-  const accessToken = jwt.sign({ ...user, iss: "Node-Auth" }, secretToken, {
+
+  console.log(user)
+  const accessToken = jwt.sign({ id: user.id, role: user.role }, secretToken, {
     expiresIn: accessTokenExpiryTime,
   });
-  const refreshToken = jwt.sign({ ...user, iss: "Node-Auth" }, secretToken, {
+  const refreshToken = jwt.sign({ id: user.id }, secretToken, {
     expiresIn: refreshTokenExpiryTime,
   });
   return { accessToken, refreshToken };

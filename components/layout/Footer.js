@@ -88,7 +88,6 @@ const Footer = () => {
         },
       ],
     },
-    
   ];
 
   const socials = [
@@ -135,10 +134,10 @@ const Footer = () => {
             </div>
           ))}
 
-          <div className="flex-col flex">
-            <div className="pb-16">Need Help?</div>
+          {/* <div className="flex-col flex">
+            <div className="pb-16">Become a Mechanic?</div>
             <CusButton text={"Subscribe"} type={"primary"} />
-          </div>
+          </div> */}
         </div>
 
         {/* social links */}

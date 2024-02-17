@@ -6,22 +6,41 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 enum DeliveryMode {
   TO_MECHANIC = "TO_MECHANIC",
   TO_CUSTOMER = "TO_CUSTOMER",
-  DISABLED = "DISABLED",
+  THIRD_PARTY = "THIRD_PARTY",
+}
+
+interface Service {
+  name: string;
+  amount: number;
+}
+
+interface Invoice {
+  services: Service[];
+  tax: number;
+  total: number;
+}
+
+interface TimeSlot {
+  date: string; // Date in format "YYYY-MM-DD"
+  time: string; // Time slot in format "HH:mm AM/PM"
+  available: boolean; // Flag to indicate if this slot is available
 }
 
 // Define an interface for the Booking document
 export interface Booking extends Document {
   user: mongoose.Types.ObjectId; // Reference to the customer user
   mechanic: mongoose.Types.ObjectId; // Reference to the booked mechanic
-  date: Date;
+  timeSlots: TimeSlot[]; // Array of time slots for this booking
   deliveryMode: DeliveryMode;
   services: string[]; // List of selected services
   customNote?: string; // Optional custom note for custom services
   isCompleted: boolean;
-  invoiceAmount?: number; // Amount to be paid by the customer
+  invoice?: Invoice; // Detailed invoice information
   location: {
-    city: string;
-    code: string;
+    street: string;
+    suburb: string;
+    state: string;
+    pinCode: string;
   };
   vehicleType: string; // "bike" or "car"
 }
@@ -31,15 +50,21 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     mechanic: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Mechanic',
+      ref: "Mechanic",
       required: true,
     },
-    date: { type: Date, required: true },
+    timeSlots: [
+      {
+        date: { type: String, required: true }, // Date in format "YYYY-MM-DD"
+        time: { type: String, required: true }, // Time slot in format "HH:mm AM/PM"
+        available: { type: Boolean, default: true }, // Default to true indicating slot is available
+      },
+    ],
     deliveryMode: {
       type: String,
       enum: Object.values(DeliveryMode),
@@ -48,10 +73,22 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
     services: [{ type: String, required: true }],
     customNote: { type: String },
     isCompleted: { type: Boolean, default: false },
-    invoiceAmount: { type: Number },
+    invoice: {
+      // Detailed invoice information
+      services: [
+        {
+          name: { type: String, required: true },
+          amount: { type: Number, required: true },
+        },
+      ],
+      tax: { type: Number, required: true },
+      total: { type: Number, required: true },
+    },
     location: {
-      city: { type: String, required: true },
-      code: { type: String, required: true },
+      street: { type: String, required: true },
+      suburb: { type: String, required: true },
+      state: { type: String, required: true },
+      pinCode: { type: String, required: true },
     },
     vehicleType: { type: String, required: true },
   },
@@ -62,7 +99,10 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
 
 let BookingModel: mongoose.Model<Booking> | mongoose.Model<Booking, {}>;
 if (!mongoose.models.Booking) {
-  BookingModel = new MongoDBConnector().getModel<Booking>("Booking", bookingSchema);
+  BookingModel = new MongoDBConnector().getModel<Booking>(
+    "Booking",
+    bookingSchema
+  );
 } else {
   BookingModel = mongoose.models.Booking as Model<Booking>;
 }

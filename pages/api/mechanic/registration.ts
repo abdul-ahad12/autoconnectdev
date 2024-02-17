@@ -2,12 +2,12 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoDBConnector } from "../../../lib/database";
-import { UserModel, UserRoles } from "../../../lib/models/user";
+import { UserModel } from "../../../lib/models/user";
 import { ApprovalStatus, MechanicRegistrationModel } from "@/lib/models/mechanic/registration";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const dbConnector = new MongoDBConnector();
-  const { userId, city, postalCode, googleMapsLocation, abn } = req.body;
+  const { userId, address, googleMapsLocation, abn, availability, services } = req.body;
 
   try {
     // Check if the user exists
@@ -27,13 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Create a new MechanicRegistration document
     const mechanicRegistration = new MechanicRegistrationModel({
       user: userId,
-      address: {
-        city,
-        postalCode,
-      },
+      address,
       googleMapsLocation,
       abn,
       approvalStatus: ApprovalStatus.PENDING,
+      availability,
+      services,
     });
 
     // Save the MechanicRegistration document

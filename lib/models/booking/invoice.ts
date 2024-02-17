@@ -8,7 +8,7 @@ export interface Invoice extends Document {
   booking: mongoose.Types.ObjectId; // Reference to the associated booking
   customer: mongoose.Types.ObjectId; // Reference to the customer user
   mechanic: mongoose.Types.ObjectId; // Reference to the booked mechanic
-  amount: number;
+  amount: number; //seperate amount
   isPaid: boolean;
   paymentDate?: Date;
 }

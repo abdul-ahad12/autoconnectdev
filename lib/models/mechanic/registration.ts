@@ -13,60 +13,122 @@ enum ApprovalStatus {
 export interface MechanicRegistration extends Document {
   user: mongoose.Types.ObjectId;
   address: {
-    city: string;
-    code: string;
+    street: string;
+    suburb: string;
+    state: string;
+    pinCode: string;
   };
   googleMapsLocation: string;
   abn: string;
   approvalStatus: ApprovalStatus;
-  availability?: {
-    days: string[];
-    startTime: string;
-    endTime: string;
+  availability: {
+    monday: {
+      available: boolean;
+      timings: string[]; // Array of 2-hour time slots
+    };
+    tuesday: {
+      available: boolean;
+      timings: string[]; // Array of 2-hour time slots
+    };
+    wednesday: {
+      available: boolean;
+      timings: string[]; // Array of 2-hour time slots
+    };
+    thursday: {
+      available: boolean;
+      timings: string[]; // Array of 2-hour time slots
+    };
+    friday: {
+      available: boolean;
+      timings: string[]; // Array of 2-hour time slots
+    };
+    saturday: {
+      available: boolean;
+      timings: string[]; // Array of 2-hour time slots
+    };
+    sunday: {
+      available: boolean;
+      timings: string[]; // Array of 2-hour time slots
+    };
   };
-  services?: string[];
-  deliveryMode?: DeliveryMode;
-  vehicleTypes?: string[];
+  services: string[];
+  deliveryMode: DeliveryMode;
+  vehicleTypes: string[];
 }
 
-const mechanicRegistrationSchema: Schema<MechanicRegistration> = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-      unique: true,
+const mechanicRegistrationSchema: Schema<MechanicRegistration> =
+  new mongoose.Schema(
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        unique: true,
+      },
+      address: {
+        street: { type: String, required: true },
+        suburb: { type: String, required: true },
+        state: { type: String, required: true },
+        pinCode: { type: String, required: true },
+      },
+      googleMapsLocation: { type: String, required: true },
+      abn: { type: String, required: true, unique: true },
+      approvalStatus: {
+        type: String,
+        enum: Object.values(ApprovalStatus),
+        default: ApprovalStatus.PENDING,
+      },
+      availability: {
+        monday: {
+          available: { type: Boolean, default: false },
+          timings: [{ type: String }],
+        },
+        tuesday: {
+          available: { type: Boolean, default: false },
+          timings: [{ type: String }],
+        },
+        wednesday: {
+          available: { type: Boolean, default: false },
+          timings: [{ type: String }],
+        },
+        thursday: {
+          available: { type: Boolean, default: false },
+          timings: [{ type: String }],
+        },
+        friday: {
+          available: { type: Boolean, default: false },
+          timings: [{ type: String }],
+        },
+        saturday: {
+          available: { type: Boolean, default: false },
+          timings: [{ type: String }],
+        },
+        sunday: {
+          available: { type: Boolean, default: false },
+          timings: [{ type: String }],
+        },
+      },
+      services: [{ type: String }],
+      deliveryMode: { type: String }, // You can choose DeliveryMode enum if needed
+      vehicleTypes: [{ type: String }],
     },
-    address: {
-      city: { type: String, required: true },
-      code: { type: String, required: true },
-    },
-    googleMapsLocation: { type: String, required: true },
-    abn: { type: String, required: true, unique: true },
-    approvalStatus: {
-      type: String,
-      enum: Object.values(ApprovalStatus),
-      default: ApprovalStatus.PENDING,
-    },
-    availability: {
-      days: { type: [String] },
-      startTime: { type: String },
-      endTime: { type: String },
-    },
-    services: { type: [String] },
-    deliveryMode: { type: String },
-    vehicleTypes: { type: [String] },
-  },
-  {
-    timestamps: true,
-  }
-);
+    {
+      timestamps: true,
+    }
+  );
 
-let MechanicRegistrationModel: mongoose.Model<MechanicRegistration> | mongoose.Model<MechanicRegistration, {}>;
+let MechanicRegistrationModel:
+  | mongoose.Model<MechanicRegistration>
+  | mongoose.Model<MechanicRegistration, {}>;
 if (!mongoose.models.MechanicRegistration) {
-  MechanicRegistrationModel = new MongoDBConnector().getModel<MechanicRegistration>("MechanicRegistration", mechanicRegistrationSchema);
+  MechanicRegistrationModel =
+    new MongoDBConnector().getModel<MechanicRegistration>(
+      "MechanicRegistration",
+      mechanicRegistrationSchema
+    );
 } else {
-  MechanicRegistrationModel = mongoose.models.MechanicRegistration as Model<MechanicRegistration>;
+  MechanicRegistrationModel = mongoose.models
+    .MechanicRegistration as Model<MechanicRegistration>;
 }
 
 export { MechanicRegistrationModel, ApprovalStatus };
