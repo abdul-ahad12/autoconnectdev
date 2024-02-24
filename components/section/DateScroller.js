@@ -57,7 +57,7 @@ function DateScroll() {
             key={date.toISOString()}
             className="border w-[70px] items-center flex flex-col  border-gray-300 rounded-lg m-2 p-2"
           >
-            <div className="font-semibold">
+            <div className="font-normal">
               {date.toLocaleString("default", { weekday: "short" })}
             </div>
             <div>{date.getDate()}</div>
