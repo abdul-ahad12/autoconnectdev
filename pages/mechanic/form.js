@@ -12,39 +12,94 @@ const Form = () => {
   const { isLoggedIn, userData } = useAuth();
   console.log(userData);
 
+  const services = [
+    "Oil Change",
+    "Brake Inspection",
+    "Tire Rotation",
+    "Engine Tune-Up",
+    "Wheel Alignment",
+    "Battery Replacement",
+    "Coolant Flush",
+    "Transmission Service",
+    "Air Filter Replacement",
+    "Spark Plug Replacement",
+    "Exhaust System Repair",
+  ];
+
   const [formData, setFormData] = useState({
-    city: "",
-    code: "",
+    user: "", 
+    aboutus: "",
+    address: {
+      street: "",
+      suburb: "",
+      state: "",
+      pinCode: "",
+    },
     googleMapsLocation: "",
     abn: "",
-    days: [],
-    startTime: "",
-    endTime: "",
+    availability: {
+      monday: { date: "", available: false, startTime: "", endTime: "" },
+      tuesday: { date: "", available: false, startTime: "", endTime: "" },
+      wednesday: { date: "", available: false, startTime: "", endTime: "" },
+      thursday: { date: "", available: false, startTime: "", endTime: "" },
+      friday: { date: "", available: false, startTime: "", endTime: "" },
+      saturday: { date: "", available: false, startTime: "", endTime: "" },
+      sunday: { date: "", available: false, startTime: "", endTime: "" },
+    },
     services: [],
-    deliveryMode: [],
-    vehicleTypes: [],
+    deliveryMode: []
   });
+
+  console.log(formData);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
-    if (
-      name === "services" ||
-      name === "deliveryMode" ||
-      name === "vehicleTypes"
-    ) {
+
+    if (name.startsWith("deliveryMode")) {
+      if (checked) {
+        setFormData((prevData) => ({
+          ...prevData,
+          deliveryMode: [...prevData.deliveryMode, value],
+        }));
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          deliveryMode: prevData.deliveryMode.filter((mode) => mode !== value),
+        }));
+      }
+    } else if (name.startsWith("availability")) {
+      const [_, day, field] = name.split(".");
       setFormData((prevData) => ({
         ...prevData,
-        [name]: checked
-          ? [...prevData[name], value]
-          : prevData[name].filter((item) => item !== value),
+        availability: {
+          ...prevData.availability,
+          [day]: {
+            ...prevData.availability[day],
+            [field]: value,
+          },
+        },
       }));
-    } else if (name === "days") {
+    } else if (name.startsWith("address")) {
+      const [_, addressField] = name.split(".");
       setFormData((prevData) => ({
         ...prevData,
-        days: checked
-          ? [...prevData.days, value]
-          : prevData.days.filter((day) => day !== value),
+        address: {
+          ...prevData.address,
+          [addressField]: value,
+        },
       }));
+    } else if (name.startsWith("services")) {
+      if (checked) {
+        setFormData((prevData) => ({
+          ...prevData,
+          services: [...prevData.services, { name: value, price: "" }]
+        }));
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          services: prevData.services.filter(service => service.name !== value)
+        }));
+      }
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -61,23 +116,7 @@ const Form = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          userId: formData.user, // Assuming formData.user holds the user ID
-          address: {
-            city: formData.city,
-            code: formData.code,
-          },
-          googleMapsLocation: formData.googleMapsLocation,
-          abn: formData.abn,
-          availability: {
-            days: formData.days,
-            startTime: formData.startTime,
-            endTime: formData.endTime,
-          },
-          services: formData.services,
-          // deliveryMode: formData.deliveryMode,
-          // vehicleTypes: formData.vehicleTypes,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -95,38 +134,6 @@ const Form = () => {
     }
   };
 
-  const services = [
-    "Oil Change",
-    "Brake Inspection",
-    "Tire Rotation",
-    "Engine Tune-Up",
-    "Wheel Alignment",
-    "Battery Replacement",
-    "Coolant Flush",
-    "Transmission Service",
-    "Air Filter Replacement",
-    "Spark Plug Replacement",
-    "Exhaust System Repair",
-  ];
-
-  // Generating options for cities
-  const cities = [
-    "Sydney",
-    "Melbourne",
-    "Brisbane",
-    "Perth",
-    "Adelaide",
-    "Gold Coast",
-    "Canberra",
-    "Newcastle",
-    "Sunshine Coast",
-    "Wollongong",
-  ];
-
-  // Generating options for start and end times
-  const startTimes = Array.from({ length: 13 }, (_, i) => `${i + 8}:00`);
-  const endTimes = Array.from({ length: 13 }, (_, i) => `${i + 9}:00`);
-
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <Navbar />
@@ -137,38 +144,67 @@ const Form = () => {
         />
         <div className="mt-[3rem] w-full bg-customwhite flex flex-col items-center pt-[4rem]">
           <TitleDesc title={"Register"} titleColor={"Yourself"} left />
+
           <form
-            className="flex  flex-col gap-2 py-[2rem] w-[75%]"
+            className="flex flex-col gap-2 py-[2rem] w-[75%]"
             onSubmit={handleSubmit}
           >
+            {/* About Us */}
+            <div className="flex flex-col w-full gap-1">
+              <Description size={"inputlabel"} text={"About Us"} />
+              <textarea
+                className="input-class border w-full border-graycolor2"
+                name="aboutus"
+                value={formData.aboutus}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Address */}
             <div className="flex w-full gap-2">
               <div className="flex flex-col w-full gap-1">
-                <Description size={"inputlabel"} text={"City"} />
-                <select
-                  className="input-class border w-full border-graycolor2"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                >
-                  <option value="">Select a city</option>
-                  {cities.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-col w-full gap-1">
-                <Description size={"inputlabel"} text={"Postal Code"} />
+                <Description size={"inputlabel"} text={"Street"} />
                 <input
                   className="input-class border w-full border-graycolor2"
                   type="text"
-                  name="code"
-                  value={formData.code}
+                  name="address.street"
+                  value={formData.address.street}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex flex-col w-full gap-1">
+                <Description size={"inputlabel"} text={"Suburb"} />
+                <input
+                  className="input-class border w-full border-graycolor2"
+                  type="text"
+                  name="address.suburb"
+                  value={formData.address.suburb}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex flex-col w-full gap-1">
+                <Description size={"inputlabel"} text={"State"} />
+                <input
+                  className="input-class border w-full border-graycolor2"
+                  type="text"
+                  name="address.state"
+                  value={formData.address.state}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex flex-col w-full gap-1">
+                <Description size={"inputlabel"} text={"Pin Code"} />
+                <input
+                  className="input-class border w-full border-graycolor2"
+                  type="text"
+                  name="address.pinCode"
+                  value={formData.address.pinCode}
                   onChange={handleChange}
                 />
               </div>
             </div>
+            
+            {/* Google Maps Location */}
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"Google Maps Location"} />
               <input
@@ -177,8 +213,11 @@ const Form = () => {
                 name="googleMapsLocation"
                 value={formData.googleMapsLocation}
                 onChange={handleChange}
+                placeholder="Enter Google Maps Location"
               />
             </div>
+
+            {/* ABN */}
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"ABN"} />
               <input
@@ -189,89 +228,87 @@ const Form = () => {
                 onChange={handleChange}
               />
             </div>
+            {/* Availability */}
             <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"Days"} />
-              {[
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday",
-              ].map((day) => (
-                <div key={day}>
-                  <input
-                    type="checkbox"
-                    name="days"
-                    value={day}
-                    checked={formData.days.includes(day)}
-                    onChange={handleChange}
-                  />
-                  <label>{day}</label>
-                </div>
-              ))}
+              <Description size={"inputlabel"} text={"Availability"} />
+              {Object.entries(formData.availability).map(
+                ([day, { available }]) => (
+                  <div key={day}>
+                    <input
+                      type="checkbox"
+                      name={`availability.${day}.available`}
+                      checked={available}
+                      onChange={handleChange}
+                    />
+                    <label>{day}</label>
+                    {available && (
+                      <>
+                        {/* Select field for start time */}
+                        <select
+                          name={`availability.${day}.startTime`}
+                          value={formData.availability[day].startTime}
+                          onChange={handleChange}
+                        >
+                          <option>Select Start time</option>
+                          {Array.from({ length: 13 }, (_, i) => i + 8).map(
+                            (hour) => (
+                              <option
+                                key={hour}
+                                value={`${hour}:00`}
+                              >{`${hour}:00`}</option>
+                            )
+                          )}
+                        </select>
+                        {/* Select field for end time */}
+                        <select
+                          name={`availability.${day}.endTime`}
+                          value={formData.availability[day].endTime}
+                          onChange={handleChange}
+                        >
+                          <option>Select End Time</option>
+                          {Array.from({ length: 13 }, (_, i) => i + 9).map(
+                            (hour) => (
+                              <option
+                                key={hour}
+                                value={`${hour}:00`}
+                              >{`${hour}:00`}</option>
+                            )
+                          )}
+                        </select>
+                      </>
+                    )}
+                  </div>
+                )
+              )}
             </div>
-            <div className="flex w-full justify-between gap-2">
-              <div className="flex flex-col w-full gap-1">
-                <Description size={"inputlabel"} text={"Start Time"} />
-                <select
-                  className="input-class border w-full border-graycolor2"
-                  name="startTime"
-                  value={formData.startTime}
-                  onChange={handleChange}
-                >
-                  <option value="">Select start time</option>
-                  {startTimes.map((time) => (
-                    <option key={time} value={time}>
-                      {time}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-col w-full gap-1">
-                <Description size={"inputlabel"} text={"End Time"} />
-                <select
-                  className="input-class border w-full border-graycolor2"
-                  name="endTime"
-                  value={formData.endTime}
-                  onChange={handleChange}
-                >
-                  <option value="">Select end time</option>
-                  {endTimes.map((time) => (
-                    <option key={time} value={time}>
-                      {time}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+
+            {/* Services */}
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"Services"} />
-              {services.map((service) => (
-                <div key={service}>
+              {services.map((service, index) => (
+                <div key={index}>
                   <input
                     type="checkbox"
-                    name="services"
-                    value={service}
-                    checked={formData.services.includes(service)}
-                    onChange={handleChange}
+                    name={`services.${index}`}
+                    checked={formData.services.some(s => s.name === service)}
+                    onChange={(e) => handleChange({ target: { name: 'services', value: service, checked: e.target.checked } })}
                   />
                   <label>{service}</label>
                 </div>
               ))}
             </div>
 
+            {/* Delivery Mode */}
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"Delivery Mode"} />
               {[
                 "Home PickUp",
                 "At Mechanic" /* Add more delivery modes here */,
-              ].map((mode) => (
-                <div key={mode}>
+              ].map((mode, index) => (
+                <div key={index}>
                   <input
                     type="checkbox"
-                    name="deliveryMode"
+                    name={`deliveryMode`}
                     value={mode}
                     checked={formData.deliveryMode.includes(mode)}
                     onChange={handleChange}
@@ -280,16 +317,14 @@ const Form = () => {
                 </div>
               ))}
             </div>
-<button type="submit">
-Click me
-</button>
-            {/* <div className="flex justify-center">
-              <CusButton type={"primary"} text={"Confirm"} />
-            </div> */}
+
+            {/* Submit button */}
+            <button type="submit">Submit</button>
           </form>
+          {/* Footer */}
+          <Footer />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
