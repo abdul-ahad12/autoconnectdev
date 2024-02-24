@@ -144,7 +144,7 @@ const ServicesWeProvide = () => {
             {services.map((data, idx) => (
               <div
                 key={idx}
-                className="p-[7px] flex gap-5 justify-between w-full rounded-lg hover:shadow-xl transition ease duration-150 shadow-lg"
+                className="p-[7px] flex gap-5 justify-between w-full rounded-lg hover:shadow-lg transition ease duration-150 shadow-md"
               >
                 <div className="flex gap-3">
                   <img src={data.img} alt={data.title} className="rounded-lg" />

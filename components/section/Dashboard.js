@@ -8,20 +8,20 @@ import Tab from "./Tab";
 const Dashboard = () => {
   const [current, setcurrent] = useState("Orders");
 
-    const tabs = [
-        {
-          title: "My Profile",
-          icons: "/icons/profile.svg",
-        },
-        {
-          title: "Orders",
-          icons: "/icons/profile.svg",
-        },
-        {
-          title: "My Vehicles",
-          icons: "/icons/profile.svg",
-        },
-      ];
+  const tabs = [
+    {
+      title: "My Profile",
+      icons: "/icons/profile.svg",
+    },
+    {
+      title: "Orders",
+      icons: "/icons/profile.svg",
+    },
+    {
+      title: "My Vehicles",
+      icons: "/icons/profile.svg",
+    },
+  ];
   return (
     <div className="w-full flex justify-center bg-white overflow-hidden">
       <div className="w-[90%] flex pt-[3rem] gap-[2rem]">
@@ -47,7 +47,7 @@ const Dashboard = () => {
         </div>
 
         {/* right */}
-        <div className="w-[80%] pb-[40vh] relative">
+        <div className="w-[90%] pb-[40vh] relative">
           {current == "Orders" && <OrdersList />}
           {current == "My Profile" && <MyProfile />}
           {current == "My Vehicles" && <MyVehicles />}

@@ -1,5 +1,6 @@
 import React from "react";
 import TitleDesc from "../section/TitleDesc";
+import ImageConnector from "../ui/common/ImageConnector";
 
 const MechanicTop = ({ title, titleColor, servicesstate }) => {
   const services = ["Services added", "Services added", "Services added"];
@@ -8,6 +9,7 @@ const MechanicTop = ({ title, titleColor, servicesstate }) => {
       <div className="w-[40%] z-30 flex flex-col">
         <TitleDesc left title={title} titleColor={titleColor} bold />
         {/* steps */}
+        <ImageConnector />
         <div></div>
       </div>
 

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import CusButton from "../section/button";
+import { Checkbox } from "../ui/common/Checkbox";
+import { CheckboxDemo } from "../ui/common/CheckboxDemo";
 
 const MechanicListing = () => {
   const [modalstate, setmodalstate] = useState(false);
@@ -34,7 +36,7 @@ export default MechanicListing;
 
 const Modal = ({ setmodalstate }) => {
   return (
-    <div className="base:absolute  lg:fixed top-0 left-0 w-full  lg:h-full flex items-center justify-center z-[10000000000000000]">
+    <div className="base:absolute  lg:fixed top-0 left-0 w-full  lg:h-full flex items-center justify-center z-[10000000000000000] ">
       <div
         className="absolute w-full h-full min-h-screen bg-black opacity-50 blur-25"
         onClick={() => setmodalstate(false)}
@@ -48,7 +50,7 @@ const Modal = ({ setmodalstate }) => {
         />
 
         <div className="lg:w-[80%]">
-          <div className="border-b max-h-[60vh] overflow-y-scroll">
+          <div className="border-b max-h-[60vh] overflow-y-scroll scroller">
             {/* Main card */}
             <div className="rounded-lg bg-graycolor px-[1rem] lg:px-[2rem] py-[1rem] flex flex-row">
               <div className="lg:w-[75%] flex flex-col gap-6">
@@ -56,11 +58,15 @@ const Modal = ({ setmodalstate }) => {
                   AC MOTORS
                 </div>
                 <div className="flex flex-col gap-2  text-[1rem] text-graycolor2">
-                  <IconText icon={"/icons/location.svg"} text={"Mehdipatnam"} />
+                  {/* <IconText icon={"/icons/location.svg"} text={"Mehdipatnam"} />
                   <IconText icon={"/icons/verified.svg"} text={"Verified"} />
-                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} />
+                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} /> */}
+                  <CheckboxDemo id="terms" label="AC Specialist" />
+                  <CheckboxDemo id="terms" label="1 Day Delivery" />
+                  <CheckboxDemo id="terms" label="7 years experience" />
                 </div>
-                <div className="flex lg:flex-row flex-col gap-2 text-[0.8rem]">
+                {/* stars */}
+                {/* <div className="flex lg:flex-row flex-col gap-2 text-[0.8rem]">
                   <div className="flex gap-1">
                     <img className="w-8" src="/icons/star.svg" />
                     <img className="w-8" src="/icons/star.svg" />
@@ -68,7 +74,7 @@ const Modal = ({ setmodalstate }) => {
                     <img className="w-8" src="/icons/star.svg" />
                   </div>
                   | Total services done on AutoConnect : 5
-                </div>
+                </div> */}
                 <div></div>
               </div>
             </div>
@@ -111,7 +117,7 @@ const Modal = ({ setmodalstate }) => {
             </div>
 
             {/* rating and reviews */}
-            <div>
+            {/* <div>
               <div className="text-unique pb-2 font-bold py-10 text-secondary">
                 Rating and reviews
               </div>
@@ -128,11 +134,15 @@ const Modal = ({ setmodalstate }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="w-full flex justify-end py-7">
-            <CusButton text={"Book Now"} href={"/bookmechanic"} type={"primary"} />
+            <CusButton
+              text={"Book Now"}
+              href={"/bookmechanic"}
+              type={"primary"}
+            />
           </div>
         </div>
       </div>
@@ -143,7 +153,10 @@ const Modal = ({ setmodalstate }) => {
 const SingleCard = ({ title, price }) => {
   return (
     <div className="rounded-lg p-4 gap-4 grid grid-cols-[1fr_1.3fr] bg-customwhite relative cursor-pointer">
-      <img src="/services/dummy.png" className="rounded-lg w-full h-full object-cover " />
+      <img
+        src="/services/dummy.png"
+        className="rounded-lg w-full h-full object-cover "
+      />
       <div className="gap-3 flex flex-col ">
         <div className="text-[1.4rem]">{title}</div>
         <div className="flex flex-col gap-2  text-[0.7rem] text-graycolor2">
