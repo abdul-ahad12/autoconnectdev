@@ -7,8 +7,13 @@ import TitleDesc from "@/components/section/TitleDesc";
 import CusButton from "@/components/section/button";
 import React from "react";
 import { useAuth } from "../../components/context/AuthProvider";
+import { useRouter } from "next/router";
+import Swal from 'sweetalert2';
+
+
 
 const Form = () => {
+  const router=useRouter()
   const { isLoggedIn, userData } = useAuth();
   console.log(userData);
 
@@ -195,6 +200,7 @@ const Form = () => {
     return `${String(newHour).padStart(2, "0")}:${String(newMinute).padStart(2, "0")}`;
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -205,21 +211,43 @@ const Form = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         console.log("Registration successful:", data);
+        // Display success popup
+        await Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful',
+          text: 'Redirecting to Mechanic Dashboard...',
+          showConfirmButton: false,
+          timer: 2000 // Adjust the time the popup is displayed (in milliseconds)
+        });
+        router.push("/mechanic/mechanicDashboard");
         // Redirect or perform any necessary actions upon successful registration
       } else {
         const errorData = await response.json();
         console.error("Registration failed:", errorData.message);
+        // Display error popup
+        await Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: errorData.message
+        });
         // Handle registration failure
       }
     } catch (error) {
       console.error("Error during registration:", error);
+      // Display error popup
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An unexpected error occurred. Please try again later.'
+      });
       // Handle other errors such as network issues
     }
   };
+  
 
   return (
     <div className="w-full flex flex-col items-center justify-center">

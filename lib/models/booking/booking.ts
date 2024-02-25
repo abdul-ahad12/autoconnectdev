@@ -30,19 +30,19 @@ interface TimeSlot {
 export interface Booking extends Document {
   user: mongoose.Types.ObjectId; // Reference to the customer user
   mechanic: mongoose.Types.ObjectId; // Reference to the booked mechanic
-  timeSlots: TimeSlot[]; // Array of time slots for this booking
+  timeSlots: TimeSlot; // Array of time slots for this booking
   deliveryMode: DeliveryMode;
   services: string[]; // List of selected services
   customNote?: string; // Optional custom note for custom services
   isCompleted: boolean;
   invoice?: Invoice; // Detailed invoice information
-  location: {
+  address: {
     street: string;
     suburb: string;
     state: string;
     pinCode: string;
   };
-  vehicleType: string; // "bike" or "car"
+  // vehicleType: string; // "bike" or "car"/
 }
 
 // Create a Mongoose schema for the Booking
@@ -58,13 +58,12 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
       ref: "Mechanic",
       required: true,
     },
-    timeSlots: [
-      {
-        date: { type: String, required: true }, // Date in format "YYYY-MM-DD"
-        time: { type: String, required: true }, // Time slot in format "HH:mm AM/PM"
-        available: { type: Boolean, default: true }, // Default to true indicating slot is available
-      },
-    ],
+    timeSlots: {
+      date: { type: String, required: true }, // Date in format "YYYY-MM-DD"
+      time: { type: String, required: true }, // Time slot in format "HH:mm AM/PM"
+      available: { type: Boolean, default: true }, // Default to true indicating slot is available
+    },
+
     deliveryMode: {
       type: String,
       enum: Object.values(DeliveryMode),
@@ -84,13 +83,13 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
       tax: { type: Number, required: true },
       total: { type: Number, required: true },
     },
-    location: {
+    address: {
       street: { type: String, required: true },
       suburb: { type: String, required: true },
       state: { type: String, required: true },
       pinCode: { type: String, required: true },
     },
-    vehicleType: { type: String, required: true },
+    // vehicleType: { type: String, required: true },
   },
   {
     timestamps: true,
