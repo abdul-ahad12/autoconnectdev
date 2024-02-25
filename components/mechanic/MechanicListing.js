@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import CusButton from "../section/button";
+import { Checkbox } from "../ui/common/Checkbox";
+import { CheckboxDemo } from "../ui/common/CheckboxDemo";
+import RangeBar from "../section/RangeBar";
 
 const MechanicListing = ({ mechanics }) => {
   const [modalstate, setmodalstate] = useState(false);
@@ -13,7 +16,9 @@ const MechanicListing = ({ mechanics }) => {
 
   return (
     <div className="w-full grid grid-cols-12 gap-9   py-[2rem]">
-      <div className="col-start-1  col-end-4 h-fit p-6 row-span-full  rounded-[2rem] bg-customwhite left-[5%] top-0   py-20"></div>
+      <div className="col-start-1  col-end-4 h-fit p-6 row-span-full  rounded-[2rem] bg-customwhite left-[5%] top-0   py-20">
+        <RangeBar />
+      </div>
       <div className=" col-start-4 ml-7 col-end-13 row-span-full grid grid-cols-2 gap-3">
         {mechanics.map((data, idx) => (
           <div
@@ -47,7 +52,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
   );
   console.log(availableDays)
   return (
-    <div className="base:absolute  lg:fixed top-0 left-0 w-full  lg:h-full flex items-center justify-center z-[10000000000000000]">
+    <div className="base:absolute  lg:fixed top-0 left-0 w-full  lg:h-full flex items-center justify-center z-[10000000000000000] ">
       <div
         className="absolute w-full h-full min-h-screen bg-black opacity-50 blur-25"
         onClick={() => setmodalstate(false)}
@@ -61,7 +66,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
         />
 
         <div className="lg:w-[80%]">
-          <div className="border-b max-h-[60vh] overflow-y-scroll">
+          <div className="border-b max-h-[60vh] overflow-y-scroll scroller">
             {/* Main card */}
             <div className="rounded-lg bg-graycolor px-[1rem] lg:px-[2rem] py-[1rem] flex flex-row">
               <div className="lg:w-[75%] flex flex-col gap-6">
@@ -73,9 +78,14 @@ const Modal = ({ setmodalstate, modalContent }) => {
                     icon={"/icons/location.svg"}
                     text={modalContent.address.street}
                   />
+                  {/* <IconText icon={"/icons/location.svg"} text={"Mehdipatnam"} />
                   <IconText icon={"/icons/verified.svg"} text={"Verified"} />
-                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} />
+                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} /> */}
+                  <CheckboxDemo id="terms" label="AC Specialist" />
+                  <CheckboxDemo id="terms" label="1 Day Delivery" />
+                  <CheckboxDemo id="terms" label="7 years experience" />
                 </div>
+                {/* stars */}
                 {/* <div className="flex lg:flex-row flex-col gap-2 text-[0.8rem]">
                   <div className="flex gap-1">
                     <img className="w-8" src="/icons/star.svg" />
@@ -123,7 +133,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
             </div>
 
             {/* rating and reviews */}
-            <div>
+            {/* <div>
               <div className="text-unique pb-2 font-bold py-10 text-secondary">
                 Rating and reviews
               </div>
@@ -140,7 +150,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="w-full flex justify-end py-7">

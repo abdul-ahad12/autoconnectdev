@@ -2,15 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-
-    background-color: #F2F1F0;
-    font-family:"Poppins" ;
+body {
+  background-color: #f2f1f0;
+  font-family: "Poppins";
 }
 
-.input-class{
-    padding: 6px 9px;
-    font-size: 1rem;
-    border-radius: 8px;
-    width: 100%;
+.input-class {
+  padding: 6px 9px;
+  font-size: 1rem;
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* hidescoller */
+.hidescroller {
+  overflow: auto; /* or overflow: scroll; */
+}
+
+.hidescroller::-webkit-scrollbar {
+  display: none;
+}
+
+/* customer scroller */
+.scroller {
+  overflow: auto;
+  scrollbar-width: thin; /* "auto" or "thin" for Firefox */
+  scrollbar-color: rgba(115, 113, 113, 0) rgba(160, 48, 48, 0); /* thumb color and track color */
+}
+
+.scroller::-webkit-scrollbar {
+  width: 12px; /* width of the scrollbar */
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* color of the thumb */
+  border-radius: 6px; /* rounded corners of the thumb */
+}
+
+.scroller::-webkit-scrollbar-track {
+  background-color: rgba(174, 169, 169, 0); /* color of the track */
 }
