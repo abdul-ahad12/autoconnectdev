@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Find mechanics based on the query criteria
     const mechanics = await MechanicRegistrationModel
-      .find(query)
+      .find()
       .skip((page - 1) * limit) // Skip records based on pagination
       .limit(limit); // Limit the number of records per page
 

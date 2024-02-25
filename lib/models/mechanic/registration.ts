@@ -21,7 +21,8 @@ interface DayAvailability {
 
 export interface MechanicRegistration extends Document {
   user: mongoose.Types.ObjectId;
-  aboutus:string,
+  name: string;
+  aboutus: string;
   address: {
     street: string;
     suburb: string;
@@ -54,7 +55,8 @@ const mechanicRegistrationSchema: Schema<MechanicRegistration> =
         required: true,
         unique: true,
       },
-      aboutus: { type: String, required: true }, 
+      name: { type: String, required: true },
+      aboutus: { type: String, required: true },
       address: {
         street: { type: String, required: true },
         suburb: { type: String, required: true },
@@ -66,43 +68,57 @@ const mechanicRegistrationSchema: Schema<MechanicRegistration> =
       approvalStatus: {
         type: String,
         enum: Object.values(ApprovalStatus),
-        default: ApprovalStatus.PENDING,
+        default: ApprovalStatus.APPROVED,
       },
       availability: {
         monday: {
           date: { type: String, required: true },
           available: { type: Boolean, default: false },
           timings: [{ type: String }],
+          startTime: { type: String },
+          endTime: { type: String },
         },
         tuesday: {
           date: { type: String, required: true },
           available: { type: Boolean, default: false },
           timings: [{ type: String }],
+          startTime: { type: String },
+          endTime: { type: String },
         },
         wednesday: {
           date: { type: String, required: true },
           available: { type: Boolean, default: false },
           timings: [{ type: String }],
+          startTime: { type: String },
+          endTime: { type: String },
         },
         thursday: {
           date: { type: String, required: true },
           available: { type: Boolean, default: false },
           timings: [{ type: String }],
+          startTime: { type: String },
+          endTime: { type: String },
         },
         friday: {
           date: { type: String, required: true },
           available: { type: Boolean, default: false },
           timings: [{ type: String }],
+          startTime: { type: String },
+          endTime: { type: String },
         },
         saturday: {
           date: { type: String, required: true },
           available: { type: Boolean, default: false },
           timings: [{ type: String }],
+          startTime: { type: String },
+          endTime: { type: String },
         },
         sunday: {
           date: { type: String, required: true },
           available: { type: Boolean, default: false },
           timings: [{ type: String }],
+          startTime: { type: String },
+          endTime: { type: String },
         },
       },
       services: [

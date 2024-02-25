@@ -1,8 +1,8 @@
 import React from "react";
 import TitleDesc from "../section/TitleDesc";
 
-const MechanicTop = ({ title, titleColor, servicesstate }) => {
-  const services = ["Services added", "Services added", "Services added"];
+const MechanicTop = ({ title, titleColor, servicesstate,services }) => {
+  // const services = ["Services added", "Services added", "Services added"];
   return (
     <div className="w-full px-[7%] bg-customwhite py-[5rem] rounded-b-[2rem]  flex relative justify-between">
       <div className="w-[40%] z-30 flex flex-col">
@@ -15,7 +15,7 @@ const MechanicTop = ({ title, titleColor, servicesstate }) => {
         <div className="flex mx-[4%] h-full shadow-lg w-[40%] bg-customwhite z-[10000] flex-col rounded-lg p-[2rem]">
           <div className="">Services added</div>
           <div className="mt-[1.5rem]">
-            {services.map((data, idx) => {
+            {services?.map((data, idx) => {
               return <div key={idx}>{data}</div>;
             })}
           </div>

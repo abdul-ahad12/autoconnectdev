@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CusButton from "../section/button";
 
-const MechanicListing = () => {
+const MechanicListing = ({mechanics}) => {
   const [modalstate, setmodalstate] = useState(false);
   const content = [
     { title: "AC Motors", price: "$345" },
@@ -14,7 +14,7 @@ const MechanicListing = () => {
     <div className="w-full grid grid-cols-12 gap-9   py-[2rem]">
       <div className="col-start-1  col-end-4 h-fit p-6 row-span-full  rounded-[2rem] bg-customwhite left-[5%] top-0   py-20"></div>
       <div className=" col-start-4 ml-7 col-end-13 row-span-full grid grid-cols-2 gap-3">
-        {content.map((data, idx) => (
+        {mechanics.map((data, idx) => (
           <div
             onClick={() => {
               setmodalstate(true);
