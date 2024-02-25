@@ -45,6 +45,7 @@ import CancelImg from "../../public/dashboard/Cancel.svg";
 import ReceiptImg from "../../public/dashboard/Receipt.svg";
 import NoOrdersYet from "./NoOrdersYet";
 import DateScroll from "./DateScroller";
+import RangeBar from "./RangeBar";
 
 const Order = () => {
   const ordersData = [
@@ -133,6 +134,7 @@ const Order = () => {
       </div>
       {/* <NoOrdersYet /> */}
       <DateScroll />
+      <RangeBar />
     </div>
   );
 };
