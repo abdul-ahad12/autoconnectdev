@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import MechanicTop from "@/components/mechanic/MechanicTop";
@@ -8,14 +8,33 @@ import CusButton from "@/components/section/button";
 import React from "react";
 import { useAuth } from "../../components/context/AuthProvider";
 import { useRouter } from "next/router";
-import Swal from 'sweetalert2';
-
-
+import Swal from "sweetalert2";
 
 const Form = () => {
-  const router=useRouter()
-  const { isLoggedIn, userData } = useAuth();
-  console.log(userData);
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userID, setuserId] = useState();
+  const [userRole, setUserRole] = useState();
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+
+  console.log(userRole);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Check if access token exists in localStorage
+      const accessToken = localStorage.getItem("accessToken");
+      const id = localStorage.getItem("id");
+      const role = localStorage.getItem("role");
+      setuserId(id);
+      setUserRole(role);
+      setIsLoggedIn(true);
+
+      // setIsLoading(false); // Set isLoading to false after fetching data
+    };
+
+    fetchData();
+  }, []);
+  // console.log(userData);
 
   const services = [
     "Oil Change",
@@ -39,8 +58,8 @@ const Form = () => {
   };
 
   const [formData, setFormData] = useState({
-    user: "65dae2260bff504a1b00d88b",
-    name:"",
+    user: "",
+    name: "",
     aboutus: "",
     address: {
       street: "",
@@ -51,20 +70,68 @@ const Form = () => {
     googleMapsLocation: "",
     abn: "",
     availability: {
-      monday: { date: getNextDayOfWeek(1).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      tuesday: { date: getNextDayOfWeek(2).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      wednesday: { date: getNextDayOfWeek(3).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      thursday: { date: getNextDayOfWeek(4).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      friday: { date: getNextDayOfWeek(5).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      saturday: { date: getNextDayOfWeek(6).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      sunday: { date: getNextDayOfWeek(0).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
+      monday: {
+        date: getNextDayOfWeek(1).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      tuesday: {
+        date: getNextDayOfWeek(2).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      wednesday: {
+        date: getNextDayOfWeek(3).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      thursday: {
+        date: getNextDayOfWeek(4).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      friday: {
+        date: getNextDayOfWeek(5).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      saturday: {
+        date: getNextDayOfWeek(6).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      sunday: {
+        date: getNextDayOfWeek(0).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
     },
     services: [],
     deliveryMode: [],
   });
-  
 
-  
+  useEffect(() => {
+    if (userID !== null) {
+      setFormData({
+        ...formData,
+        user: userID,
+      });
+    }
+  }, [userID]);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -90,7 +157,13 @@ const Form = () => {
             [day]: {
               ...prevData.availability[day],
               [field]: checked,
-              timings: checked ? generateTimings(day, prevData.availability[day].startTime, prevData.availability[day].endTime) : [],
+              timings: checked
+                ? generateTimings(
+                    day,
+                    prevData.availability[day].startTime,
+                    prevData.availability[day].endTime
+                  )
+                : [],
             },
           },
         }));
@@ -102,7 +175,13 @@ const Form = () => {
             [day]: {
               ...prevData.availability[day],
               [field]: value,
-              timings: generateTimings(day, field === "startTime" ? value : prevData.availability[day].startTime, field === "endTime" ? value : prevData.availability[day].endTime),
+              timings: generateTimings(
+                day,
+                field === "startTime"
+                  ? value
+                  : prevData.availability[day].startTime,
+                field === "endTime" ? value : prevData.availability[day].endTime
+              ),
             },
           },
         }));
@@ -154,19 +233,18 @@ const Form = () => {
     }
   };
 
-  console.log(formData)
-  
-  
+  console.log(formData);
+
   const generateTimings = (day, startTime, endTime) => {
     if (!startTime || !endTime) {
       return [];
     }
-  
+
     const [startHour, startMinute] = startTime.split(":").map(Number);
     const [endHour, endMinute] = endTime.split(":").map(Number);
     const startTotalMinutes = startHour * 60 + startMinute;
     const endTotalMinutes = endHour * 60 + endMinute;
-  
+
     const timings = [];
     let currentTime = startTotalMinutes;
     while (currentTime < endTotalMinutes) {
@@ -174,7 +252,7 @@ const Form = () => {
       const minute = currentTime % 60;
       const formattedHour = String(hour).padStart(2, "0");
       const formattedMinute = String(minute).padStart(2, "0");
-  
+
       let nextTime;
       if (currentTime + 120 <= endTotalMinutes) {
         nextTime = addTwoHours(`${formattedHour}:${formattedMinute}`);
@@ -182,24 +260,23 @@ const Form = () => {
         // If the next time exceeds the end time, set it to the end time
         nextTime = endTime;
       }
-      
+
       timings.push(`${formattedHour}:${formattedMinute}-${nextTime}`);
       currentTime += 120;
     }
     return timings;
   };
-  
 
-  
-  
   const addTwoHours = (time) => {
     const [hour, minute] = time.split(":").map(Number);
     const totalMinutes = hour * 60 + minute + 120;
     const newHour = Math.floor(totalMinutes / 60);
     const newMinute = totalMinutes % 60;
-    return `${String(newHour).padStart(2, "0")}:${String(newMinute).padStart(2, "0")}`;
+    return `${String(newHour).padStart(2, "0")}:${String(newMinute).padStart(
+      2,
+      "0"
+    )}`;
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -211,18 +288,23 @@ const Form = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log("Registration successful:", data);
         // Display success popup
         await Swal.fire({
-          icon: 'success',
-          title: 'Registration Successful',
-          text: 'Redirecting to Mechanic Dashboard...',
+          icon: "success",
+          title: "Registration Successful",
+          text: "Redirecting to Mechanic Dashboard...",
           showConfirmButton: false,
-          timer: 2000 // Adjust the time the popup is displayed (in milliseconds)
+          timer: 2000, // Adjust the time the popup is displayed (in milliseconds)
         });
+
+        console.log(data)
+
+        localStorage.setItem("role", "MECHANIC");
+        localStorage.setItem("mechanicId",data.id );
         router.push("/mechanic/mechanicDashboard");
         // Redirect or perform any necessary actions upon successful registration
       } else {
@@ -230,9 +312,9 @@ const Form = () => {
         console.error("Registration failed:", errorData.message);
         // Display error popup
         await Swal.fire({
-          icon: 'error',
-          title: 'Registration Failed',
-          text: errorData.message
+          icon: "error",
+          title: "Registration Failed",
+          text: errorData.message,
         });
         // Handle registration failure
       }
@@ -240,14 +322,13 @@ const Form = () => {
       console.error("Error during registration:", error);
       // Display error popup
       await Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An unexpected error occurred. Please try again later.'
+        icon: "error",
+        title: "Error",
+        text: "An unexpected error occurred. Please try again later.",
       });
       // Handle other errors such as network issues
     }
   };
-  
 
   return (
     <div className="w-full flex flex-col items-center justify-center">

@@ -57,12 +57,13 @@ export default async function handler(
     });
 
     // Save the MechanicRegistration document
-    await mechanicRegistration.save();
+   const registeredMechanic= await mechanicRegistration.save();
 
     res
       .status(201)
       .json({
         message: "Mechanic registration details submitted successfully.",
+        id:registeredMechanic._id
       });
   } catch (error) {
     console.error("Error during mechanic registration:", error);

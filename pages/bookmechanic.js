@@ -5,10 +5,89 @@ import Description from "@/components/section/Description";
 import TitleDesc from "@/components/section/TitleDesc";
 import CusButton from "@/components/section/button";
 import { Calendar } from "@/components/ui/common/Calender";
-import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const Bookmechanic = () => {
+  const [mechanicData, setMechanicData] = useState(null);
+  const [selectedTime, setSelectedTime] = useState();
+  const [selectedMode, setSelectedMode] = useState("TO_MECHANIC");
+  const [customNote, setcustomNote] = useState();
+
+  // console.log(selectedMode);
+  const handleCheckboxChange = (mode) => {
+    setSelectedMode(mode);
+  };
+
+  const [selectedDay, setSelectedDay] = useState();
+  // console.log(selectedTime);
+  const [userData, setUserData] = useState(null);
+  const [timings, setTimings] = useState();
+  const [display, setDisplay] = useState(false);
+  // console.log(timings);
+
+  // console.log(userData, mechanicData);
   const [date, setDate] = React.useState(new Date());
+  const [daysofweek, setdaysofweek] = useState();
+  const [address, setAddress] = useState({
+    street: "",
+    suburb: "",
+    state: "",
+    pinCode: "",
+  });
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setAddress((prevAddress) => ({
+      ...prevAddress,
+      [name]: value,
+    }));
+  };
+
+  const handleNoteChange = (e) => {
+    const { value } = e.target;
+    setcustomNote(value);
+  };
+
+  const router = useRouter();
+
+  // Get mechanicId and customerId from query string
+  const mechanicId = router.query.mechanicId;
+  const customerId = router.query.customerId;
+  const services = router.query.services;
+
+  useEffect(() => {
+    console.log(mechanicId, customerId);
+    if (customerId !== undefined) {
+      console.log(customerId);
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`/api/customer/${customerId}`);
+          setUserData(response.data.user);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      fetchUserData();
+      setDisplay(true);
+    }
+    if (mechanicId !== undefined) {
+      const fetchMechanicData = async () => {
+        try {
+          const response = await axios.get(`/api/mechanic/${mechanicId}`);
+          setMechanicData(response.data.mechanic);
+          setdaysofweek(Object.keys(mechanicData?.availability));
+        } catch (error) {
+          console.error("Error fetching mechanic data:", error);
+        }
+      };
+      fetchMechanicData();
+      setDisplay(true);
+    }
+  }, [customerId, mechanicId,display,userData]);
+
   const typeofdelivery = [
     {
       img: "/mechanic/tools.png",
@@ -26,15 +105,56 @@ const Bookmechanic = () => {
       desc: "Pick and drop with your convenience in the given time slot .",
     },
   ];
+  const handleSubmit = async () => {
+    try {
+      const obj = {
+        userId: customerId,
+        mechanicId: mechanicId,
+        timeSlots: {
+          date: mechanicData.availability[selectedDay].date,
+          time: selectedTime,
+          available: true,
+        },
+        deliveryMode: selectedMode,
+        services: ["empty"],
+        customNote: customNote,
+        address: address,
+      };
+
+      const response = await axios.post("/api/bookings/registerABooking", obj);
+      console.log(response.data); // This will log the response from the server
+
+      // Display a SweetAlert pop-up for success
+      Swal.fire({
+        icon: "success",
+        title: "Booking Created Successfully",
+        text: "Your booking has been created successfully!",
+      });
+
+      router.push("/customerDashboard")
+
+      // Handle success, redirect, or any other action
+    } catch (error) {
+      console.error("Error creating booking:", error);
+      // Handle error
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "An error occurred while creating the booking. Please try again later.",
+      });
+    }
+  };
 
   return (
     <div className="w-full flex justify-center flex-col items-center">
       <Navbar />
+
       <div className="w-[90%]">
         <MechanicTop
           title={"Isra , you’re just a few steps"}
           titleColor={" away!"}
         />
+        <div></div>;
         <div className="w-full flex gap-6 relative  my-7">
           <div className="w-[65%]    ">
             {/* left side */}
@@ -48,22 +168,48 @@ const Bookmechanic = () => {
                 <div className="text-secondary text-[1.2rem]">
                   <span className="text-black">Prefered</span> Time Slot
                 </div>
-                <select className="input-class w-[50%]">
-                  <option>10:00 am</option>
-                  <option>10:00 am</option>
-                  <option>10:00 am</option>
-                  <option>10:00 am</option>
-                  <option>10:00 am</option>
-                  <option>10:00 am</option>
+
+                <select
+                  className="input-class w-[50%]"
+                  onChange={(e) => setSelectedTime(e.target.value)}
+                >
+                  {timings?.map((time, index) => (
+                    <option key={index} value={time}>
+                      {time}
+                    </option>
+                  ))}
                 </select>
               </div>
+              <div>
+                Days availability
+                <div className="grid grid-cols-3 gap-2">
+                  {daysofweek?.map((day) => (
+                    <button
+                      className="text-[0.8rem] bg-slate-200 px-5 py-1 border border-black"
+                      key={day}
+                      style={{
+                        color: mechanicData?.availability[day].available
+                          ? "black"
+                          : "gray",
+                        pointerEvents: mechanicData?.availability[day].available
+                          ? "auto"
+                          : "none",
+                      }}
+                      onClick={() => {
+                        // Handle click event for available days
+                        if (mechanicData?.availability[day].available) {
+                          // Do something when the day is available and clicked
+                          setSelectedDay(day);
+                          setTimings(mechanicData?.availability[day]?.timings);
+                        }
+                      }}
+                    >
+                      {day}
+                    </button>
+                  ))}
+                </div>
+              </div>
               {/* right side */}
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                className="rounded-md border h-fit shadow"
-              />
             </div>
             <div className="text-[1.5rem] font-semibold bg-customwhite p-[2rem] rounded-b-[2rem]">
               <div>
@@ -76,8 +222,11 @@ const Bookmechanic = () => {
 
               {/* mode of delivery select fields */}
               <div className="flex flex-col gap-3">
-                {typeofdelivery.map((data, idx) => (
-                  <div key={idx} className="p-[1rem] flex justify-between w-full rounded-lg shadow-md ">
+                {/* {typeofdelivery.map((data, idx) => (
+                  <div
+                    key={idx}
+                    className="p-[1rem] flex justify-between w-full rounded-lg shadow-md "
+                  >
                     <div className="flex gap-4 items-center">
                       <img className="h-full" src={data.img} />
                       <div className="flex flex-col  text-primary">
@@ -91,7 +240,35 @@ const Bookmechanic = () => {
                     </div>
                     <input type="radio" />
                   </div>
-                ))}
+                ))} */}
+              </div>
+              <div className="flex flex-col text-[1rem] ">
+                <input
+                  type="checkbox"
+                  id="toMechanic"
+                  value="TO_MECHANIC"
+                  checked={selectedMode === "TO_MECHANIC"}
+                  onChange={() => handleCheckboxChange("TO_MECHANIC")}
+                />
+                <label htmlFor="toMechanic">To Mechanic</label>
+
+                <input
+                  type="checkbox"
+                  id="toCustomer"
+                  value="TO_CUSTOMER"
+                  checked={selectedMode === "TO_CUSTOMER"}
+                  onChange={() => handleCheckboxChange("TO_CUSTOMER")}
+                />
+                {/* <label htmlFor="toCustomer">To Customer</label>
+
+                <input
+                  type="checkbox"
+                  id="thirdParty"
+                  value="THIRD_PARTY"
+                  checked={selectedMode === "THIRD_PARTY"}
+                  onChange={() => handleCheckboxChange("THIRD_PARTY")}
+                /> */}
+                <label htmlFor="thirdParty">Third Party</label>
               </div>
             </div>
             <div className="my-5 bg-customwhite rounded-[2rem] p-[2rem]">
@@ -105,30 +282,78 @@ const Bookmechanic = () => {
                 <div className="flex w-full justify-between gap-2">
                   <div className="flex flex-col w-full gap-1">
                     <Description size={"inputlabel"} text={"First Name"} />
-                    <input className="input-class border w-full border-graycolor2" />
+                    <input
+                      value={userData?.name}
+                      className="input-class border w-full border-graycolor2"
+                    />
                   </div>
-                  <div className="flex flex-col w-full gap-1">
+                  {/* <div className="flex flex-col w-full gap-1">
                     <Description size={"inputlabel"} text={"Last Name"} />
                     <input className="input-class border w-full border-graycolor2" />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                   <Description size={"inputlabel"} text={"Email"} />
-                  <input className="input-class border w-full border-graycolor2" />
+                  <input
+                    value={userData?.email}
+                    className="input-class border w-full border-graycolor2"
+                  />
                 </div>
                 <div className="flex w-full justify-between gap-2">
                   <div className="flex flex-col w-full gap-1">
                     <Description size={"inputlabel"} text={"Phone Number"} />
-                    <input className="input-class border w-full border-graycolor2" />
+                    <input
+                      value={userData?.phoneNumber}
+                      className="input-class border w-full border-graycolor2"
+                    />
                   </div>
                   <div className="flex flex-col w-full gap-1">
                     <Description size={"inputlabel"} text={"Alternate"} />
                     <input className="input-class border w-full border-graycolor2" />
                   </div>
                 </div>
-                <div className="flex flex-col w-full gap-1">
-                  <Description size={"inputlabel"} text={"Note"} />
-                  <textarea className="input-class border w-full border-graycolor2" />
+                <div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      name="street"
+                      placeholder="Street"
+                      value={address.street}
+                      onChange={handleAddressChange}
+                    />
+                    <input
+                      type="text"
+                      name="suburb"
+                      placeholder="Suburb"
+                      value={address.suburb}
+                      onChange={handleAddressChange}
+                    />
+                    <input
+                      type="text"
+                      name="state"
+                      placeholder="State"
+                      value={address.state}
+                      onChange={handleAddressChange}
+                    />
+                    <input
+                      type="text"
+                      name="pinCode"
+                      placeholder="Pin Code"
+                      value={address.pinCode}
+                      onChange={handleAddressChange}
+                    />
+                  </div>
+                  <div className="flex flex-col w-full gap-1">
+                    <label htmlFor="note" className="inputlabel">
+                      Note
+                    </label>
+                    <textarea
+                      id="note"
+                      name="note"
+                      className="input-class border w-full border-graycolor2"
+                      onChange={handleNoteChange}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex w-full flex-col items-center justify-center mt-5">
@@ -139,7 +364,10 @@ const Bookmechanic = () => {
                       Policy
                     </div>
                   </div>
-                  <CusButton type={"primary"} text={"Confirm"} />
+                  <div onClick={handleSubmit}>
+                    {" "}
+                    <CusButton type={"primary"} text={"Confirm"} />
+                  </div>
                 </div>
               </form>
             </div>
@@ -205,11 +433,9 @@ const Bookmechanic = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
 
 export default Bookmechanic;
-
-

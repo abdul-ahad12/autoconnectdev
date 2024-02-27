@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Order from "./Order";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/common/Tabs";
+import axios from "axios";
 
-const OrdersList = () => {
+const OrdersList = ({bookings}) => {
+
+
   return (
     <div className="w-full flex justify-center">
       <div className="w-[80%] flex-col flex gap-5">
@@ -20,7 +23,7 @@ const OrdersList = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="account">
-            <Order />
+            <Order bookings={bookings} />
           </TabsContent>
           <TabsContent aria-disabled value="password">
             get

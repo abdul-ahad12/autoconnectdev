@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CusButton from "../section/button";
 import { Checkbox } from "../ui/common/Checkbox";
 import { CheckboxDemo } from "../ui/common/CheckboxDemo";
 import RangeBar from "../section/RangeBar";
+import { useAuth } from "../context/AuthProvider";
 
 const MechanicListing = ({ mechanics }) => {
+
   const [modalstate, setmodalstate] = useState(false);
   const [modalContent, setModalContent] = useState();
   const content = [
@@ -42,15 +44,38 @@ const MechanicListing = ({ mechanics }) => {
 export default MechanicListing;
 
 const Modal = ({ setmodalstate, modalContent }) => {
+  const [userID, setuserId] = useState();
+  const [userRole, setUserRole] = useState();
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+
+  console.log(userRole);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Check if access token exists in localStorage
+      const accessToken = localStorage.getItem("accessToken");
+      const id = localStorage.getItem("id");
+      const role = localStorage.getItem("role");
+      setuserId(id);
+      setUserRole(role);
+      // setIsLoggedIn(true);
+
+      // setIsLoading(false); // Set isLoading to false after fetching data
+    };
+
+    fetchData();
+  }, []);
+  console.log(modalContent)
+
   const daysOfWeek = Object.keys(modalContent.availability);
 
-  console.log(daysOfWeek)
+  console.log(daysOfWeek);
 
   // Filter out the days where availability is true
   const availableDays = daysOfWeek.filter(
     (day) => modalContent.availability[day].available
   );
-  console.log(availableDays)
+  console.log(availableDays);
   return (
     <div className="base:absolute  lg:fixed top-0 left-0 w-full  lg:h-full flex items-center justify-center z-[10000000000000000] ">
       <div
@@ -78,12 +103,12 @@ const Modal = ({ setmodalstate, modalContent }) => {
                     icon={"/icons/location.svg"}
                     text={modalContent.address.street}
                   />
-                  {/* <IconText icon={"/icons/location.svg"} text={"Mehdipatnam"} />
+                  {/* <IconText icon={"/icons/location.svg"} text={"Mehdipatnam"} /> */}
                   <IconText icon={"/icons/verified.svg"} text={"Verified"} />
-                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} /> */}
-                  <CheckboxDemo id="terms" label="AC Specialist" />
+                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} />
+                  {/* <CheckboxDemo id="terms" label="AC Specialist" />
                   <CheckboxDemo id="terms" label="1 Day Delivery" />
-                  <CheckboxDemo id="terms" label="7 years experience" />
+                  <CheckboxDemo id="terms" label="7 years experience" /> */}
                 </div>
                 {/* stars */}
                 {/* <div className="flex lg:flex-row flex-col gap-2 text-[0.8rem]">
@@ -126,7 +151,8 @@ const Modal = ({ setmodalstate, modalContent }) => {
               </div>
               {availableDays.map((day) => (
                 <div key={day}>
-                  <strong>{day}</strong>: {modalContent.availability[day].startTime} -{" "}
+                  <strong>{day}</strong>:{" "}
+                  {modalContent.availability[day].startTime} -{" "}
                   {modalContent.availability[day].endTime}
                 </div>
               ))}
@@ -156,7 +182,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
           <div className="w-full flex justify-end py-7">
             <CusButton
               text={"Book Now"}
-              href={"/bookmechanic"}
+              href={`/bookmechanic?mechanicId=${modalContent?._id}&customerId=${userID}`}
               type={"primary"}
             />
           </div>

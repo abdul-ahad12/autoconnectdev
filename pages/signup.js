@@ -24,7 +24,7 @@ const Signup = () => {
     // Check if there is an active session
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
-      router.push("/"); // Redirect to home page if session exists
+      router.push("/login"); // Redirect to home page if session exists
     }
   }, []);
 
@@ -83,7 +83,7 @@ const Signup = () => {
             "You have successfully signed up.",
             "success"
           ); // Display SweetAlert success message
-          router.push("/"); // Redirect to success page or any desired page upon successful signup
+          router.push("/login"); // Redirect to success page or any desired page upon successful signup
         }
       } else {
         const data = await response.json();

@@ -47,7 +47,7 @@ import NoOrdersYet from "./NoOrdersYet";
 import DateScroll from "./DateScroller";
 import RangeBar from "./RangeBar";
 
-const Order = () => {
+const Order = ({ bookings }) => {
   const ordersData = [
     {
       orderNumber: "Order #2416",
@@ -122,19 +122,19 @@ const Order = () => {
         <div>Action</div>
       </div>
       <div className="flex flex-col gap-9">
-        {ordersData.map((order, index) => (
+        {bookings?.map((order, index) => (
           <OrderItem
             key={index}
-            orderNumber={order.orderNumber}
-            dateTime={order.dateTime}
-            status={order.status}
-            service={order.service}
+            orderNumber={order?._id.slice(0, 4)}
+            dateTime={order?.timeSlots?.date}
+            status={order?.isCompleted}
+            service={order.services[0]}
           />
         ))}
       </div>
       {/* <NoOrdersYet /> */}
-      <DateScroll />
-      <RangeBar />
+      {/* <DateScroll />
+      <RangeBar /> */}
     </div>
   );
 };
@@ -150,9 +150,9 @@ const OrderItem = ({ orderNumber, dateTime, status, service }) => (
     <button className="text-primary w-fit text-[0.7rem] border-[1px] rounded-md p-1">
       Click here
     </button>
-    <div className="text-graycolor2 text-[0.7rem]">{status}</div>
-    <button className="text-primary w-fit bg-green-500 text-[0.7rem] border-[1px] rounded-md p-1">
-      Done
+    <div className="text-graycolor2 text-[0.7rem]">{dateTime}</div>
+    <button className={`text-primary w-fit ${status ? "bg-green-500" :"bg-[pink]"}  text-[0.7rem] border-[1px] rounded-md p-1`}>
+     {status ? "Done":"Not completed"} 
     </button>
     <div className="text-graycolor2 text-[0.8rem]">{service}</div>
     <div className="flex gap-1">

@@ -7,6 +7,9 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
+console.log(userData)
+
+
   useEffect(() => {
     const fetchData = async () => {
       // Check if access token exists in localStorage

@@ -17,8 +17,8 @@ const Login = () => {
 
   useEffect(() => {
     // Check if there is an active session
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
+    const id = localStorage.getItem("id");
+    if (id!==undefined) {
       router.push("/"); // Redirect to home page if session exists
     }
   }, []);
