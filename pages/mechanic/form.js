@@ -58,8 +58,8 @@ const Form = () => {
   };
 
   const [formData, setFormData] = useState({
-    user: "",
-    name: "",
+    user: "65dae2260bff504a1b00d88b",
+    name:"",
     aboutus: "",
     address: {
       street: "",
@@ -123,15 +123,9 @@ const Form = () => {
     services: [],
     deliveryMode: [],
   });
+  
 
-  useEffect(() => {
-    if (userID !== null) {
-      setFormData({
-        ...formData,
-        user: userID,
-      });
-    }
-  }, [userID]);
+  
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -342,24 +336,28 @@ const Form = () => {
           <TitleDesc title={"Register"} titleColor={"Yourself"} left />
 
           <form
-            className="flex flex-col gap-2 py-[2rem] w-[75%]"
+            className="flex flex-col gap-4 py-[2rem] w-[75%]"
             onSubmit={handleSubmit}
           >
             {/* Name */}
-            <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"Name"} />
+            {/* <div className="flex flex-col w-full gap-1 ">
+              <Description
+                className="text-primary"
+                size={"inputlabel"}
+                text={"Name"}
+              />
               <input
                 className="input-class border w-full border-graycolor2"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
             {/* About Us */}
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"About Us"} />
               <textarea
-                className="input-class border w-full border-graycolor2"
+                className="input-class h-28 border w-full border-graycolor2"
                 name="aboutus"
                 value={formData.aboutus}
                 onChange={handleChange}
@@ -367,7 +365,7 @@ const Form = () => {
             </div>
 
             {/* Address */}
-            <div className="flex w-full gap-2">
+            <div className="flex w-full gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"Street"} />
                 <input
@@ -388,6 +386,8 @@ const Form = () => {
                   onChange={handleChange}
                 />
               </div>
+            </div>
+            <div className="flex  gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"State"} />
                 <input
@@ -399,7 +399,7 @@ const Form = () => {
                 />
               </div>
               <div className="flex flex-col w-full gap-1">
-                <Description size={"inputlabel"} text={"Pin Code"} />
+                <Description size={"inputlabel"} text={"Pincode"} />
                 <input
                   className="input-class border w-full border-graycolor2"
                   type="text"
@@ -435,30 +435,46 @@ const Form = () => {
               />
             </div>
             {/* Availability */}
-            <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"Availability"} />
+            <div className="flex flex-col gap-5 w-full ">
+              <Description
+                size={"inputlabel"}
+                text={"Availability"}
+                className="text-or"
+              />
+              <p className="text-graycolor2 text-[1rem]">
+                Select the days you’re available to take the orders and fill in
+                the timings
+              </p>
               {Object.entries(formData.availability).map(
                 ([day, { available }]) => (
-                  <div key={day}>
+                  <div
+                    className="flex border-2 p-3 rounded-lg items-center gap-8"
+                    key={day}
+                  >
                     <input
                       type="checkbox"
                       name={`availability.${day}.available`}
                       checked={available}
                       onChange={handleChange}
+                      style={{ backgroundColor: available ? "orange" : "" }}
                     />
-                    <label>{day}</label>
+                    <label className="text-primary capitalize">{day}</label>
                     {available && (
                       <>
                         {/* Select field for start time */}
                         <select
+                          className="border-2 p-1 rounded-lg text-graycolor2"
                           name={`availability.${day}.startTime`}
                           value={formData.availability[day].startTime}
                           onChange={handleChange}
                         >
-                          <option>Select Start time</option>
+                          <option className="pointer-events-none select-none selec">
+                            Select Start time
+                          </option>
                           {Array.from({ length: 13 }, (_, i) => i + 8).map(
                             (hour) => (
                               <option
+                                className="text-primary "
                                 key={hour}
                                 value={`${hour}:00`}
                               >{`${hour}:00`}</option>
@@ -467,6 +483,7 @@ const Form = () => {
                         </select>
                         {/* Select field for end time */}
                         <select
+                          className="border-2 p-1 rounded-lg text-graycolor2"
                           name={`availability.${day}.endTime`}
                           value={formData.availability[day].endTime}
                           onChange={handleChange}
@@ -475,6 +492,7 @@ const Form = () => {
                           {Array.from({ length: 13 }, (_, i) => i + 9).map(
                             (hour) => (
                               <option
+                                className="text-primary"
                                 key={hour}
                                 value={`${hour}:00`}
                               >{`${hour}:00`}</option>
@@ -489,10 +507,13 @@ const Form = () => {
             </div>
 
             {/* Services */}
-            <div className="flex flex-col w-full gap-1">
+            {/* <div className="flex flex-col gap-5 w-full">
               <Description size={"inputlabel"} text={"Services"} />
               {services.map((service, index) => (
-                <div key={index}>
+                <div
+                  className="flex border-2 p-3 rounded-lg items-center gap-8"
+                  key={index}
+                >
                   <input
                     type="checkbox"
                     name={`services.${index}`}
@@ -507,9 +528,60 @@ const Form = () => {
                       })
                     }
                   />
-                  <label>{service}</label>
+                  <label className="text-primary">{service}</label>
                   {formData.services.some((s) => s.name === service) && (
                     <input
+                      className="border-2 p-1 rounded-lg text-graycolor2"
+                      type="number"
+                      name={`services.${index}.price`}
+                      value={
+                        formData.services.find((s) => s.name === service)
+                          ?.price || ""
+                      }
+                      placeholder="Price"
+                      onChange={(e) =>
+                        handleChange({
+                          target: {
+                            name: `price.${index}`,
+                            value: e.target.value,
+                          },
+                        })
+                      }
+                    />
+                  )}
+                </div>
+              ))}
+            </div> */}
+            <Description size={"inputlabel"} text={"Services"} />
+            <div className="grid grid-cols-2 p- gap-5 w-full">
+              {services.map((service, index) => (
+                <div
+                  className="flex  p-3 rounded-lg items-center gap-8"
+                  key={index}
+                >
+                  <label className="flex  h-fit items-center gap-9 cursor-context-menu">
+                    <input
+                      type="checkbox"
+                      name={`services.${index}`}
+                      checked={formData.services.some(
+                        (s) => s.name === service
+                      )}
+                      onChange={(e) =>
+                        handleChange({
+                          target: {
+                            name: "services",
+                            value: service,
+                            checked: e.target.checked,
+                          },
+                        })
+                      }
+                      className="w-5"
+                    />
+                    <span className="text-primary">{service}</span>
+                  </label>
+                  {formData.services.some((s) => s.name === service) && (
+                    <input
+                      className="border-2 border-secondary p-1 rounded-lg text-graycolor2"
                       type="number"
                       name={`services.${index}.price`}
                       value={
@@ -532,21 +604,22 @@ const Form = () => {
             </div>
 
             {/* Delivery Mode */}
-            <div className="flex flex-col w-full gap-1">
+            <div className="flex items-start flex-col w-full gap-5">
               <Description size={"inputlabel"} text={"Delivery Mode"} />
               {[
                 "Home PickUp",
                 "At Mechanic" /* Add more delivery modes here */,
               ].map((mode, index) => (
-                <div key={index}>
+                <div className="flex items-center gap-10 p-4" key={index}>
                   <input
                     type="checkbox"
                     name={`deliveryMode`}
                     value={mode}
                     checked={formData.deliveryMode.includes(mode)}
                     onChange={handleChange}
+                    className="h-4"
                   />
-                  <label>{mode}</label>
+                  <label className="text-primary">{mode}</label>
                 </div>
               ))}
             </div>

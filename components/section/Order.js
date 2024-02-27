@@ -133,8 +133,8 @@ const Order = ({ bookings }) => {
         ))}
       </div>
       {/* <NoOrdersYet /> */}
-      {/* <DateScroll />
-      <RangeBar /> */}
+      {/* <DateScroll /> */}
+      {/* <RangeBar /> */}
     </div>
   );
 };
