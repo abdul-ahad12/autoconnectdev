@@ -8,12 +8,10 @@ import CusButton from "@/components/section/button";
 import React from "react";
 import { useAuth } from "../../components/context/AuthProvider";
 import { useRouter } from "next/router";
-import Swal from 'sweetalert2';
-
-
+import Swal from "sweetalert2";
 
 const Form = () => {
-  const router=useRouter()
+  const router = useRouter();
   const { isLoggedIn, userData } = useAuth();
   console.log(userData);
 
@@ -40,7 +38,7 @@ const Form = () => {
 
   const [formData, setFormData] = useState({
     user: "65dae2260bff504a1b00d88b",
-    name:"",
+    name: "",
     aboutus: "",
     address: {
       street: "",
@@ -51,20 +49,59 @@ const Form = () => {
     googleMapsLocation: "",
     abn: "",
     availability: {
-      monday: { date: getNextDayOfWeek(1).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      tuesday: { date: getNextDayOfWeek(2).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      wednesday: { date: getNextDayOfWeek(3).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      thursday: { date: getNextDayOfWeek(4).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      friday: { date: getNextDayOfWeek(5).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      saturday: { date: getNextDayOfWeek(6).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
-      sunday: { date: getNextDayOfWeek(0).toISOString().slice(0, 10), available: false, timings: [], startTime: "", endTime: "" },
+      monday: {
+        date: getNextDayOfWeek(1).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      tuesday: {
+        date: getNextDayOfWeek(2).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      wednesday: {
+        date: getNextDayOfWeek(3).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      thursday: {
+        date: getNextDayOfWeek(4).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      friday: {
+        date: getNextDayOfWeek(5).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      saturday: {
+        date: getNextDayOfWeek(6).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
+      sunday: {
+        date: getNextDayOfWeek(0).toISOString().slice(0, 10),
+        available: false,
+        timings: [],
+        startTime: "",
+        endTime: "",
+      },
     },
     services: [],
     deliveryMode: [],
   });
-  
-
-  
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -90,7 +127,13 @@ const Form = () => {
             [day]: {
               ...prevData.availability[day],
               [field]: checked,
-              timings: checked ? generateTimings(day, prevData.availability[day].startTime, prevData.availability[day].endTime) : [],
+              timings: checked
+                ? generateTimings(
+                    day,
+                    prevData.availability[day].startTime,
+                    prevData.availability[day].endTime
+                  )
+                : [],
             },
           },
         }));
@@ -102,7 +145,13 @@ const Form = () => {
             [day]: {
               ...prevData.availability[day],
               [field]: value,
-              timings: generateTimings(day, field === "startTime" ? value : prevData.availability[day].startTime, field === "endTime" ? value : prevData.availability[day].endTime),
+              timings: generateTimings(
+                day,
+                field === "startTime"
+                  ? value
+                  : prevData.availability[day].startTime,
+                field === "endTime" ? value : prevData.availability[day].endTime
+              ),
             },
           },
         }));
@@ -154,19 +203,18 @@ const Form = () => {
     }
   };
 
-  console.log(formData)
-  
-  
+  console.log(formData);
+
   const generateTimings = (day, startTime, endTime) => {
     if (!startTime || !endTime) {
       return [];
     }
-  
+
     const [startHour, startMinute] = startTime.split(":").map(Number);
     const [endHour, endMinute] = endTime.split(":").map(Number);
     const startTotalMinutes = startHour * 60 + startMinute;
     const endTotalMinutes = endHour * 60 + endMinute;
-  
+
     const timings = [];
     let currentTime = startTotalMinutes;
     while (currentTime < endTotalMinutes) {
@@ -174,7 +222,7 @@ const Form = () => {
       const minute = currentTime % 60;
       const formattedHour = String(hour).padStart(2, "0");
       const formattedMinute = String(minute).padStart(2, "0");
-  
+
       let nextTime;
       if (currentTime + 120 <= endTotalMinutes) {
         nextTime = addTwoHours(`${formattedHour}:${formattedMinute}`);
@@ -182,24 +230,23 @@ const Form = () => {
         // If the next time exceeds the end time, set it to the end time
         nextTime = endTime;
       }
-      
+
       timings.push(`${formattedHour}:${formattedMinute}-${nextTime}`);
       currentTime += 120;
     }
     return timings;
   };
-  
 
-  
-  
   const addTwoHours = (time) => {
     const [hour, minute] = time.split(":").map(Number);
     const totalMinutes = hour * 60 + minute + 120;
     const newHour = Math.floor(totalMinutes / 60);
     const newMinute = totalMinutes % 60;
-    return `${String(newHour).padStart(2, "0")}:${String(newMinute).padStart(2, "0")}`;
+    return `${String(newHour).padStart(2, "0")}:${String(newMinute).padStart(
+      2,
+      "0"
+    )}`;
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -211,17 +258,17 @@ const Form = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log("Registration successful:", data);
         // Display success popup
         await Swal.fire({
-          icon: 'success',
-          title: 'Registration Successful',
-          text: 'Redirecting to Mechanic Dashboard...',
+          icon: "success",
+          title: "Registration Successful",
+          text: "Redirecting to Mechanic Dashboard...",
           showConfirmButton: false,
-          timer: 2000 // Adjust the time the popup is displayed (in milliseconds)
+          timer: 2000, // Adjust the time the popup is displayed (in milliseconds)
         });
         router.push("/mechanic/mechanicDashboard");
         // Redirect or perform any necessary actions upon successful registration
@@ -230,9 +277,9 @@ const Form = () => {
         console.error("Registration failed:", errorData.message);
         // Display error popup
         await Swal.fire({
-          icon: 'error',
-          title: 'Registration Failed',
-          text: errorData.message
+          icon: "error",
+          title: "Registration Failed",
+          text: errorData.message,
         });
         // Handle registration failure
       }
@@ -240,14 +287,13 @@ const Form = () => {
       console.error("Error during registration:", error);
       // Display error popup
       await Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An unexpected error occurred. Please try again later.'
+        icon: "error",
+        title: "Error",
+        text: "An unexpected error occurred. Please try again later.",
       });
       // Handle other errors such as network issues
     }
   };
-  
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -261,24 +307,28 @@ const Form = () => {
           <TitleDesc title={"Register"} titleColor={"Yourself"} left />
 
           <form
-            className="flex flex-col gap-2 py-[2rem] w-[75%]"
+            className="flex flex-col gap-4 py-[2rem] w-[75%]"
             onSubmit={handleSubmit}
           >
             {/* Name */}
-            <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"Name"} />
+            {/* <div className="flex flex-col w-full gap-1 ">
+              <Description
+                className="text-primary"
+                size={"inputlabel"}
+                text={"Name"}
+              />
               <input
                 className="input-class border w-full border-graycolor2"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
             {/* About Us */}
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"About Us"} />
               <textarea
-                className="input-class border w-full border-graycolor2"
+                className="input-class h-28 border w-full border-graycolor2"
                 name="aboutus"
                 value={formData.aboutus}
                 onChange={handleChange}
@@ -286,7 +336,7 @@ const Form = () => {
             </div>
 
             {/* Address */}
-            <div className="flex w-full gap-2">
+            <div className="flex w-full gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"Street"} />
                 <input
@@ -307,6 +357,8 @@ const Form = () => {
                   onChange={handleChange}
                 />
               </div>
+            </div>
+            <div className="flex  gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"State"} />
                 <input
@@ -318,7 +370,7 @@ const Form = () => {
                 />
               </div>
               <div className="flex flex-col w-full gap-1">
-                <Description size={"inputlabel"} text={"Pin Code"} />
+                <Description size={"inputlabel"} text={"Pincode"} />
                 <input
                   className="input-class border w-full border-graycolor2"
                   type="text"
@@ -354,30 +406,46 @@ const Form = () => {
               />
             </div>
             {/* Availability */}
-            <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"Availability"} />
+            <div className="flex flex-col gap-5 w-full ">
+              <Description
+                size={"inputlabel"}
+                text={"Availability"}
+                className="text-or"
+              />
+              <p className="text-graycolor2 text-[1rem]">
+                Select the days you’re available to take the orders and fill in
+                the timings
+              </p>
               {Object.entries(formData.availability).map(
                 ([day, { available }]) => (
-                  <div key={day}>
+                  <div
+                    className="flex border-2 p-3 rounded-lg items-center gap-8"
+                    key={day}
+                  >
                     <input
                       type="checkbox"
                       name={`availability.${day}.available`}
                       checked={available}
                       onChange={handleChange}
+                      style={{ backgroundColor: available ? "orange" : "" }}
                     />
-                    <label>{day}</label>
+                    <label className="text-primary capitalize">{day}</label>
                     {available && (
                       <>
                         {/* Select field for start time */}
                         <select
+                          className="border-2 p-1 rounded-lg text-graycolor2"
                           name={`availability.${day}.startTime`}
                           value={formData.availability[day].startTime}
                           onChange={handleChange}
                         >
-                          <option>Select Start time</option>
+                          <option className="pointer-events-none select-none selec">
+                            Select Start time
+                          </option>
                           {Array.from({ length: 13 }, (_, i) => i + 8).map(
                             (hour) => (
                               <option
+                                className="text-primary "
                                 key={hour}
                                 value={`${hour}:00`}
                               >{`${hour}:00`}</option>
@@ -386,6 +454,7 @@ const Form = () => {
                         </select>
                         {/* Select field for end time */}
                         <select
+                          className="border-2 p-1 rounded-lg text-graycolor2"
                           name={`availability.${day}.endTime`}
                           value={formData.availability[day].endTime}
                           onChange={handleChange}
@@ -394,6 +463,7 @@ const Form = () => {
                           {Array.from({ length: 13 }, (_, i) => i + 9).map(
                             (hour) => (
                               <option
+                                className="text-primary"
                                 key={hour}
                                 value={`${hour}:00`}
                               >{`${hour}:00`}</option>
@@ -408,10 +478,13 @@ const Form = () => {
             </div>
 
             {/* Services */}
-            <div className="flex flex-col w-full gap-1">
+            {/* <div className="flex flex-col gap-5 w-full">
               <Description size={"inputlabel"} text={"Services"} />
               {services.map((service, index) => (
-                <div key={index}>
+                <div
+                  className="flex border-2 p-3 rounded-lg items-center gap-8"
+                  key={index}
+                >
                   <input
                     type="checkbox"
                     name={`services.${index}`}
@@ -426,9 +499,60 @@ const Form = () => {
                       })
                     }
                   />
-                  <label>{service}</label>
+                  <label className="text-primary">{service}</label>
                   {formData.services.some((s) => s.name === service) && (
                     <input
+                      className="border-2 p-1 rounded-lg text-graycolor2"
+                      type="number"
+                      name={`services.${index}.price`}
+                      value={
+                        formData.services.find((s) => s.name === service)
+                          ?.price || ""
+                      }
+                      placeholder="Price"
+                      onChange={(e) =>
+                        handleChange({
+                          target: {
+                            name: `price.${index}`,
+                            value: e.target.value,
+                          },
+                        })
+                      }
+                    />
+                  )}
+                </div>
+              ))}
+            </div> */}
+            <Description size={"inputlabel"} text={"Services"} />
+            <div className="grid grid-cols-2 p- gap-5 w-full">
+              {services.map((service, index) => (
+                <div
+                  className="flex  p-3 rounded-lg items-center gap-8"
+                  key={index}
+                >
+                  <label className="flex  h-fit items-center gap-9 cursor-context-menu">
+                    <input
+                      type="checkbox"
+                      name={`services.${index}`}
+                      checked={formData.services.some(
+                        (s) => s.name === service
+                      )}
+                      onChange={(e) =>
+                        handleChange({
+                          target: {
+                            name: "services",
+                            value: service,
+                            checked: e.target.checked,
+                          },
+                        })
+                      }
+                      className="w-5"
+                    />
+                    <span className="text-primary">{service}</span>
+                  </label>
+                  {formData.services.some((s) => s.name === service) && (
+                    <input
+                      className="border-2 border-secondary p-1 rounded-lg text-graycolor2"
                       type="number"
                       name={`services.${index}.price`}
                       value={
@@ -451,21 +575,22 @@ const Form = () => {
             </div>
 
             {/* Delivery Mode */}
-            <div className="flex flex-col w-full gap-1">
+            <div className="flex items-start flex-col w-full gap-5">
               <Description size={"inputlabel"} text={"Delivery Mode"} />
               {[
                 "Home PickUp",
                 "At Mechanic" /* Add more delivery modes here */,
               ].map((mode, index) => (
-                <div key={index}>
+                <div className="flex items-center gap-10 p-4" key={index}>
                   <input
                     type="checkbox"
                     name={`deliveryMode`}
                     value={mode}
                     checked={formData.deliveryMode.includes(mode)}
                     onChange={handleChange}
+                    className="h-4"
                   />
-                  <label>{mode}</label>
+                  <label className="text-primary">{mode}</label>
                 </div>
               ))}
             </div>

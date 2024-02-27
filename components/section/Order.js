@@ -133,8 +133,8 @@ const Order = () => {
         ))}
       </div>
       {/* <NoOrdersYet /> */}
-      <DateScroll />
-      <RangeBar />
+      {/* <DateScroll /> */}
+      {/* <RangeBar /> */}
     </div>
   );
 };

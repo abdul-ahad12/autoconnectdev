@@ -4,6 +4,7 @@ import OrdersList from "./OrderList";
 import MyProfile from "./MyProfile";
 import MyVehicles from "./MyVehicles";
 import Tab from "./Tab";
+import MyAvailibility from "./MyAvailability";
 
 const Dashboard = () => {
   const [current, setcurrent] = useState("Orders");
@@ -15,10 +16,14 @@ const Dashboard = () => {
     },
     {
       title: "Orders",
-      icons: "/icons/profile.svg",
+      icons: "/icons/orders.svg",
     },
     {
       title: "My Vehicles",
+      icons: "/icons/profile.svg",
+    },
+    {
+      title: "My Availability",
       icons: "/icons/profile.svg",
     },
   ];
@@ -51,6 +56,8 @@ const Dashboard = () => {
           {current == "Orders" && <OrdersList />}
           {current == "My Profile" && <MyProfile />}
           {current == "My Vehicles" && <MyVehicles />}
+          {current == "My Availability" && <MyAvailibility />}
+
           <img
             className="absolute bottom-0 right-[-10%] w-[80%]"
             src="/mechanic/bgmech.svg"
