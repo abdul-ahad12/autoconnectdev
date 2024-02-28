@@ -46,6 +46,7 @@ import ReceiptImg from "../../public/dashboard/Receipt.svg";
 import NoOrdersYet from "./NoOrdersYet";
 import DateScroll from "./DateScroller";
 import RangeBar from "./RangeBar";
+import RequestAdmin from "../admin/RequestAdmin";
 
 const Order = () => {
   const ordersData = [
@@ -71,6 +72,35 @@ const Order = () => {
       orderNumber: "Order #2416",
       dateTime: "Aug 17, 2024, 2:56:31 PM",
       status: "Aug 17, 2023",
+      service: "Mobile mechanic",
+    },
+    // Add data for the remaining orders here...
+  ];
+
+  // request admin array
+  const requestData = [
+    {
+      orderNumber: "Order #2416",
+      dateTime: "Aug 17, 2024, 2:56:31 PM",
+      acmotor: "AC Motor",
+      service: "Mobile mechanic",
+    },
+    {
+      orderNumber: "Order #2416",
+      dateTime: "Aug 17, 2024, 2:56:31 PM",
+      acmotor: "AC Motor",
+      service: "Mobile mechanic",
+    },
+    {
+      orderNumber: "Order #2416",
+      dateTime: "Aug 17, 2024, 2:56:31 PM",
+      acmotor: "AC Motor",
+      service: "Mobile mechanic",
+    },
+    {
+      orderNumber: "Order #2416",
+      dateTime: "Aug 17, 2024, 2:56:31 PM",
+      acmotor: "AC Motor",
       service: "Mobile mechanic",
     },
     // Add data for the remaining orders here...
@@ -135,6 +165,24 @@ const Order = () => {
       {/* <NoOrdersYet /> */}
       {/* <DateScroll /> */}
       {/* <RangeBar /> */}
+      <div className="mt-20">admin component here</div>
+      <div className="grid  grid-cols-4 gap-x-16 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
+        <div>Request ID</div>
+        <div>Mechanic Name</div>
+        <div>Mechanic details</div>
+        <div></div>
+      </div>
+      <div className="flex flex-col gap-9">
+        {requestData.map((order, index) => (
+          <RequestAdmin
+            key={index}
+            acmotors={order.acmotor}
+            orderNumber={order.orderNumber}
+            dateTime={order.dateTime}
+            service={order.service}
+          />
+        ))}
+      </div>
     </div>
   );
 };
@@ -144,7 +192,7 @@ export default Order;
 const OrderItem = ({ orderNumber, dateTime, status, service }) => (
   <div className="grid grid-cols-6  gap-x-12 items-center border-[1px] py-3 px-3 rounded-lg">
     <div className="flex flex-col gap-1">
-      <div className="text-[0.9rem]">{orderNumber}</div>
+      <div className="text-[0.9rem] font-semibold">{orderNumber}</div>
       <div className="text-[0.6rem]">{dateTime}</div>
     </div>
     <button className="text-primary w-fit text-[0.7rem] border-[1px] rounded-md p-1">
