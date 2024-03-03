@@ -1,11 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoDBConnector } from "../../../lib/database";
 import { UserModel, UserRoles } from "../../../lib/models/user";
-import {
-  ApprovalStatus,
-  MechanicRegistrationModel,
-} from "@/lib/models/mechanic/registration";
+
 import { authorize } from "../../../lib/auth"; // Import the authorization middleware
+import { ApprovalStatus, MechanicRegistrationModel } from "lib/models/mechanic/registration";
 
 export default async function handler(
   req: NextApiRequest,

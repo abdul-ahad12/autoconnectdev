@@ -4,18 +4,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { setCookie } from "./cookie";
 dotenv.config();
 
+interface AuthenticatedNextApiRequest extends NextApiRequest {
+  user?: { id: string; role: string }; // Define the user property
+}
+
 const secretToken = process.env.SECRET_TOKEN;
 const accessTokenExpiryTime = process.env.ACCESS_TOKEN_EXPIRY_TIME;
 const refreshTokenExpiryTime = process.env.REFRESH_TOKEN_EXPIRY_TIME;
 
-function sendError(res, msg: string) {
+function sendError(res: NextApiResponse, msg: string) {
   return res.status(403).json({ message: msg });
 }
 
-
-
 async function authorize(
-  req: NextApiRequest,
+  req: AuthenticatedNextApiRequest, // Use the extended interface
   res: NextApiResponse,
   next: () => void
 ) {
@@ -73,7 +75,7 @@ async function authorize(
         } else {
           console.log("in here",decodedToken)
           // Set user information in req.user
-          req["user"] = decodedToken;
+          req.user = decodedToken;
 
           // Access token is valid, continue with the request
           next();
