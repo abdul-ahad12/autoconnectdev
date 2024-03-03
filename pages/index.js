@@ -29,10 +29,10 @@ export default function Home() {
       // };
 
       // Make GET request to the API endpoint with headers
-      const response = await axios.get("/api/auth/getDetailsById", {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true, // Send cookies with the request
-      });
+      // const response = await axios.get("/api/auth/getDetailsById", {
+      //   headers: { "Content-Type": "application/json" },
+      //   withCredentials: true, // Send cookies with the request
+      // });
 
       // Return the user details from the response
       return response.data;
