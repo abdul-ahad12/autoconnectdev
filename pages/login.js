@@ -15,13 +15,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false); // Add loading state
 
-  useEffect(() => {
-    // Check if there is an active session
-    const id = localStorage.getItem("id");
-    if (id!==undefined) {
-      router.push("/"); // Redirect to home page if session exists
-    }
-  }, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;

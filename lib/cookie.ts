@@ -23,7 +23,8 @@ export function setTokensCookies(
     httpOnly: true,
     secure: true,
     sameSite: "strict",
-    maxAge: 60 * 60,
+    maxAge: 60 * 60 * 24 * 7,
+    path: '/', // Set the path to '/'
   });
 
   const refreshCookie = serialize("refresh-token", refreshToken, {
@@ -31,6 +32,7 @@ export function setTokensCookies(
     secure: true,
     sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7,
+    path: '/', // Set the path to '/'
   });
 
   res.setHeader("Set-Cookie", [accessCookie, refreshCookie]);
