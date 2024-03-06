@@ -78,33 +78,7 @@ const Order = ({ bookings }) => {
   ];
 
   // request admin array
-  const requestData = [
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      acmotor: "AC Motor",
-      service: "Mobile mechanic",
-    },
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      acmotor: "AC Motor",
-      service: "Mobile mechanic",
-    },
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      acmotor: "AC Motor",
-      service: "Mobile mechanic",
-    },
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      acmotor: "AC Motor",
-      service: "Mobile mechanic",
-    },
-    // Add data for the remaining orders here...
-  ];
+
   return (
     <div>
       {/* heading */}
@@ -165,8 +139,8 @@ const Order = ({ bookings }) => {
       {/* <NoOrdersYet /> */}
       {/* <DateScroll /> */}
       {/* <RangeBar /> */}
-      <div className="mt-20">admin component here</div>
-      <div className="grid  grid-cols-4 gap-x-16 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
+      {/* <div className="mt-20">admin component here</div> */}
+      {/* <div className="grid  grid-cols-4 gap-x-16 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
         <div>Request ID</div>
         <div>Mechanic Name</div>
         <div>Mechanic details</div>
@@ -182,7 +156,7 @@ const Order = ({ bookings }) => {
             service={order.service}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -199,8 +173,12 @@ const OrderItem = ({ orderNumber, dateTime, status, service }) => (
       Click here
     </button>
     <div className="text-graycolor2 text-[0.7rem]">{dateTime}</div>
-    <button className={`text-primary w-fit ${status ? "bg-green-500" :"bg-[pink]"}  text-[0.7rem] border-[1px] rounded-md p-1`}>
-     {status ? "Done":"Not completed"} 
+    <button
+      className={`text-primary w-fit ${
+        status ? "bg-green-500" : "bg-[pink]"
+      }  text-[0.7rem] border-[1px] rounded-md p-1`}
+    >
+      {status ? "Done" : "Not completed"}
     </button>
     <div className="text-graycolor2 text-[0.8rem]">{service}</div>
     <div className="flex gap-1">
