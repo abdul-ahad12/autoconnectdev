@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import MechanicTop from "@/components/mechanic/MechanicTop";
@@ -9,11 +9,33 @@ import React from "react";
 import { useAuth } from "../../components/context/AuthProvider";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Form = () => {
   const router = useRouter();
-  const { isLoggedIn, userData } = useAuth();
-  console.log(userData);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userID, setuserId] = useState();
+  const [userRole, setUserRole] = useState();
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+
+  console.log(userRole);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Check if access token exists in localStorage
+      const accessToken = localStorage.getItem("accessToken");
+      const id = localStorage.getItem("id");
+      const role = localStorage.getItem("role");
+      setuserId(id);
+      setUserRole(role);
+      setIsLoggedIn(true);
+
+      // setIsLoading(false); // Set isLoading to false after fetching data
+    };
+
+    fetchData();
+  }, []);
+  // console.log(userData);
 
   const services = [
     "Oil Change",
@@ -37,7 +59,7 @@ const Form = () => {
   };
 
   const [formData, setFormData] = useState({
-    user: "65dae2260bff504a1b00d88b",
+    
     name: "",
     aboutus: "",
     address: {
@@ -203,7 +225,6 @@ const Form = () => {
     }
   };
 
-  console.log(formData);
 
   const generateTimings = (day, startTime, endTime) => {
     if (!startTime || !endTime) {
@@ -251,49 +272,46 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/mechanic/registration", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const response = await axios.post("/api/mechanic/registration", formData, {
+        withCredentials: true,
       });
-
-      if (response.ok) {
-        const data = await response.json();
+  
+      if (response.status === 201) {
+        const data = response.data;
         console.log("Registration successful:", data);
-        // Display success popup
-        await Swal.fire({
+  
+        localStorage.setItem("role", "MECHANIC");
+        localStorage.setItem("mechanicId", data.id);
+        router.push("/mechanic/mechanicDashboard");
+  
+        // Show success message using Swal
+        Swal.fire({
           icon: "success",
           title: "Registration Successful",
           text: "Redirecting to Mechanic Dashboard...",
           showConfirmButton: false,
-          timer: 2000, // Adjust the time the popup is displayed (in milliseconds)
+          timer: 2000,
         });
-        router.push("/mechanic/mechanicDashboard");
-        // Redirect or perform any necessary actions upon successful registration
       } else {
-        const errorData = await response.json();
-        console.error("Registration failed:", errorData.message);
-        // Display error popup
-        await Swal.fire({
-          icon: "error",
-          title: "Registration Failed",
-          text: errorData.message,
-        });
-        // Handle registration failure
+        throw new Error("Registration failed");
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      // Display error popup
-      await Swal.fire({
+  
+      let errorMessage = "An error occurred during registration.";
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message;
+      }
+  
+      Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "An unexpected error occurred. Please try again later.",
+        title: "Registration Failed",
+        text: errorMessage,
       });
-      // Handle other errors such as network issues
     }
   };
+  
+  
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -311,7 +329,7 @@ const Form = () => {
             onSubmit={handleSubmit}
           >
             {/* Name */}
-            {/* <div className="flex flex-col w-full gap-1 ">
+            <div className="flex flex-col w-full gap-1 ">
               <Description
                 className="text-primary"
                 size={"inputlabel"}
@@ -323,7 +341,7 @@ const Form = () => {
                 value={formData.name}
                 onChange={handleChange}
               />
-            </div> */}
+            </div>
             {/* About Us */}
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"About Us"} />

@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CusButton from "../section/button";
 import Link from "next/link";
 import { useAuth } from "../context/AuthProvider";
 import { useRouter } from "next/router";
 
 const Navbar = () => {
-  const router=useRouter()
+  const router = useRouter();
   const { isLoggedIn, userData } = useAuth();
+  const [loggedin, setloggedin] = useState(false);
+  useEffect(() => {
+    if (isLoggedIn == true) {
+      setloggedin(true);
+    }
+    setloggedin(false)
+  }, [isLoggedIn]);
+
   const menu = [
     {
       title: "About",
-      href: "#",
+      href: "/aboutus",
     },
     {
       title: "Services",
@@ -39,8 +47,7 @@ const Navbar = () => {
     document.cookie =
       "refresh-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-
-      router.push("/login")
+    router.push("/login");
   };
 
   return (
@@ -70,8 +77,9 @@ const Navbar = () => {
         {/* buttons */}
         {isLoggedIn ? (
           <div className="base:hidden lg:flex gap-6 row-span-full items-center justify-end col-start-1 col-end-13">
-            <div className="cursor-pointer" onClick={handleLogout}>Sign Out</div>
-            {" "}
+            <div className="cursor-pointer" onClick={handleLogout}>
+              Sign Out
+            </div>{" "}
             <CusButton
               type={"primary"}
               text={"Dashboard"}

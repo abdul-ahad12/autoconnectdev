@@ -6,7 +6,7 @@ import MyVehicles from "./MyVehicles";
 import Tab from "./Tab";
 import MyAvailibility from "./MyAvailability";
 
-const Dashboard = () => {
+const Dashboard = ({bookings}) => {
   const [current, setcurrent] = useState("Orders");
 
   const tabs = [
@@ -46,14 +46,14 @@ const Dashboard = () => {
                   state={current}
                 />
               );
-            })}
+            })} 
           </div>
           <CusButton type={"primary"} text={"Sign Out"} />
         </div>
 
         {/* right */}
         <div className="w-[90%] pb-[40vh] relative">
-          {current == "Orders" && <OrdersList />}
+          {current == "Orders" && <OrdersList bookings={bookings} />}
           {current == "My Profile" && <MyProfile />}
           {current == "My Vehicles" && <MyVehicles />}
           {current == "My Availability" && <MyAvailibility />}

@@ -18,6 +18,7 @@ export default async function handler(
   const userAlreadyExists = await dbConnector.find(UserModel, {
     email: user.email,
   });
+  console.log("user details:",userAlreadyExists)
 
   if (!userAlreadyExists) {
     res.status(400).json({ message: "User doesn't exists" });
@@ -32,16 +33,17 @@ export default async function handler(
         return;
       }
       if (result) {
+        console.log(result)
         const { accessToken, refreshToken } = issueToken({
-          id: user._id,
-          role: user.role,
+          id: userAlreadyExists[0]._id,
+          role: userAlreadyExists[0].role,
         });
 
         setCookie(res, "access-token", accessToken, {
-          maxAge: 60 * 60 * 24 * 7,
+          maxAge: 30 * 24 * 60 * 60,
         });
         setCookie(res, "refresh-token", refreshToken, {
-          maxAge: 60 * 60 * 24 * 7,
+          maxAge: 30 * 24 * 60 * 60,
         });
 
         res.status(200).json({ accessToken, refreshToken, user: result });
