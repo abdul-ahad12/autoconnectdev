@@ -9,6 +9,9 @@ import RequestAdmin from "../admin/RequestAdmin";
 import Requests from "../admin/Requests";
 import RequestTabs from "../admin/RequestTabs";
 import MechanicInfo from "../admin/MechanicInfo";
+import MechanicsOrders from "../admin/mechanic/MechanicsOrders";
+import MechanicsDashbord from "../admin/mechanic/MechanicsDashbord";
+import MechanicAdminContainer from "../admin/mechanic/MechanicAdminContaine";
 
 const AdminDashboard = ({ bookings }) => {
   const [current, setcurrent] = useState("Orders");
@@ -59,7 +62,7 @@ const AdminDashboard = ({ bookings }) => {
         <div className="w-[90%] pb-[40vh] relative">
           {current == "Requests" && <RequestTabs bookings={bookings} />}
           {current == "Home" && <MechanicInfo />}
-          {current == "My Vehicles" && <MyVehicles />}
+          {current == "Mechanics" && <MechanicsOrders bookings={bookings} />}
           {current == "My Availability" && <MyAvailibility />}
 
           <img
