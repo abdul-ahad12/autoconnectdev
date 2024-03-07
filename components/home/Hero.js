@@ -5,11 +5,11 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="w-full flex justify-center items-center lg:h-screen">
-      <div className="w-[90%] flex">
+    <div className="w-full flex justify-center items-center  lg:h-screen">
+      <div className="w-[90%] flex lg:flex-row base:flex-col base:gap-20 lg:gap-0">
         {/*  */}
-        <div className="w-[55%] flex flex-col gap-5 justify-center">
-          <div className="font-[Bebas] text-[min(4.5rem,4.5vw)]  text-primary w-[70%] leading-[min(5vw,5rem)]">
+        <div className="lg:w-[55%] flex flex-col gap-5 justify-center">
+          <div className="font-[Bebas] base:text-[min(6vw,25px)] tracking-wide lg:text-[min(4.5rem,4.5vw)] mt-10 lg:mt-1 text-primary lg:w-[70%] lg:leading-[min(5vw,5rem)]">
             Accompany your journey with comfort
           </div>
           <Description
@@ -38,11 +38,14 @@ const Hero = () => {
                 />
               </svg>
             </div>
-           <Link href={"/"}>Learn More</Link>
+            <Link href={"/"}>Learn More</Link>
           </div>
         </div>
-        <div className="w-[45%] flex justify-end">
-          <img className="w-[min(100%,40rem)]" src="/hero/heropic.png" />
+        <div className="w-[100%]  lg:w-[45%] flex justify-start   lg:justify-end">
+          <img
+            className=" base:w-[290px]  lg:w-[min(100%,40rem)]"
+            src="/hero/heropic.png"
+          />
         </div>
       </div>
     </div>

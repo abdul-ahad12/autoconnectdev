@@ -47,12 +47,20 @@ const FAQ = () => {
         <Accordion
           type="single"
           collapsible
-          className="w-[80%] bg-customwhite px-3 rounded-lg my-16"
+          className="base:w-[90%] flex flex-col text-start base:gap-5 lg:gap-10 lg:w-[80%]    rounded-lg my-16"
         >
           {content.map((data, idx) => (
-            <AccordionItem key={idx} value={`item-${idx + 1}`}>
-              <AccordionTrigger className="text-[1.2rem] font-medium">{data.question}</AccordionTrigger>
-              <AccordionContent className="text-graycolor2 text-[0.8rem]">{data.answer}</AccordionContent>
+            <AccordionItem
+              className="bg-customwhite base:px-3 lg:px-10 rounded-lg"
+              key={idx}
+              value={`item-${idx + 1}`}
+            >
+              <AccordionTrigger className="base:text-[1rem] lg:text-[1.2rem] font-medium">
+                {data.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-graycolor2 lg:text-[0.9rem] tracking-wide">
+                {data.answer}
+              </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
