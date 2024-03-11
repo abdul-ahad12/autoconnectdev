@@ -12,6 +12,10 @@ import MechanicInfo from "../admin/MechanicInfo";
 import MechanicsOrders from "../admin/mechanic/MechanicsOrders";
 import MechanicsDashbord from "../admin/mechanic/MechanicsDashbord";
 import MechanicAdminContainer from "../admin/mechanic/MechanicAdminContaine";
+import MechanicsACOrders from "../admin/mechanic/MechanicsACOrders";
+import Order from "./Order";
+import MechanicHome from "../admin/MechanicHome";
+import MechanicsUser from "../admin/MechanicsUser";
 
 const AdminDashboard = ({ bookings }) => {
   const [current, setcurrent] = useState("Orders");
@@ -31,6 +35,10 @@ const AdminDashboard = ({ bookings }) => {
     },
     {
       title: "Users",
+      icons: "/icons/orders.svg",
+    },
+    {
+      title: "Orders",
       icons: "/icons/orders.svg",
     },
   ];
@@ -61,9 +69,11 @@ const AdminDashboard = ({ bookings }) => {
         {/* right */}
         <div className="w-[90%] pb-[40vh] relative">
           {current == "Requests" && <RequestTabs bookings={bookings} />}
-          {current == "Home" && <MechanicInfo />}
-          {current == "Mechanics" && <MechanicsOrders bookings={bookings} />}
+          {current == "Home" && <MechanicHome />}
+          {current == "Mechanics" && <MechanicsACOrders />}
           {current == "My Availability" && <MyAvailibility />}
+          {current == "Orders" && <OrdersList bookings={bookings} />}
+          {current == "Users" && <MechanicsUser />}
 
           <img
             className="absolute bottom-0 right-[-10%] w-[80%]"

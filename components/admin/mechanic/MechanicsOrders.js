@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/common/Tabs";
+import MechanicsACOrders from "./MechanicsACOrders";
 
 const MechanicsOrders = ({ bookings }) => {
   return (
@@ -21,7 +22,6 @@ const MechanicsOrders = ({ bookings }) => {
           <TabsContent value="new">
             {/* <Order bookings={bookings} /> */}
             {/* <Requests bookings={bookings} /> */}
-            <MechanicsOrders />
           </TabsContent>
           <TabsContent aria-disabled value="password">
             get
