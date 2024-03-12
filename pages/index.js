@@ -17,47 +17,7 @@ import axios from "axios";
 
 export default function Home() {
   // Function to fetch user details by ID
-  const fetchUserDetailsById = async () => {
-    try {
-      // Retrieve access token from cookies
 
-
-
-      // Set up headers with the access token
-      // const headers = {
-      //   Authorization: `Bearer ${accessToken}`,
-      // };
-
-      // Make GET request to the API endpoint with headers
-      // const response = await axios.get("/api/auth/getDetailsById", {
-      //   headers: { "Content-Type": "application/json" },
-      //   withCredentials: true, // Send cookies with the request
-      // });
-
-      // Return the user details from the response
-      return response.data;
-    } catch (error) {
-      // Handle errors
-      console.error("Error fetching user details:", error);
-      throw error; // Optionally, you can handle errors differently or return a default value
-    }
-  };
-
-  useEffect(() => {
-    
-
-    return () => {
-      fetchUserDetailsById()
-        .then((userDetails) => {
-          console.log("User details:", userDetails);
-          // Do something with the user details
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          // Handle errors
-        });
-    };
-  }, []);
 
   // Usage example
 

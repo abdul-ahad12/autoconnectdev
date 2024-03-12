@@ -3,7 +3,10 @@ import { MongoDBConnector } from "../../../lib/database";
 import { UserModel, UserRoles } from "../../../lib/models/user";
 
 import { authorize } from "../../../lib/auth"; // Import the authorization middleware
-import { ApprovalStatus, MechanicRegistrationModel } from "lib/models/mechanic/registration";
+import {
+  ApprovalStatus,
+  MechanicRegistrationModel,
+} from "lib/models/mechanic/registration";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +18,7 @@ export default async function handler(
       const dbConnector = new MongoDBConnector();
       const user = req["user"]; // Extract user ID from the authorization middleware
 
-console.log("IN HERE",user)
+      console.log("IN HERE", user);
       const {
         address,
         googleMapsLocation,
@@ -24,8 +27,8 @@ console.log("IN HERE",user)
         services,
         aboutus,
         name,
+        deliveryMode,
       } = req.body;
-
 
       // Check if the user exists
       const userFromDb = await dbConnector.findById(UserModel, user.id);
@@ -57,11 +60,12 @@ console.log("IN HERE",user)
         approvalStatus: ApprovalStatus.PENDING,
         availability,
         services,
+        deliveryMode,
       });
 
       // Save the MechanicRegistration document
       const registeredMechanic = await mechanicRegistration.save();
-      console.log(registeredMechanic)
+      console.log(registeredMechanic);
 
       // Update user role to MECHANIC
       userFromDb.role = UserRoles.MECHANIC;

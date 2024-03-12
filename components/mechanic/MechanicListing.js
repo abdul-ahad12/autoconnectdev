@@ -6,7 +6,6 @@ import RangeBar from "../section/RangeBar";
 import { useAuth } from "../context/AuthProvider";
 
 const MechanicListing = ({ mechanics }) => {
-
   const [modalstate, setmodalstate] = useState(false);
   const [modalContent, setModalContent] = useState();
   const content = [
@@ -22,17 +21,23 @@ const MechanicListing = ({ mechanics }) => {
         <RangeBar />
       </div>
       <div className=" col-start-4 ml-7 col-end-13 row-span-full grid grid-cols-2 gap-3">
-        {mechanics.map((data, idx) => (
-          <div
-            onClick={() => {
-              setModalContent(data);
-              setmodalstate(true);
-            }}
-            key={idx}
-          >
-            <SingleCard data={data} />
+        {mechanics.length > 0 ? (
+          mechanics.map((data, idx) => (
+            <div
+              onClick={() => {
+                setModalContent(data);
+                setmodalstate(true);
+              }}
+              key={idx}
+            >
+              <SingleCard data={data} />
+            </div>
+          ))
+        ) : (
+          <div className="flex justify-center w-full pt-[5rem]">
+            No mechanics found
           </div>
-        ))}
+        )}
       </div>
       {modalstate && (
         <Modal modalContent={modalContent} setmodalstate={setmodalstate} />
@@ -44,29 +49,6 @@ const MechanicListing = ({ mechanics }) => {
 export default MechanicListing;
 
 const Modal = ({ setmodalstate, modalContent }) => {
-  const [userID, setuserId] = useState();
-  const [userRole, setUserRole] = useState();
-  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
-
-  console.log(userRole);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // Check if access token exists in localStorage
-      const accessToken = localStorage.getItem("accessToken");
-      const id = localStorage.getItem("id");
-      const role = localStorage.getItem("role");
-      setuserId(id);
-      setUserRole(role);
-      // setIsLoggedIn(true);
-
-      // setIsLoading(false); // Set isLoading to false after fetching data
-    };
-
-    fetchData();
-  }, []);
-  console.log(modalContent)
-
   const daysOfWeek = Object.keys(modalContent.availability);
 
   console.log(daysOfWeek);

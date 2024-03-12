@@ -124,7 +124,7 @@ const Form = () => {
     services: [],
     deliveryMode: [],
   });
-
+console.log(formData)
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
     if (name.startsWith("deliveryMode")) {
@@ -596,8 +596,8 @@ const Form = () => {
             <div className="flex items-start flex-col w-full gap-5">
               <Description size={"inputlabel"} text={"Delivery Mode"} />
               {[
-                "Home PickUp",
-                "At Mechanic" /* Add more delivery modes here */,
+                "TO_MECHANIC",
+                "TO_CUSTOMER" /* Add more delivery modes here */,
               ].map((mode, index) => (
                 <div className="flex items-center gap-10 p-4" key={index}>
                   <input
