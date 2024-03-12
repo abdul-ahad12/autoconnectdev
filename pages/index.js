@@ -9,7 +9,7 @@ import YouLiveUs from "@/components/home/YouLiveUs";
 import Hero from "@/components/home/Hero";
 import Form from "@/components/home/Form";
 import Footer from "@/components/layout/Footer";
-import { parseCookies } from "nookies";
+// import { parseCookies } from "nookies";
 import { useEffect } from "react";
 import axios from "axios";
 

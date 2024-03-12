@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import Order from "./Order";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/common/Tabs";
-import axios from "axios";
+import React from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/common/Tabs";
+import MechanicsACOrders from "./MechanicsACOrders";
 
-const OrdersList = ({ bookings }) => {
+const MechanicsOrders = ({ bookings }) => {
   return (
-    <div className="w-full flex justify-center">
+    <div>
       <div className="w-[80%] flex-col flex gap-5">
-        <Tabs defaultValue="account" className=" ">
+        <Tabs defaultValue="new" className=" ">
           <TabsList className="flex gap-3 items justify-start w-full bg-graycolor py-6 px-3 items-center    border-b-2 rounded-none">
             <TabsTrigger
-              value="account"
+              value="new"
               className="w-[100px] data-[state=active]:bg-graycolor "
             >
               {" "}
-              All Orders
+              New
             </TabsTrigger>
-            <TabsTrigger disabled className="w-[100px] " value="password">
+            <TabsTrigger disabled className="w-[100px]" value="password">
               Customs
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="account">
-            <Order bookings={bookings} />
+          <TabsContent value="new">
+            {/* <Order bookings={bookings} /> */}
+            {/* <Requests bookings={bookings} /> */}
           </TabsContent>
           <TabsContent aria-disabled value="password">
             get
@@ -35,4 +35,4 @@ const OrdersList = ({ bookings }) => {
   );
 };
 
-export default OrdersList;
+export default MechanicsOrders;

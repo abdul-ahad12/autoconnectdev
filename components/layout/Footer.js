@@ -116,7 +116,7 @@ const Footer = () => {
           Auto<span className="text-secondary">connect</span>
         </div>
         {/*  */}
-        <div className=" grid text-customwhite  grid-cols-[1fr_1fr_1fr_1fr_1.3fr] gap-6">
+        <div className=" grid text-customwhite base:grid-cols-1 gap-y-10 lg:gap-y-0  lg:grid-cols-[1fr_1fr_1fr_1fr_1.3fr] lg:gap-6">
           {navigationlinks.map((data, idx) => (
             <div key={idx} className="flex flex-col gap-2">
               <div className="font-semibold">{data.title}</div>

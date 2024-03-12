@@ -29,9 +29,9 @@ const Form = () => {
   };
 
   return (
-    <div className="w-full flex justify-center pt-[-10vh] pb-[10vh]">
-      <div className="rounded-full w-[70%] bg-customwhite flex justify-center py-5 shadow-lg max-w-[1100px]">
-        <div className="w-[80%] grid grid-cols-4 gap-6">
+    <div className="w-full flex justify-center py-10 lg:pt-[-10vh] lg:pb-[10vh]">
+      <div className=" base:w-[90%] rounded-xl lg:rounded-full lg:w-[70%] bg-customwhite flex justify-center py-5 shadow-lg max-w-[1100px]">
+        <div className="base:w-[90%] lg:w-[80%] grid lg:grid-cols-4 gap-6">
           {/* location */}
           <div className="flex flex-col gap-1">
             <Description text={"City"} />

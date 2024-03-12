@@ -58,7 +58,7 @@ const CarServices = () => {
 
   return (
     <div className="w-full flex justify-center items-center flex-col py-8">
-      <div className="w-[90%] flex justify-center">
+      <div className="  w-[90%] flex items-center justify-center">
         <TitleDesc
           title={"Car Services"}
           titleColor={"We Provide"}
@@ -82,7 +82,7 @@ const CarServices = () => {
         })}
       </div>
       {/* bottom section */}
-      <div className="mb-4 text-graycolor2 text-[1.3rem]">
+      <div className="mb-4 text-graycolor2 text-center lg:text-[1.3rem]">
         {" "}
         Our experienced technicians provide reliable and consistent service for
         all your auto repair needs.
