@@ -616,10 +616,10 @@ console.log(formData)
             {/* Submit button */}
             <button type="submit">Submit</button>
           </form>
-          {/* Footer */}
-          <Footer />
         </div>
       </div>
+          {/* Footer */}
+          <Footer />
     </div>
   );
 };
