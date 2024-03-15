@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 
-const RangeBar = () => {
-  const [value, setValue] = useState(15); // Default value changed to 15
-  console.log(value);
-
-  const handleChange = (event) => {
-    setValue(parseInt(event.target.value));
+const RangeBar = ({
+  mechanics,
+  location,
+  setLocation,
+  toMechanic,
+  setToMechanic,
+  toCustomer,
+  setToCustomer,
+  handleClick
+}) => {
+  const handleChangeLocation = (event) => {
+    setLocation(event.target.value); // Update location state
   };
 
-  const handleSnapToValue = (snapValue) => {
-    setValue(snapValue);
+  const handleChangeToMechanic = () => {
+    setToMechanic(!toMechanic); // Toggle TO_MECHANIC checkbox state
   };
 
-  const getRangeColor = () => {
-    if (value <= 10) {
-      return "bg-red-";
-    } else if (value <= 20) {
-      return "bg-orange-";
-    } else {
-      return "bg-green-50";
-    }
+  const handleChangeToCustomer = () => {
+    setToCustomer(!toCustomer); // Toggle TO_CUSTOMER checkbox state
   };
 
   return (
@@ -32,7 +32,53 @@ const RangeBar = () => {
         <div className="text-graycolor2">Distance near you</div>
       </div>
 
-      <div className=" bottom-0 left-0 w-full flex flex-col justify-between text-sm text-graycolor2">
+      {/* Location input */}
+      <div className="flex flex-col">
+        <label htmlFor="location">Location</label>
+        <input
+          id="location"
+          type="text"
+          value={location}
+          onChange={handleChangeLocation}
+          placeholder="Enter location"
+        />
+      </div>
+
+      {/* Checkboxes for delivery mode */}
+      {/* <div className="flex flex-col gap-4">
+        <div>
+          {" "}
+          <label htmlFor="toMechanic">To Mechanic</label>
+          <input
+            id="toMechanic"
+            type="checkbox"
+            checked={toMechanic}
+            onChange={handleChangeToMechanic}
+          />
+        </div>
+        <div>
+          {" "}
+          <label htmlFor="toCustomer">To Customer</label>
+          <input
+            id="toCustomer"
+            type="checkbox"
+            checked={toCustomer}
+            onChange={handleChangeToCustomer}
+          />
+        </div>
+      </div> */}
+
+      {/* Button */}
+      <button className="btn-primary" onClick={handleClick}>
+        Apply Filters
+      </button>
+    </div>
+  );
+};
+
+export default RangeBar;
+{
+  /* <div className=" bottom-0 left-0 w-full flex flex-col justify-between text-sm text-graycolor2">
         <input
           type="range"
           min="10"
@@ -80,9 +126,5 @@ const RangeBar = () => {
             35KM
           </div>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default RangeBar;
+      </div> */
+}

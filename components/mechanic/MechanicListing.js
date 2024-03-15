@@ -5,7 +5,16 @@ import { CheckboxDemo } from "../ui/common/CheckboxDemo";
 import RangeBar from "../section/RangeBar";
 import { useAuth } from "../context/AuthProvider";
 
-const MechanicListing = ({ mechanics }) => {
+const MechanicListing = ({
+  mechanics,
+  location,
+  setLocation,
+  toMechanic,
+  setToMechanic,
+  toCustomer,
+  setToCustomer,
+  handleClick
+}) => {
   const [modalstate, setmodalstate] = useState(false);
   const [modalContent, setModalContent] = useState();
   const content = [
@@ -18,7 +27,15 @@ const MechanicListing = ({ mechanics }) => {
   return (
     <div className="w-full grid grid-cols-12 gap-9   py-[2rem]">
       <div className="col-start-1  col-end-4 h-fit p-6 row-span-full  rounded-[2rem] bg-customwhite left-[5%] top-0   py-20">
-        <RangeBar />
+        <RangeBar
+          location={location}
+          setLocation={setLocation}
+          toMechanic={toMechanic}
+          setToMechanic={setToMechanic}
+          toCustomer={toCustomer}
+          setToCustomer={setToCustomer}
+          handleClick={handleClick}
+        />
       </div>
       <div className=" col-start-4 ml-7 col-end-13 row-span-full grid grid-cols-2 gap-3">
         {mechanics.length > 0 ? (
@@ -164,7 +181,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
           <div className="w-full flex justify-end py-7">
             <CusButton
               text={"Book Now"}
-              href={`/bookmechanic?mechanicId=${modalContent?._id}&customerId=${userID}`}
+              href={`/bookmechanic?mechanicId=${modalContent?._id}`}
               type={"primary"}
             />
           </div>

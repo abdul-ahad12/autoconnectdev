@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Order = ({ bookings }) => {
   const ordersData = [
@@ -28,6 +28,32 @@ const Order = ({ bookings }) => {
     },
     // Add data for the remaining orders here...
   ];
+  const [orders, setOrders] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchOrders() {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          `/api/admin/getAllOrders?page=${currentPage}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+        const data = await response.json();
+        setOrders(data.orders);
+        setTotalCount(data.totalCount);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    }
+
+    fetchOrders();
+  }, [currentPage]);
 
   // request admin array
 
@@ -78,15 +104,16 @@ const Order = ({ bookings }) => {
         <div>Action</div>
       </div>
       <div className="flex flex-col gap-9">
-        {bookings?.map((order, index) => (
-          <OrderItem
-            key={index}
-            orderNumber={order?._id.slice(0, 4)}
-            dateTime={order?.timeSlots?.date}
-            status={order?.isCompleted}
-            service={order.services[0]}
-          />
-        ))}
+        {orders &&
+          orders?.map((order, index) => (
+            <OrderItem
+              // key={index}
+              // orderNumber={order?._id.slice(0, 4)}
+              // dateTime={order?.timeSlots?.date}
+              // status={order?.isCompleted}
+              // service={order.services[0]}
+            />
+          ))}
       </div>
       {/* <NoOrdersYet /> */}
       {/* <DateScroll /> */}

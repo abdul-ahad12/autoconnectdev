@@ -22,7 +22,7 @@ const Form = () => {
     }
 
     // Construct query string
-    const queryString = `?postalCode=${postalCode}`;
+    const queryString = `?location=${city}`;
 
     // Navigate to "/service" route with query string
     router.push(`/services${queryString}`);

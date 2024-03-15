@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const RequestAdmin = ({ orderNumber, dateTime, acmotors }) => {
+const RequestAdmin = ({ orderNumber, dateTime, acmotors,index }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleButtonClick = () => {
@@ -14,7 +14,7 @@ const RequestAdmin = ({ orderNumber, dateTime, acmotors }) => {
   return (
     <div className="grid grid-cols-4 gap-x-16 items-center border-[1px] py-3 px-3 rounded-lg">
       <div className="flex flex-col gap-1">
-        <div className="text-[0.9rem] font-semibold">{orderNumber}</div>
+        <div className="text-[0.9rem] font-semibold">#0{index}</div>
         <div className="text-[0.6rem]">{dateTime}</div>
       </div>
       <button className="text-primary w-fit text-[1rem] rounded-md font-semibold">

@@ -6,10 +6,41 @@ import MechanicListing from "@/components/mechanic/MechanicListing";
 import MechanicTop from "@/components/mechanic/MechanicTop";
 import React from "react";
 import axios from "axios";
+import { useLayoutEffect } from "react";
 
 const Mechanic = () => {
   const router = useRouter();
   const [query, setQuery] = useState({});
+  const [location, setLocation] = useState(""); // State for location input
+  const [toMechanic, setToMechanic] = useState(true); // State for TO_MECHANIC checkbox
+  const [toCustomer, setToCustomer] = useState(false); // State for TO_CUSTOMER checkbox
+
+  const handleClick = async () => {
+    try {
+      // Construct the query parameters based on the current state
+      const queryParams = {
+        selectedServices: query.selectedServices.join(","),
+        location: location,
+        deliveryMode: [],
+        page: 1,
+        limit: 10,
+      };
+
+      // Add selected delivery modes to the query parameters array
+      if (toMechanic) queryParams.deliveryMode.push("TO_MECHANIC");
+      if (toCustomer) queryParams.deliveryMode.push("TO_CUSTOMER");
+
+      // Make GET request to fetch mechanics with updated filters
+      const response = await axios.get("/api/customer/findallmechanics", {
+        params: queryParams,
+      });
+
+      // Update the mechanics state with the new data
+      setMechanics(response.data.mechanics);
+    } catch (error) {
+      console.error("Error applying filters:", error);
+    }
+  };
 
   useEffect(() => {
     // Get query parameters from the router
@@ -30,12 +61,10 @@ const Mechanic = () => {
 
   console.log(mechanics);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log(query);
     // Extract query parameters
-    const pinCode = query?.location?.postalCode
-      ? query?.location?.postalCode
-      : "";
+    const location = query?.location?.location ? query?.location?.location : "";
     const selectedServices = query.selectedServices;
 
     // Function to fetch mechanics data
@@ -44,8 +73,9 @@ const Mechanic = () => {
         // Make GET request to your API endpoint
         const response = await axios.get("/api/customer/findallmechanics", {
           params: {
-            pinCode: pinCode,
+            location: location,
             services: selectedServices.join(","), // Join array of services into a comma-separated string
+            // deliveryMode: JSON.stringify(["TO_MECHANIC"]),
             page: 1, // Specify the page number
             limit: 10, // Specify the limit
           },
@@ -77,7 +107,16 @@ const Mechanic = () => {
           titleColor={"3 EASY STEPS!"}
           services={query?.selectedServices}
         />
-        <MechanicListing mechanics={mechanics} />
+        <MechanicListing
+          location={location}
+          setLocation={setLocation}
+          toMechanic={toMechanic}
+          setToMechanic={setToMechanic}
+          toCustomer={toCustomer}
+          setToCustomer={setToCustomer}
+          mechanics={mechanics}
+          handleClick={handleClick}
+        />
       </div>
       <Footer />
     </div>

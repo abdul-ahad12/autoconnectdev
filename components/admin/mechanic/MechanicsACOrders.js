@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MechanicsDashbord from "./MechanicsDashbord";
 
 const MechanicsACOrders = () => {
@@ -19,6 +19,33 @@ const MechanicsACOrders = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
+  const [approvedMechanics, setApprovedMechanics] = useState([]);
+  console.log(approvedMechanics);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchApprovedMechanics() {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          `/api/admin/getAllApprovedMechanics?page=${currentPage}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch approved mechanics");
+        }
+        const data = await response.json();
+        setApprovedMechanics(data.approvedMechanics);
+        setTotalCount(data.totalCount);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching approved mechanics:", error);
+      }
+    }
+
+    fetchApprovedMechanics();
+  }, [currentPage]);
+
   const itemsPerPage = 6;
   const totalPages = Math.ceil(mechanicsData.length / itemsPerPage);
 

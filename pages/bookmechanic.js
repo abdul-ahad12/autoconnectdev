@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const Bookmechanic = () => {
-  const [mechanicData, setMechanicData] = useState(null);
+  const [mechanicData, setMechanicData] = useState();
   const [selectedTime, setSelectedTime] = useState();
   const [selectedMode, setSelectedMode] = useState("TO_MECHANIC");
   const [customNote, setcustomNote] = useState();
@@ -23,7 +23,8 @@ const Bookmechanic = () => {
 
   const [selectedDay, setSelectedDay] = useState();
   // console.log(selectedTime);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState();
+  console.log(userData);
   const [timings, setTimings] = useState();
   const [display, setDisplay] = useState(false);
   // console.log(timings);
@@ -55,16 +56,16 @@ const Bookmechanic = () => {
 
   // Get mechanicId and customerId from query string
   const mechanicId = router.query.mechanicId;
-  const customerId = router.query.customerId;
+  // const customerId = router.query.customerId;
   const services = router.query.services;
 
   useEffect(() => {
-    console.log(mechanicId, customerId);
-    if (customerId !== undefined) {
-      console.log(customerId);
+    if (mechanicId !== undefined) {
       const fetchUserData = async () => {
         try {
-          const response = await axios.get(`/api/customer/${customerId}`);
+          const response = await axios.get(`/api/customer`, {
+            withCredentials: true,
+          });
           setUserData(response.data.user);
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -77,8 +78,13 @@ const Bookmechanic = () => {
       const fetchMechanicData = async () => {
         try {
           const response = await axios.get(`/api/mechanic/${mechanicId}`);
-          setMechanicData(response.data.mechanic);
-          setdaysofweek(Object.keys(mechanicData?.availability));
+          if (response) {
+            setMechanicData(response.data.mechanic);
+            const daysOfWeek = Object.keys(
+              response.data.mechanic?.availability
+            );
+            setdaysofweek(daysOfWeek); // Set days of week directly here
+          }
         } catch (error) {
           console.error("Error fetching mechanic data:", error);
         }
@@ -86,7 +92,7 @@ const Bookmechanic = () => {
       fetchMechanicData();
       setDisplay(true);
     }
-  }, [customerId, mechanicId,display,userData]);
+  }, [mechanicId]); // Add mechanicId and customerId to the dependency array
 
   const typeofdelivery = [
     {
@@ -108,7 +114,6 @@ const Bookmechanic = () => {
   const handleSubmit = async () => {
     try {
       const obj = {
-        userId: customerId,
         mechanicId: mechanicId,
         timeSlots: {
           date: mechanicData.availability[selectedDay].date,
@@ -131,7 +136,7 @@ const Bookmechanic = () => {
         text: "Your booking has been created successfully!",
       });
 
-      router.push("/customerDashboard")
+      router.push("/customerDashboard");
 
       // Handle success, redirect, or any other action
     } catch (error) {
@@ -200,7 +205,7 @@ const Bookmechanic = () => {
                         if (mechanicData?.availability[day].available) {
                           // Do something when the day is available and clicked
                           setSelectedDay(day);
-                          setTimings(mechanicData?.availability[day]?.timings);
+                          setTimings(mechanicData?.availability[day]?.timings); // Set timings here
                         }
                       }}
                     >

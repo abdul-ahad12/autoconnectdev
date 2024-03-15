@@ -54,10 +54,37 @@
 
 // export default Requests;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RequestAdmin from "./RequestAdmin";
 
 const Requests = () => {
+  const [mechanics, setMechanics] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    async function fetchMechanics() {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          `/api/admin/getAllMechanicsForApproval?page=${currentPage}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch mechanics");
+        }
+        const data = await response.json();
+        setMechanics(data.mechanics);
+        setTotalCount(data.totalCount);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching mechanics:", error);
+      }
+    }
+
+    fetchMechanics();
+  }, [currentPage]);
+
   const requestData = [
     {
       orderNumber: "Request #2416",
@@ -110,9 +137,8 @@ const Requests = () => {
     // Add data for the remaining orders here...
   ];
 
-  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
-  const totalPages = Math.ceil(requestData.length / itemsPerPage);
+  const totalPages = Math.ceil(mechanics.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -135,15 +161,18 @@ const Requests = () => {
         <div></div>
       </div>
       <div className="flex flex-col gap-6">
-        {currentData.map((order, index) => (
-          <RequestAdmin
-            key={index}
-            acmotors={order.acmotor}
-            orderNumber={order.orderNumber}
-            dateTime={order.dateTime}
-            service={order.service}
-          />
-        ))}
+        {mechanics &&
+          mechanics.map((order, index) => (
+            <div key={index}>
+              <RequestAdmin
+                index={index}
+                acmotors={order.acmotor}
+                orderNumber={order.orderNumber}
+                dateTime={order.dateTime}
+                service={order.service}
+              />
+            </div>
+          ))}
       </div>
       <div className="flex justify-between mt-4">
         <button onClick={prevPage} disabled={currentPage === 1}>

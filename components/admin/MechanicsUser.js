@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const MechanicsUser = () => {
   const user = {
@@ -6,6 +6,32 @@ const MechanicsUser = () => {
     email: "john@example.com",
     role: "mechanic",
   };
+  const [users, setUsers] = useState([]);
+  console.log(users)
+  const [totalCount, setTotalCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`/api/admin/getAllUsers?page=${currentPage}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+        const data = await response.json();
+        setUsers(data.users);
+        setTotalCount(data.totalCount);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    }
+
+    fetchUsers();
+  }, [currentPage]);
+
 
   return (
     <div>
