@@ -19,7 +19,7 @@ const Mechanic = () => {
     try {
       // Construct the query parameters based on the current state
       const queryParams = {
-        selectedServices: query.selectedServices.join(","),
+        services: query.selectedServices.join(","),
         location: location,
         deliveryMode: [],
         page: 1,
@@ -116,6 +116,7 @@ const Mechanic = () => {
           setToCustomer={setToCustomer}
           mechanics={mechanics}
           handleClick={handleClick}
+          selectedServices={query.selectedServices}
         />
       </div>
       <Footer />

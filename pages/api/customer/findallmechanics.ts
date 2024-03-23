@@ -5,16 +5,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
+  console.log(req.query)
   try {
     const {
       location,
-      services,
+      services: rawServices,
       deliveryMode,
       page: rawPage,
       limit: rawLimit,
     } = req.query;
 
- console.log(req.query)
+
+    // Parse services into an array if it's a string with commas
+    const services = Array.isArray(rawServices)
+      ? rawServices
+      : rawServices.split(",").map((service) => service.trim());
+
+
+console.log(services)
+
     // Parse query parameters
     const city = location;
     const page = parseInt(rawPage as string) || 1;
@@ -32,10 +42,10 @@ export default async function handler(
     const query: any = {};
 
     // Add services criteria if provided
-    if (services) {
+    if (services.length > 0) {
       query.services = {
         $elemMatch: {
-          name: { $in: Array.isArray(services) ? services : [services] },
+          name: { $in: services },
         },
       };
     }

@@ -59,6 +59,7 @@ import RequestAdmin from "./RequestAdmin";
 
 const Requests = () => {
   const [mechanics, setMechanics] = useState([]);
+  console.log(mechanics)
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -166,10 +167,11 @@ const Requests = () => {
             <div key={index}>
               <RequestAdmin
                 index={index}
-                acmotors={order.acmotor}
+                acmotors={order.name}
                 orderNumber={order.orderNumber}
                 dateTime={order.dateTime}
                 service={order.service}
+                mechanicid={order._id}
               />
             </div>
           ))}

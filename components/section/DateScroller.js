@@ -1,181 +1,146 @@
-// import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-// function DateScroll() {
-//   // Get today's date
-//   const today = new Date();
+const MechanicAvailability = ({ mechanicId }) => {
+  const [availability, setAvailability] = useState({});
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [updatedAvailability, setUpdatedAvailability] = useState(null);
+  const [orderedDaysOfWeek, setOrderedDaysOfWeek] = useState([]);
 
-//   // Calculate yesterday and upcoming 5 days
-//   const yesterday = new Date(today);
-//   yesterday.setDate(yesterday.getDate() - 1);
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      try {
+        const response = await axios.get(`/api/mechanic/getSingleMechanic`, {
+          withCredentials: true,
+        });
 
-//   const upcomingDates = [];
-//   for (let i = 1; i <= 5; i++) {
-//     const date = new Date(today);
-//     date.setDate(today.getDate() + i);
-//     upcomingDates.push(date);
-//   }
+        setAvailability(response.data.mechanic.availability);
+      } catch (error) {
+        console.error("Error fetching mechanic availability:", error);
+      }
+    };
 
-//   // State for displayed dates
-//   const [displayedDates, setDisplayedDates] = useState([
-//     yesterday,
-//     today,
-//     ...upcomingDates,
-//   ]);
+    fetchAvailability();
+  }, [mechanicId]);
 
-//   // Function to shift displayed dates to the left
-//   const shiftLeft = () => {
-//     const newDates = [...displayedDates];
-//     newDates.pop(); // Remove the last date
-//     newDates.unshift(new Date(newDates[0].getTime() - 24 * 60 * 60 * 1000)); // Add a new date at the beginning
-//     setDisplayedDates(newDates);
-//   };
+  // Default to today's day
+  useEffect(() => {
+    const daysOfWeek = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+    ];
+    const today = new Date();
+    const dayOfWeekIndex = today.getDay(); // Returns 0 for Sunday, 1 for Monday, etc.
+    const todayDay = daysOfWeek[dayOfWeekIndex];
+    setSelectedDay(todayDay);
 
-//   // Function to shift displayed dates to the right
-//   const shiftRight = () => {
-//     const newDates = [...displayedDates];
-//     newDates.shift(); // Remove the first date
-//     newDates.push(
-//       new Date(newDates[newDates.length - 1].getTime() + 24 * 60 * 60 * 1000)
-//     ); // Add a new date at the end
-//     setDisplayedDates(newDates);
-//   };
+    // Reorder days of the week array based on today's index
+    const reorderedDaysOfWeek = [
+      ...daysOfWeek.slice(dayOfWeekIndex),
+      ...daysOfWeek.slice(0, dayOfWeekIndex),
+    ];
 
-//   return (
-//     <div className="flex items-center gap-5">
-//       {/* Left button */}
-//       <button
-//         className="bg-graycolor rounded-full  text-black  font-bold w-10 h-10"
-//         onClick={shiftLeft}
-//       >
-//         &#x2190;
-//       </button>
+    setOrderedDaysOfWeek(reorderedDaysOfWeek);
+  }, []);
 
-//       {/* Displayed dates */}
-//       <div className="flex border-[1px] border-graycolor rounded-lg">
-//         {displayedDates.map((date) => (
-//           <div
-//             key={date.toISOString()}
-//             className="border p-8 items-center flex flex-col  border-gray-300 rounded-lg m-2 "
-//           >
-//             <div className="font-normal text-graycolor2">
-//               {date.toLocaleString("default", { weekday: "short" })}
-//             </div>
-//             <div className="text-[1.5rem] ">{date.getDate()}</div>
-//           </div>
-//         ))}
-//       </div>
+  const handleDayClick = (day) => {
+    // Handle click on a specific day
+    setSelectedDay(day);
+  };
 
-//       {/* Right button */}
-//       <button
-//         className="bg-graycolor  rounded-full  text-black font-bold w-10 h-10"
-//         onClick={shiftRight}
-//       >
-//         &#x2192;
-//       </button>
-//     </div>
-//   );
-// }
+  // Update availability status for the selected time slot
+  const updateTimeSlotAvailability = (timeSlot) => {
+    const updatedAvailability = { ...availability };
+    const updatedTimings = [...updatedAvailability[selectedDay].timings];
 
-// export default DateScroll;
+    if (updatedTimings.includes(timeSlot)) {
+      // Remove the time slot
+      const index = updatedTimings.indexOf(timeSlot);
+      updatedTimings.splice(index, 1);
+    } else {
+      // Add the time slot
+      updatedTimings.push(timeSlot);
+    }
 
-import React, { useState } from "react";
+    // Update the availability in the state
+    updatedAvailability[selectedDay].timings = updatedTimings;
+    setUpdatedAvailability(updatedAvailability);
+  };
 
-function DateScroll() {
-  // Get today's date
-  const today = new Date();
+  const handleUpdateAvailability = async () => {
+    try {
+      // Send a request to update the availability on the backend
+      await axios.post(`/api/mechanic/updateAvailability`, {
+        availability: updatedAvailability,
+      });
+      setAvailability(updatedAvailability);
+      console.log("Availability updated successfully!");
+    } catch (error) {
+      console.error("Error updating availability:", error);
+    }
+  };
 
-  // Calculate yesterday and upcoming 5 days
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  const upcomingDates = [];
-  for (let i = 1; i <= 5; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
-    upcomingDates.push(date);
+  // Generate timing slots from 8:00 to 20:00 with 2-hour increments
+  const timingSlots = [];
+  for (let i = 8; i < 20; i += 2) {
+    const startHour = i < 10 ? `0${i}` : `${i}`;
+    const endHour = i + 2 < 10 ? `0${i + 2}` : `${i + 2}`;
+    timingSlots.push(`${startHour}:00-${endHour}:00`);
   }
 
-  // State for displayed dates
-  const [displayedDates, setDisplayedDates] = useState([
-    yesterday,
-    today,
-    ...upcomingDates,
-  ]);
-
-  // Function to shift displayed dates to the left
-  const shiftLeft = () => {
-    const newDates = [...displayedDates];
-    newDates.pop(); // Remove the last date
-    newDates.unshift(new Date(newDates[0].getTime() - 24 * 60 * 60 * 1000)); // Add a new date at the beginning
-    setDisplayedDates(newDates);
-  };
-
-  // Function to shift displayed dates to the right
-  const shiftRight = () => {
-    const newDates = [...displayedDates];
-    newDates.shift(); // Remove the first date
-    newDates.push(
-      new Date(newDates[newDates.length - 1].getTime() + 24 * 60 * 60 * 1000)
-    ); // Add a new date at the end
-    setDisplayedDates(newDates);
-  };
-
   return (
-    <div className="flex flex-col gap-7">
-      {/* Month selector */}
-      <select className="border w-fit py-1 px-4 rounded-md">
-        <option value={0}>January</option>
-        <option value={1}>February</option>
-        {/* Add other months here */}
-      </select>
-
-      <div className="flex items-center gap-5">
-        {/* Left button */}
-        <button
-          className="bg-graycolor rounded-full text-black font-bold w-10 h-10"
-          onClick={shiftLeft}
-        >
-          &#x2190;
-        </button>
-
-        {/* Displayed dates */}
-        <div className="flex border-[1px] border-graycolor rounded-lg">
-          {displayedDates.map((date) => (
-            <div
-              key={date.toISOString()}
-              className="border p-8 items-center flex flex-col border-gray-300 rounded-lg m-2"
-            >
-              <div className="font-normal text-graycolor2">
-                {date.toLocaleString("default", { weekday: "short" })}
-              </div>
-              <div className="text-[1.5rem]">{date.getDate()}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Right button */}
-        <button
-          className="bg-graycolor rounded-full text-black font-bold w-10 h-10"
-          onClick={shiftRight}
-        >
-          &#x2192;
-        </button>
-      </div>
-
-      {/* Time slots */}
-      <div className="w-[70%] grid grid-rows-2 grid-cols-3 mt-10   gap-6  flex-wrap">
-        {/* Render your time slots here */}
-        {/* Example: */}
-        {Array.from({ length: 7 }, (_, i) => (
-          <div key={i} className="border rounded-lg  p-2 m-1">
-            {`${i < 10 ? "0" + i : i}:00 - ${
-              i + 1 < 10 ? "0" + (i + 1) : i + 1
-            }:00`}
-          </div>
+    <div className="mt-6">
+      <h2 className="text-lg font-semibold mb-4">Mechanic Availability</h2>
+      <div className="flex space-x-2 mb-4">
+        {orderedDaysOfWeek.map((day) => (
+          <button
+            key={day}
+            onClick={() => handleDayClick(day)}
+            className={`px-4 py-2 rounded ${
+              selectedDay === day
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            {day}
+          </button>
         ))}
       </div>
+      {selectedDay && (
+        <div>
+          <h3 className="font-semibold">{selectedDay}</h3>
+          <div className="flex gap-4">
+            {timingSlots.map((timeSlot, index) => (
+              <div
+                key={index}
+                className={`
+                  px-3 py-2
+                  ${
+                    availability[selectedDay]?.timings.includes(timeSlot)
+                      ? "bg-green-200 cursor-pointer"
+                      : "bg-gray-200 cursor-pointer"
+                  }`}
+                onClick={() => updateTimeSlotAvailability(timeSlot)}
+              >
+                {timeSlot}
+              </div>
+            ))}
+          </div>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+            onClick={handleUpdateAvailability}
+          >
+            Update Availability
+          </button>
+        </div>
+      )}
     </div>
   );
-}
+};
 
-export default DateScroll;
+export default MechanicAvailability;

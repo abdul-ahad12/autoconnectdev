@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const Bookmechanic = () => {
+  const router = useRouter();
   const [mechanicData, setMechanicData] = useState();
   const [selectedTime, setSelectedTime] = useState();
   const [selectedMode, setSelectedMode] = useState("TO_MECHANIC");
@@ -22,12 +23,20 @@ const Bookmechanic = () => {
   };
 
   const [selectedDay, setSelectedDay] = useState();
+  console.log(selectedDay);
   // console.log(selectedTime);
   const [userData, setUserData] = useState();
   console.log(userData);
   const [timings, setTimings] = useState();
   const [display, setDisplay] = useState(false);
-  // console.log(timings);
+
+  // Retrieve the query parameters from the router object
+  const { selectedServices } = router.query;
+  const selectedServicesData = selectedServices
+    ? JSON.parse(decodeURIComponent(selectedServices))
+    : [];
+
+  console.log("selectedServices", selectedServicesData);
 
   // console.log(userData, mechanicData);
   const [date, setDate] = React.useState(new Date());
@@ -51,8 +60,6 @@ const Bookmechanic = () => {
     const { value } = e.target;
     setcustomNote(value);
   };
-
-  const router = useRouter();
 
   // Get mechanicId and customerId from query string
   const mechanicId = router.query.mechanicId;
@@ -111,6 +118,7 @@ const Bookmechanic = () => {
       desc: "Pick and drop with your convenience in the given time slot .",
     },
   ];
+  // Inside the handleSubmit function in the Bookmechanic component
   const handleSubmit = async () => {
     try {
       const obj = {
@@ -121,7 +129,7 @@ const Bookmechanic = () => {
           available: true,
         },
         deliveryMode: selectedMode,
-        services: ["empty"],
+        services: selectedServicesData, // Pass the selectedServicesData array here
         customNote: customNote,
         address: address,
       };
@@ -153,7 +161,6 @@ const Bookmechanic = () => {
   return (
     <div className="w-full flex justify-center flex-col items-center">
       <Navbar />
-a
       <div className="w-[90%]">
         <MechanicTop
           title={"Isra , you’re just a few steps"}
@@ -171,7 +178,8 @@ a
                 </div>
                 <div className="w-[70%] h-[0.1px] bg-graycolor2"></div>
                 <div className="text-secondary text-[1.2rem]">
-                  <span className="text-black">Prefered</span> Time Slot
+                  <span className="text-black">Prefered</span> Time Slot for{" "}
+                  {selectedDay ? selectedDay : "--"}
                 </div>
 
                 <select
@@ -188,30 +196,51 @@ a
               <div>
                 Days availability
                 <div className="grid grid-cols-3 gap-2">
-                  {daysofweek?.map((day) => (
-                    <button
-                      className="text-[0.8rem] bg-slate-200 px-5 py-1 border border-black"
-                      key={day}
-                      style={{
-                        color: mechanicData?.availability[day].available
-                          ? "black"
-                          : "gray",
-                        pointerEvents: mechanicData?.availability[day].available
-                          ? "auto"
-                          : "none",
-                      }}
-                      onClick={() => {
-                        // Handle click event for available days
-                        if (mechanicData?.availability[day].available) {
-                          // Do something when the day is available and clicked
-                          setSelectedDay(day);
-                          setTimings(mechanicData?.availability[day]?.timings); // Set timings here
-                        }
-                      }}
-                    >
-                      {day}
-                    </button>
-                  ))}
+                  {daysofweek?.map((day) => {
+                    const currentDate = new Date();
+                    const dayIndex = [
+                      "sunday",
+                      "monday",
+                      "tuesday",
+                      "wednesday",
+                      "thursday",
+                      "friday",
+                      "saturday",
+                    ].indexOf(day.toLowerCase());
+                    const date = new Date(
+                      currentDate.setDate(
+                        currentDate.getDate() +
+                          ((dayIndex - currentDate.getDay() + 7) % 7)
+                      )
+                    );
+
+                    return (
+                      <button
+                        className="text-[0.8rem] bg-slate-200 px-5 py-1 border border-black"
+                        key={day}
+                        style={{
+                          color: mechanicData?.availability[day].available
+                            ? "black"
+                            : "gray",
+                          pointerEvents: mechanicData?.availability[day]
+                            .available
+                            ? "auto"
+                            : "none",
+                        }}
+                        onClick={() => {
+                          if (mechanicData?.availability[day].available) {
+                            setSelectedDay(day);
+                            setTimings(
+                              mechanicData?.availability[day]?.timings
+                            );
+                          }
+                        }}
+                      >
+                        {day.toUpperCase()}
+                        <div>{date.toLocaleDateString()}</div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               {/* right side */}
@@ -247,6 +276,7 @@ a
                   </div>
                 ))} */}
               </div>
+
               <div className="flex flex-col text-[1rem] ">
                 <input
                   type="checkbox"
@@ -275,7 +305,20 @@ a
                 /> */}
                 <label htmlFor="thirdParty">Third Party</label>
               </div>
+              <div className="my-5">
+                {" "}
+                Services <span className="text-secondary">you</span> Opted for
+              </div>
+              {services?.map((data, idx) => {
+                return (
+                  <div className="flex text-[1rem] font-medium">
+                    <div>{data.name}</div>
+                    <div>{data.price}</div>
+                  </div>
+                );
+              })}
             </div>
+
             <div className="my-5 bg-customwhite rounded-[2rem] p-[2rem]">
               <div className="text-[1.5rem] font-semibold">
                 {" "}
@@ -381,7 +424,7 @@ a
           {/* right */}
           <div className="w-[35%]  h-fit bg-customwhite rounded-[2rem]">
             <img className="rounded-[2rem]" src="/mechanic/dummy.jpg" />
-            <div className="flex flex-col  px-[5%] py-3">
+            {/* <div className="flex flex-col  px-[5%] py-3">
               <div className="flex justify-between items-center py-4">
                 {" "}
                 <div className="text-[1.3rem]">AC Motors</div>
@@ -434,7 +477,7 @@ a
               <div className="w-full flex justify-center pt-8">
                 <CusButton type={"secondary"} text={"Book Mechanic"} />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

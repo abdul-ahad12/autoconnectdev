@@ -10,6 +10,7 @@ import { useAuth } from "../../components/context/AuthProvider";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { citiesAustralia } from "../../components/home/Form";
 
 const Form = () => {
   const router = useRouter();
@@ -59,7 +60,6 @@ const Form = () => {
   };
 
   const [formData, setFormData] = useState({
-    
     name: "",
     aboutus: "",
     address: {
@@ -124,7 +124,7 @@ const Form = () => {
     services: [],
     deliveryMode: [],
   });
-console.log(formData)
+  console.log(formData);
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
     if (name.startsWith("deliveryMode")) {
@@ -225,7 +225,6 @@ console.log(formData)
     }
   };
 
-
   const generateTimings = (day, startTime, endTime) => {
     if (!startTime || !endTime) {
       return [];
@@ -272,37 +271,46 @@ console.log(formData)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/mechanic/registration", formData, {
-        withCredentials: true,
-      });
-  
+      const response = await axios.post(
+        "/api/mechanic/registration",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+
       if (response.status === 201) {
         const data = response.data;
         console.log("Registration successful:", data);
-  
-        localStorage.setItem("role", "MECHANIC");
-        localStorage.setItem("mechanicId", data.id);
-        router.push("/mechanic/mechanicDashboard");
-  
+
+        // localStorage.setItem("role", "MECHANIC");
+        // localStorage.setItem("mechanicId", data.id);
+
         // Show success message using Swal
         Swal.fire({
           icon: "success",
-          title: "Registration Successful",
-          text: "Redirecting to Mechanic Dashboard...",
-          showConfirmButton: false,
-          timer: 2000,
+          title: "Your details have been submitted successfully and are under review",
+          text: "You will be mailed if we approve your registration",
+          showConfirmButton: true,
+          timer: 5000,
         });
+        router.push("/");
+
       } else {
         throw new Error("Registration failed");
       }
     } catch (error) {
       console.error("Error during registration:", error);
-  
+
       let errorMessage = "An error occurred during registration.";
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         errorMessage = error.response.data.message;
       }
-  
+
       Swal.fire({
         icon: "error",
         title: "Registration Failed",
@@ -310,8 +318,6 @@ console.log(formData)
       });
     }
   };
-  
-  
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -378,14 +384,20 @@ console.log(formData)
             </div>
             <div className="flex  gap-3">
               <div className="flex flex-col w-full gap-1">
-                <Description size={"inputlabel"} text={"State"} />
-                <input
+                <Description size={"inputlabel"} text={"City"} />
+                <select
                   className="input-class border w-full border-graycolor2"
-                  type="text"
                   name="address.state"
                   value={formData.address.state}
                   onChange={handleChange}
-                />
+                >
+                  <option value="">Select State</option>
+                  {citiesAustralia.map((state, index) => (
+                    <option key={index} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"Pincode"} />
@@ -618,8 +630,8 @@ console.log(formData)
           </form>
         </div>
       </div>
-          {/* Footer */}
-          <Footer />
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

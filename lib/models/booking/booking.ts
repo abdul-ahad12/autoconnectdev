@@ -11,7 +11,7 @@ enum DeliveryMode {
 
 interface Service {
   name: string;
-  amount: number;
+  price: string; // Add price field
 }
 
 interface Invoice {
@@ -32,7 +32,7 @@ export interface Booking extends Document {
   mechanic: mongoose.Types.ObjectId; // Reference to the booked mechanic
   timeSlots: TimeSlot; // Array of time slots for this booking
   deliveryMode: DeliveryMode;
-  services: string[]; // List of selected services
+  services: Service[]; // List of selected services with name and price
   customNote?: string; // Optional custom note for custom services
   isCompleted: boolean;
   invoice?: Invoice; // Detailed invoice information
@@ -70,7 +70,7 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
       enum: Object.values(DeliveryMode),
       default: DeliveryMode.TO_MECHANIC,
     },
-    services: [{ type: String, required: true }],
+    services: [{ name: String, price: String }], // Update services array to include name and price
     customNote: { type: String },
     isCompleted: { type: Boolean, default: false },
     // invoice: {
@@ -91,7 +91,7 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
       state: { type: String, required: true },
       pinCode: { type: String, required: true },
     },
-    
+
     // vehicleType: { type: String, required: true },
   },
   {

@@ -3,6 +3,26 @@ import { useRouter } from "next/router";
 import Description from "../section/Description";
 import CusButton from "../section/button";
 
+export const citiesAustralia = [
+  "Sydney",
+  "Melbourne",
+  "Brisbane",
+  "Perth",
+  "Adelaide",
+  "Gold Coast",
+  "Newcastle",
+  "Canberra",
+  "Sunshine Coast",
+  "Wollongong",
+  "Hobart",
+  "Geelong",
+  "Townsville",
+  "Cairns",
+  "Darwin",
+  "Hyderabad"
+];
+
+
 const Form = () => {
   const [city, setCity] = useState("");
   const [suburb, setSuburb] = useState("");
@@ -35,11 +55,18 @@ const Form = () => {
           {/* location */}
           <div className="flex flex-col gap-1">
             <Description text={"City"} />
-            <input
+            <select
               className="input-class border-black border"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-            />
+            >
+              <option value="">Select City</option>
+              {citiesAustralia.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
           </div>
           {/* Vehicle Type */}
           <div className="flex flex-col gap-1">
