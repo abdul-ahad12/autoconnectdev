@@ -5,12 +5,11 @@ import Navbar from "@/components/layout/Navbar";
 import MechanicListing from "@/components/mechanic/MechanicListing";
 import MechanicTop from "@/components/mechanic/MechanicTop";
 import React from "react";
-import axios from "axios"
+import axios from "axios";
 
 const Mechanic = () => {
   const router = useRouter();
   const [query, setQuery] = useState({});
-
 
   useEffect(() => {
     // Get query parameters from the router
@@ -29,19 +28,32 @@ const Mechanic = () => {
   console.log(query);
   const [mechanics, setMechanics] = useState([]);
 
-  console.log(mechanics)
+  console.log(mechanics);
 
   useEffect(() => {
+    console.log(query);
+    // Extract query parameters
+    const pinCode = query?.location?.postalCode
+      ? query?.location?.postalCode
+      : "";
+    const selectedServices = query.selectedServices;
+
     // Function to fetch mechanics data
     const fetchMechanics = async () => {
       try {
         // Make GET request to your API endpoint
-        const response = await axios.get('/api/customer/findallmechanics');
+        const response = await axios.get("/api/customer/findallmechanics", {
+          params: {
+            pinCode: pinCode,
+            services: selectedServices.join(","), // Join array of services into a comma-separated string
+            page: 1, // Specify the page number
+            limit: 10, // Specify the limit
+          },
+        });
 
-        // Set mechanics state with the data received
         setMechanics(response.data.mechanics);
       } catch (error) {
-        console.error('Error fetching mechanics:', error);
+        console.error("Error fetching mechanics:", error);
       }
     };
 
@@ -52,14 +64,19 @@ const Mechanic = () => {
     return () => {
       // Cleanup code (if needed)
     };
-  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+  }, [query]); // Include 'query' in the dependency array to trigger the effect when the query changes
 
   return (
     <div className="w-full flex justify-center flex-col items-center">
       <Navbar />
       <div className="w-[90%]">
         {" "}
-        <MechanicTop servicesstate title={"BOOK YOUR MECHANIC IN "} titleColor={"3 EASY STEPS!"} services={query?.selectedServices} />
+        <MechanicTop
+          servicesstate
+          title={"BOOK YOUR MECHANIC IN "}
+          titleColor={"3 EASY STEPS!"}
+          services={query?.selectedServices}
+        />
         <MechanicListing mechanics={mechanics} />
       </div>
       <Footer />

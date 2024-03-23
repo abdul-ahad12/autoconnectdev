@@ -8,7 +8,8 @@ const ServicesWeProvide = () => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [customBookingText, setCustomBookingText] = useState("");
   const router = useRouter();
-  const { state, suburb, pincode } = router.query;
+  const { postalCode } = router.query;
+  console.log(postalCode)
 
   console.log(selectedServices);
 
@@ -94,9 +95,7 @@ const ServicesWeProvide = () => {
       return service.title;
     });
     const locationData = {
-      state,
-      suburb,
-      pincode,
+      postalCode,
     };
     const query = {
       selectedServices: selectedServiceTitles.join(","),
@@ -130,10 +129,10 @@ const ServicesWeProvide = () => {
             />
           </div>
           <div className="flex gap-4 items-center mt-9">
-            <img className="w-8" src="/icons/bike.svg" alt="Bike Icon" />
-            <div className="text-yellowcolor font-semibold lg:text-[1vw]">
+            {/* <img className="w-8" src="/icons/bike.svg" alt="Bike Icon" /> */}
+            {/* <div className="text-yellowcolor font-semibold lg:text-[1vw]">
               Need services for your bike ?
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -152,7 +151,7 @@ const ServicesWeProvide = () => {
                     <div className="text-[0.8rem] w-full font-bold">
                       {data.title}
                     </div>
-                    <Description text={`${data.noOfServices} services`} />
+                    {/* <Description text={`${data.noOfServices} services`} /> */}
                   </div>
                 </div>
                 <input

@@ -42,7 +42,7 @@ export interface MechanicRegistration extends Document {
     sunday: DayAvailability;
   };
   services: Service[];
-  deliveryMode: DeliveryMode;
+  deliveryMode: DeliveryMode[]; // Updated to an array of DeliveryMode enum
   vehicleTypes: string[];
 }
 
@@ -127,7 +127,7 @@ const mechanicRegistrationSchema: Schema<MechanicRegistration> =
           price: { type: Number, required: true },
         },
       ],
-      deliveryMode: { type: String }, // You can choose DeliveryMode enum if needed
+      deliveryMode: [{ type: String }], // Updated to an array of strings
       vehicleTypes: [{ type: String }],
     },
     {
