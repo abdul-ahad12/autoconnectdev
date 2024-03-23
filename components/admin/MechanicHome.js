@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Arrow from "../../public/admin/homearrow.png";
 import Users from "../../public/admin/homeusers.png";
 import Graph from "../../public/admin/fullgraph.png";
@@ -7,10 +7,40 @@ import Graph from "../../public/admin/fullgraph.png";
 import CusButton from "../section/button";
 
 const MechanicHome = () => {
+  const [stats, setStats] = useState(null);
+  console.log(stats);
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const response = await fetch("/api/admin/stats");
+        if (!response.ok) {
+          throw new Error("Failed to fetch statistics");
+        }
+        const data = await response.json();
+        setStats(data);
+      } catch (error) {
+        console.error("Error fetching statistics:", error);
+      }
+    }
+    fetchStats();
+  }, []);
   const items = [
-    { id: 1, totalUsers: 3234, percentageChange: -3.5 },
-    { id: 2, totalUsers: 4000, percentageChange: 2.5 },
-    { id: 3, totalUsers: 2800, percentageChange: -1.2 },
+    {
+      id: 1,
+      number: stats?.totalUsers ? stats.totalUsers : 0,
+      text: "Total Users",
+    },
+    {
+      id: 2,
+      number: stats?.totalMechanics ? stats.totalMechanics : 0,
+      text: "Total Mechanic",
+    },
+    {
+      id: 3,
+      number: stats?.totalBookings ? stats.totalBookings : 0,
+      text: "Total Orders",
+    },
   ];
 
   return (
@@ -19,8 +49,8 @@ const MechanicHome = () => {
         {items.map((item) => (
           <MechanicSingleHome
             key={item.id}
-            totalUsers={item.totalUsers}
-            percentageChange={item.percentageChange}
+            number={item.number}
+            name={item.text}
           />
         ))}
       </div>
@@ -35,20 +65,20 @@ const MechanicHome = () => {
 
 export default MechanicHome;
 
-const MechanicSingleHome = ({ totalUsers, percentageChange }) => {
+const MechanicSingleHome = ({ number, name }) => {
   return (
     <div className="w-full">
       <div className="flex justify-between border-[1px] border-opacity-70 rounded-lg p-5">
         <div className="flex flex-col gap-4">
           <div className="text-graycolor2 lg:text-[min(0.8vw,14px)] font-semibold">
-            Total Users
+            {name}
           </div>
-          <p className="lg:text-[min(1.5vw,32px)] font-bold">{totalUsers}</p>
+          <p className="lg:text-[min(1.5vw,32px)] font-bold">{number}</p>
           <div className="flex gap-3">
             <Image src={Arrow} alt="arrowhomemechanic" className="w-8 h-8" />
-            <div className="text-[#EA8F95] ">
-              {percentageChange}%<span> down from past week </span>
-            </div>
+              {/* <div className="text-[#EA8F95] ">
+                {percentageChange}%<span> down from past week </span>
+              </div> */}
           </div>
         </div>
         <div className="flex flex-col items-center justify-between">

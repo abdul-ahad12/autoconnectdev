@@ -1,18 +1,18 @@
-// pages/api/mechanics/availability.js
+// pages/api/mechanics/details.js
 
-import { MechanicRegistrationModel } from "@/lib/models/mechanic/registration";
 import { authorize } from "lib/auth";
+import { MechanicRegistrationModel } from "../../../lib/models/mechanic/registration";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
     try {
       // Call the authorize middleware to extract user ID from token
       authorize(req, res, async () => {
-        const user = req["user"];
+        const user = req["user"]; 
         const userId = user.id;
 
         // Validate user ID
@@ -29,14 +29,10 @@ export default async function handler(
           return res.status(404).json({ message: "Mechanic not found" });
         }
 
-        // Update the availability for the mechanic
-        mechanic.availability = req.body.availability;
-        await mechanic.save();
-
-        res.status(200).json({ message: "Availability updated successfully" });
+        res.status(200).json({ mechanic });
       });
     } catch (error) {
-      console.error("Error updating availability:", error);
+      console.error("Error fetching mechanic details:", error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   } else {

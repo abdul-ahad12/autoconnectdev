@@ -11,7 +11,8 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const Bookmechanic = () => {
-  const [mechanicData, setMechanicData] = useState(null);
+  const router = useRouter();
+  const [mechanicData, setMechanicData] = useState();
   const [selectedTime, setSelectedTime] = useState();
   const [selectedMode, setSelectedMode] = useState("TO_MECHANIC");
   const [customNote, setcustomNote] = useState();
@@ -22,11 +23,20 @@ const Bookmechanic = () => {
   };
 
   const [selectedDay, setSelectedDay] = useState();
+  console.log(selectedDay);
   // console.log(selectedTime);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState();
+  console.log(userData);
   const [timings, setTimings] = useState();
   const [display, setDisplay] = useState(false);
-  // console.log(timings);
+
+  // Retrieve the query parameters from the router object
+  const { selectedServices } = router.query;
+  const selectedServicesData = selectedServices
+    ? JSON.parse(decodeURIComponent(selectedServices))
+    : [];
+
+  console.log("selectedServices", selectedServicesData);
 
   // console.log(userData, mechanicData);
   const [date, setDate] = React.useState(new Date());
@@ -51,20 +61,18 @@ const Bookmechanic = () => {
     setcustomNote(value);
   };
 
-  const router = useRouter();
-
   // Get mechanicId and customerId from query string
   const mechanicId = router.query.mechanicId;
-  const customerId = router.query.customerId;
+  // const customerId = router.query.customerId;
   const services = router.query.services;
 
   useEffect(() => {
-    console.log(mechanicId, customerId);
-    if (customerId !== undefined) {
-      console.log(customerId);
+    if (mechanicId !== undefined) {
       const fetchUserData = async () => {
         try {
-          const response = await axios.get(`/api/customer/${customerId}`);
+          const response = await axios.get(`/api/customer`, {
+            withCredentials: true,
+          });
           setUserData(response.data.user);
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -77,8 +85,13 @@ const Bookmechanic = () => {
       const fetchMechanicData = async () => {
         try {
           const response = await axios.get(`/api/mechanic/${mechanicId}`);
-          setMechanicData(response.data.mechanic);
-          setdaysofweek(Object.keys(mechanicData?.availability));
+          if (response) {
+            setMechanicData(response.data.mechanic);
+            const daysOfWeek = Object.keys(
+              response.data.mechanic?.availability
+            );
+            setdaysofweek(daysOfWeek); // Set days of week directly here
+          }
         } catch (error) {
           console.error("Error fetching mechanic data:", error);
         }
@@ -86,7 +99,7 @@ const Bookmechanic = () => {
       fetchMechanicData();
       setDisplay(true);
     }
-  }, [customerId, mechanicId,display,userData]);
+  }, [mechanicId]); // Add mechanicId and customerId to the dependency array
 
   const typeofdelivery = [
     {
@@ -105,10 +118,10 @@ const Bookmechanic = () => {
       desc: "Pick and drop with your convenience in the given time slot .",
     },
   ];
+  // Inside the handleSubmit function in the Bookmechanic component
   const handleSubmit = async () => {
     try {
       const obj = {
-        userId: customerId,
         mechanicId: mechanicId,
         timeSlots: {
           date: mechanicData.availability[selectedDay].date,
@@ -116,7 +129,7 @@ const Bookmechanic = () => {
           available: true,
         },
         deliveryMode: selectedMode,
-        services: ["empty"],
+        services: selectedServicesData, // Pass the selectedServicesData array here
         customNote: customNote,
         address: address,
       };
@@ -131,7 +144,7 @@ const Bookmechanic = () => {
         text: "Your booking has been created successfully!",
       });
 
-      router.push("/customerDashboard")
+      router.push("/customerDashboard");
 
       // Handle success, redirect, or any other action
     } catch (error) {
@@ -148,7 +161,6 @@ const Bookmechanic = () => {
   return (
     <div className="w-full flex justify-center flex-col items-center">
       <Navbar />
-
       <div className="w-[90%]">
         <MechanicTop
           title={"Isra , you’re just a few steps"}
@@ -166,7 +178,8 @@ const Bookmechanic = () => {
                 </div>
                 <div className="w-[70%] h-[0.1px] bg-graycolor2"></div>
                 <div className="text-secondary text-[1.2rem]">
-                  <span className="text-black">Prefered</span> Time Slot
+                  <span className="text-black">Prefered</span> Time Slot for{" "}
+                  {selectedDay ? selectedDay : "--"}
                 </div>
 
                 <select
@@ -183,30 +196,51 @@ const Bookmechanic = () => {
               <div>
                 Days availability
                 <div className="grid grid-cols-3 gap-2">
-                  {daysofweek?.map((day) => (
-                    <button
-                      className="text-[0.8rem] bg-slate-200 px-5 py-1 border border-black"
-                      key={day}
-                      style={{
-                        color: mechanicData?.availability[day].available
-                          ? "black"
-                          : "gray",
-                        pointerEvents: mechanicData?.availability[day].available
-                          ? "auto"
-                          : "none",
-                      }}
-                      onClick={() => {
-                        // Handle click event for available days
-                        if (mechanicData?.availability[day].available) {
-                          // Do something when the day is available and clicked
-                          setSelectedDay(day);
-                          setTimings(mechanicData?.availability[day]?.timings);
-                        }
-                      }}
-                    >
-                      {day}
-                    </button>
-                  ))}
+                  {daysofweek?.map((day) => {
+                    const currentDate = new Date();
+                    const dayIndex = [
+                      "sunday",
+                      "monday",
+                      "tuesday",
+                      "wednesday",
+                      "thursday",
+                      "friday",
+                      "saturday",
+                    ].indexOf(day.toLowerCase());
+                    const date = new Date(
+                      currentDate.setDate(
+                        currentDate.getDate() +
+                          ((dayIndex - currentDate.getDay() + 7) % 7)
+                      )
+                    );
+
+                    return (
+                      <button
+                        className="text-[0.8rem] bg-slate-200 px-5 py-1 border border-black"
+                        key={day}
+                        style={{
+                          color: mechanicData?.availability[day].available
+                            ? "black"
+                            : "gray",
+                          pointerEvents: mechanicData?.availability[day]
+                            .available
+                            ? "auto"
+                            : "none",
+                        }}
+                        onClick={() => {
+                          if (mechanicData?.availability[day].available) {
+                            setSelectedDay(day);
+                            setTimings(
+                              mechanicData?.availability[day]?.timings
+                            );
+                          }
+                        }}
+                      >
+                        {day.toUpperCase()}
+                        <div>{date.toLocaleDateString()}</div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               {/* right side */}
@@ -242,6 +276,7 @@ const Bookmechanic = () => {
                   </div>
                 ))} */}
               </div>
+
               <div className="flex flex-col text-[1rem] ">
                 <input
                   type="checkbox"
@@ -270,7 +305,20 @@ const Bookmechanic = () => {
                 /> */}
                 <label htmlFor="thirdParty">Third Party</label>
               </div>
+              <div className="my-5">
+                {" "}
+                Services <span className="text-secondary">you</span> Opted for
+              </div>
+              {services?.map((data, idx) => {
+                return (
+                  <div className="flex text-[1rem] font-medium">
+                    <div>{data.name}</div>
+                    <div>{data.price}</div>
+                  </div>
+                );
+              })}
             </div>
+
             <div className="my-5 bg-customwhite rounded-[2rem] p-[2rem]">
               <div className="text-[1.5rem] font-semibold">
                 {" "}
@@ -376,7 +424,7 @@ const Bookmechanic = () => {
           {/* right */}
           <div className="w-[35%]  h-fit bg-customwhite rounded-[2rem]">
             <img className="rounded-[2rem]" src="/mechanic/dummy.jpg" />
-            <div className="flex flex-col  px-[5%] py-3">
+            {/* <div className="flex flex-col  px-[5%] py-3">
               <div className="flex justify-between items-center py-4">
                 {" "}
                 <div className="text-[1.3rem]">AC Motors</div>
@@ -429,7 +477,7 @@ const Bookmechanic = () => {
               <div className="w-full flex justify-center pt-8">
                 <CusButton type={"secondary"} text={"Book Mechanic"} />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

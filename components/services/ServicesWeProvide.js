@@ -8,8 +8,7 @@ const ServicesWeProvide = () => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [customBookingText, setCustomBookingText] = useState("");
   const router = useRouter();
-  const { postalCode } = router.query;
-  console.log(postalCode)
+  const { location } = router.query;
 
   console.log(selectedServices);
 
@@ -95,7 +94,7 @@ const ServicesWeProvide = () => {
       return service.title;
     });
     const locationData = {
-      postalCode,
+      location,
     };
     const query = {
       selectedServices: selectedServiceTitles.join(","),

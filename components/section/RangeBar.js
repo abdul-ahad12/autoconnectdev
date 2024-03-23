@@ -1,25 +1,29 @@
 import React, { useState } from "react";
+import { citiesAustralia } from "../home/Form";
 
-const RangeBar = () => {
-  const [value, setValue] = useState(15); // Default value changed to 15
-  console.log(value);
+const RangeBar = ({
+  mechanics,
+  location,
+  setLocation,
+  toMechanic,
+  setToMechanic,
+  toCustomer,
+  setToCustomer,
+  handleClick
+}) => {
+  // Array of city options
 
-  const handleChange = (event) => {
-    setValue(parseInt(event.target.value));
+
+  const handleChangeLocation = (event) => {
+    setLocation(event.target.value); // Update location state
   };
 
-  const handleSnapToValue = (snapValue) => {
-    setValue(snapValue);
+  const handleChangeToMechanic = () => {
+    setToMechanic(!toMechanic); // Toggle TO_MECHANIC checkbox state
   };
 
-  const getRangeColor = () => {
-    if (value <= 10) {
-      return "bg-red-";
-    } else if (value <= 20) {
-      return "bg-orange-";
-    } else {
-      return "bg-green-50";
-    }
+  const handleChangeToCustomer = () => {
+    setToCustomer(!toCustomer); // Toggle TO_CUSTOMER checkbox state
   };
 
   return (
@@ -29,58 +33,52 @@ const RangeBar = () => {
           Filter <span className="text-yellowcolor">by</span>{" "}
         </div>
         <div className="h-[2px] bg-graycolor"></div>
-        <div className="text-graycolor2">Distance near you</div>
+        {/* <div className="text-graycolor2">Distance near you</div> */}
       </div>
 
-      <div className=" bottom-0 left-0 w-full flex flex-col justify-between text-sm text-graycolor2">
-        <input
-          type="range"
-          min="10"
-          max="35"
-          step="5"
-          value={value}
-          onChange={handleChange}
-          className={`h-1  w-full fill:bg-black ${getRangeColor()}`}
-        />
-        <div className="flex mt-3">
-          <div
-            className="w-1/6 text-center cursor-pointer"
-            onClick={() => handleSnapToValue(10)}
-          >
-            10KM
-          </div>
-          <div
-            className="w-1/6 text-center cursor-pointer"
-            onClick={() => handleSnapToValue(15)}
-          >
-            15KM
-          </div>
-          <div
-            className="w-1/6 text-center cursor-pointer"
-            onClick={() => handleSnapToValue(20)}
-          >
-            20KM
-          </div>
-          <div
-            className="w-1/6 text-center cursor-pointer"
-            onClick={() => handleSnapToValue(25)}
-          >
-            25KM
-          </div>
-          <div
-            className="w-1/6 text-center cursor-pointer"
-            onClick={() => handleSnapToValue(30)}
-          >
-            30KM
-          </div>
-          <div
-            className="w-1/6 text-center cursor-pointer"
-            onClick={() => handleSnapToValue(35)}
-          >
-            35KM
-          </div>
-        </div>
+      {/* Location select dropdown */}
+      <div className="flex flex-col">
+        <label htmlFor="location">Location</label>
+        <select
+          id="location"
+          value={location}
+          onChange={handleChangeLocation}
+        >
+          <option value="">Select Location</option>
+          {citiesAustralia.map((city) => (
+            <option key={city} value={city}>{city}</option>
+          ))}
+        </select>
       </div>
+
+      {/* Checkboxes for delivery mode */}
+      {/* <div className="flex flex-col gap-4">
+        <div>
+          {" "}
+          <label htmlFor="toMechanic">To Mechanic</label>
+          <input
+            id="toMechanic"
+            type="checkbox"
+            checked={toMechanic}
+            onChange={handleChangeToMechanic}
+          />
+        </div>
+        <div>
+          {" "}
+          <label htmlFor="toCustomer">To Customer</label>
+          <input
+            id="toCustomer"
+            type="checkbox"
+            checked={toCustomer}
+            onChange={handleChangeToCustomer}
+          />
+        </div>
+      </div> */}
+
+      {/* Button */}
+      <button className="btn-primary" onClick={handleClick}>
+        Apply Filters
+      </button>
     </div>
   );
 };

@@ -4,8 +4,20 @@ import { Checkbox } from "../ui/common/Checkbox";
 import { CheckboxDemo } from "../ui/common/CheckboxDemo";
 import RangeBar from "../section/RangeBar";
 import { useAuth } from "../context/AuthProvider";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const MechanicListing = ({ mechanics }) => {
+const MechanicListing = ({
+  mechanics,
+  location,
+  setLocation,
+  toMechanic,
+  setToMechanic,
+  toCustomer,
+  setToCustomer,
+  handleClick,
+  selectedServices,
+}) => {
   const [modalstate, setmodalstate] = useState(false);
   const [modalContent, setModalContent] = useState();
   const content = [
@@ -18,7 +30,15 @@ const MechanicListing = ({ mechanics }) => {
   return (
     <div className="w-full grid grid-cols-12 gap-9   py-[2rem]">
       <div className="col-start-1  col-end-4 h-fit p-6 row-span-full  rounded-[2rem] bg-customwhite left-[5%] top-0   py-20">
-        <RangeBar />
+        <RangeBar
+          location={location}
+          setLocation={setLocation}
+          toMechanic={toMechanic}
+          setToMechanic={setToMechanic}
+          toCustomer={toCustomer}
+          setToCustomer={setToCustomer}
+          handleClick={handleClick}
+        />
       </div>
       <div className=" col-start-4 ml-7 col-end-13 row-span-full grid grid-cols-2 gap-3">
         {mechanics.length > 0 ? (
@@ -30,7 +50,7 @@ const MechanicListing = ({ mechanics }) => {
               }}
               key={idx}
             >
-              <SingleCard data={data} />
+              <SingleCard selectedServices={selectedServices} data={data} />
             </div>
           ))
         ) : (
@@ -50,14 +70,26 @@ export default MechanicListing;
 
 const Modal = ({ setmodalstate, modalContent }) => {
   const daysOfWeek = Object.keys(modalContent.availability);
+  const router = useRouter();
+  const selectedServices = router.query.selectedServices.split(",");
 
-  console.log(daysOfWeek);
-
-  // Filter out the days where availability is true
-  const availableDays = daysOfWeek.filter(
-    (day) => modalContent.availability[day].available
+  // Filter the modalContent.services array to include only the selected services
+  const selectedServicesData = modalContent.services.filter((service) =>
+    selectedServices.includes(service.name)
   );
-  console.log(availableDays);
+  console.log("selectedServices", selectedServicesData);
+
+  // Calculate the total price
+  const totalPrice = selectedServicesData.reduce(
+    (total, service) => total + service.price,
+    0
+  );
+
+  // Construct the query parameter with selectedServicesData
+  const selectedServicesQueryParam = encodeURIComponent(
+    JSON.stringify(selectedServicesData)
+  );
+
   return (
     <div className="base:absolute  lg:fixed top-0 left-0 w-full  lg:h-full flex items-center justify-center z-[10000000000000000] ">
       <div
@@ -85,29 +117,13 @@ const Modal = ({ setmodalstate, modalContent }) => {
                     icon={"/icons/location.svg"}
                     text={modalContent.address.street}
                   />
-                  {/* <IconText icon={"/icons/location.svg"} text={"Mehdipatnam"} /> */}
                   <IconText icon={"/icons/verified.svg"} text={"Verified"} />
-                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} />
-                  {/* <CheckboxDemo id="terms" label="AC Specialist" />
-                  <CheckboxDemo id="terms" label="1 Day Delivery" />
-                  <CheckboxDemo id="terms" label="7 years experience" /> */}
                 </div>
-                {/* stars */}
-                {/* <div className="flex lg:flex-row flex-col gap-2 text-[0.8rem]">
-                  <div className="flex gap-1">
-                    <img className="w-8" src="/icons/star.svg" />
-                    <img className="w-8" src="/icons/star.svg" />
-                    <img className="w-8" src="/icons/star.svg" />
-                    <img className="w-8" src="/icons/star.svg" />
-                  </div>
-                  | Total services done on AutoConnect : 5
-                </div> */}
-                <div></div>
               </div>
             </div>
 
             {/* aboutus */}
-            <div className="flex lg:flex-row base:flex-col-reverse py-12 gap-9  border-b-black">
+            <div className="flex lg:flex-row base:flex-col-reverse pt-12 pb-6  gap-9  border-b-black">
               <div className="lg:w-[75%] flex flex-col ">
                 <div className="text-secondary font-semibold pb-2 lg:text-unique">
                   About us
@@ -121,17 +137,41 @@ const Modal = ({ setmodalstate, modalContent }) => {
                     text={modalContent.address.street}
                   />
                   <IconText icon={"/icons/verified.svg"} text={"Verified"} />
-                  <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} />
+                  {/* <IconText icon={"/icons/time.svg"} text={"8am to 5pm"} /> */}
                 </div>
               </div>
             </div>
 
+            {/* gps location */}
+            <div>
+              <SingleText text={"GPS Location"} />
+              <Link
+                className="text-blue-700 underline"
+                target="blank"
+                href={modalContent.googleMapsLocation}
+              >
+                {modalContent.googleMapsLocation}
+              </Link>
+            </div>
+
+            {/* Pricing */}
+            <div className="py-4">
+              <SingleText text={"Pricing"} />
+              {/* Display selected services and their prices */}
+              {selectedServicesData.map((service) => (
+                <div key={service._id}>
+                  <span>{service.name}</span>: <span>${service.price}</span>
+                </div>
+              ))}
+              <div>Total: ${totalPrice}</div>
+            </div>
+
             {/* Timings */}
-            <div className="flex flex-col text-unique">
+            <div className="flex flex-col text-unique my-6">
               <div className="text-unique pb-2 font-bold text-secondary">
                 Timings
               </div>
-              {availableDays.map((day) => (
+              {daysOfWeek.map((day) => (
                 <div key={day}>
                   <strong>{day}</strong>:{" "}
                   {modalContent.availability[day].startTime} -{" "}
@@ -139,32 +179,12 @@ const Modal = ({ setmodalstate, modalContent }) => {
                 </div>
               ))}
             </div>
-
-            {/* rating and reviews */}
-            {/* <div>
-              <div className="text-unique pb-2 font-bold py-10 text-secondary">
-                Rating and reviews
-              </div>
-              <div className="grid grid-cols-[1fr]">
-                <div className="flex justify-center flex-col">
-                  <div className="text-black font-extrabold base:text-[3rem] lg:text-[min(2vw,2rem)]">
-                    4.5
-                  </div>
-                  <div className="flex">
-                    <img className=" base:w-6 lg:w-3" src="/icons/star.svg" />
-                    <img className="base:w-6 lg:w-3" src="/icons/star.svg" />
-                    <img className="base:w-6 lg:w-3" src="/icons/star.svg" />
-                    <img className=" base:w-6 lg:w-3" src="/icons/star.svg" />
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
 
           <div className="w-full flex justify-end py-7">
             <CusButton
               text={"Book Now"}
-              href={`/bookmechanic?mechanicId=${modalContent?._id}&customerId=${userID}`}
+              href={`/bookmechanic?mechanicId=${modalContent?._id}&selectedServices=${selectedServicesQueryParam}`}
               type={"primary"}
             />
           </div>
@@ -174,7 +194,18 @@ const Modal = ({ setmodalstate, modalContent }) => {
   );
 };
 
-const SingleCard = ({ data }) => {
+const SingleCard = ({ data, selectedServices }) => {
+  // Calculate total price based on selected services
+  const totalPrice = selectedServices.reduce((total, service) => {
+    const selectedService = data.services.find(
+      (mechanicService) => mechanicService.name === service
+    );
+    if (selectedService) {
+      return total + selectedService.price;
+    }
+    return total;
+  }, 0);
+
   return (
     <div className="rounded-lg p-4 gap-4 grid grid-cols-[1fr_1.3fr] bg-customwhite relative cursor-pointer">
       <img
@@ -199,7 +230,7 @@ const SingleCard = ({ data }) => {
       </div>
       <div className="flex flex-col  absolute right-4 bottom-4 ">
         <div className="text-secondary font-semibold text-[1.2rem]">
-          ${data.services[0].price}
+          ${totalPrice.toFixed(2)} {/* Display total price */}
         </div>
         <div className="rounded-full font-semibold bg-primary text-customwhite text-[0.6rem] px-2 py-2">
           Book Now
@@ -214,6 +245,14 @@ const IconText = ({ icon, text }) => {
     <div className="flex gap-3 items-center">
       <img src={icon} className="w-4" />
       <div>{text}</div>
+    </div>
+  );
+};
+
+const SingleText = ({ text }) => {
+  return (
+    <div className="text-secondary font-semibold pb-2 lg:text-unique">
+      {text}
     </div>
   );
 };

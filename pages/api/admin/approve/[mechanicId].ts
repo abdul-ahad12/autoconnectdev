@@ -1,11 +1,13 @@
 // pages/api/mechanics/approve.js
 
-import { ApprovalStatus, MechanicRegistrationModel } from '@/lib/models/mechanic/registration';
+import { ApprovalStatus, MechanicRegistrationModel } from 'lib/models/mechanic/registration';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method, query } = req;
   const mechanicId = query.mechanicId;
+
+  console.log(mechanicId)
 
   if (method !== 'PUT') {
     return res.status(405).json({ message: 'Method Not Allowed' });

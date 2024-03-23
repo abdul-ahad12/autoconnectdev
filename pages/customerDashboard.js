@@ -37,7 +37,7 @@ const CustomerDashboard = () => {
         const userId = userID;
 
         // Send GET request to the API endpoint
-        const response = await axios.get(`/api/customer/bookings/${userId}`);
+        const response = await axios.get(`/api/customer/booking`);
 
         // Extract the bookings data from the response
         const { bookings } = response.data;
