@@ -95,7 +95,7 @@ const Order = ({ bookings }) => {
         </div>
       </div> */}
       {/* new */}
-      <div className="grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
+      <div className="base:hidden lg:grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
         <div>ID Order</div>
         <div>Order details</div>
         <div>Service Date</div>
@@ -107,11 +107,11 @@ const Order = ({ bookings }) => {
         {orders &&
           orders?.map((order, index) => (
             <OrderItem
-              // key={index}
-              // orderNumber={order?._id.slice(0, 4)}
-              // dateTime={order?.timeSlots?.date}
-              // status={order?.isCompleted}
-              // service={order.services[0]}
+            // key={index}
+            // orderNumber={order?._id.slice(0, 4)}
+            // dateTime={order?.timeSlots?.date}
+            // status={order?.isCompleted}
+            // service={order.services[0]}
             />
           ))}
       </div>
@@ -143,7 +143,7 @@ const Order = ({ bookings }) => {
 export default Order;
 
 const OrderItem = ({ orderNumber, dateTime, status, service }) => (
-  <div className="grid grid-cols-6  gap-x-12 items-center border-[1px] py-3 px-3 rounded-lg">
+  <div className="grid base:grid-cols-2 lg:grid-cols-6  gap-x-12 items-center border-[1px] py-3 px-3 rounded-lg">
     <div className="flex flex-col gap-1">
       <div className="text-[0.9rem] font-semibold">{orderNumber}</div>
       <div className="text-[0.6rem]">{dateTime}</div>

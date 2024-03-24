@@ -9,10 +9,9 @@ const RangeBar = ({
   setToMechanic,
   toCustomer,
   setToCustomer,
-  handleClick
+  handleClick,
 }) => {
   // Array of city options
-
 
   const handleChangeLocation = (event) => {
     setLocation(event.target.value); // Update location state
@@ -27,7 +26,7 @@ const RangeBar = ({
   };
 
   return (
-    <div className="flex flex-col gap-9">
+    <div className="flex flex-col gap-9 ">
       <div className="flex flex-col gap-7">
         <div className="text-primary text-[1.5rem] font-medium">
           Filter <span className="text-yellowcolor">by</span>{" "}
@@ -39,14 +38,12 @@ const RangeBar = ({
       {/* Location select dropdown */}
       <div className="flex flex-col">
         <label htmlFor="location">Location</label>
-        <select
-          id="location"
-          value={location}
-          onChange={handleChangeLocation}
-        >
+        <select id="location" value={location} onChange={handleChangeLocation}>
           <option value="">Select Location</option>
           {citiesAustralia.map((city) => (
-            <option key={city} value={city}>{city}</option>
+            <option key={city} value={city}>
+              {city}
+            </option>
           ))}
         </select>
       </div>

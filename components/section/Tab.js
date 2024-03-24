@@ -6,12 +6,12 @@ const Tab = ({ title, icons, statefn, state }) => {
       onClick={() => {
         statefn(title);
       }}
-      className="flex justify-between gap-[6vw] w-full py-3 cursor-pointer"
+      className="flex justify-between base:gap-16 lg:gap-[6vw] w-full py-3 cursor-pointer"
     >
       <div className="flex gap-2">
-        <img className="w-8" src={icons} />
+        <img className="base:w-5 lg:w-8" src={icons} />
         <div
-          className={`text-black text-[1rem] ${
+          className={`text-black base:text-[0.9rem] lg:text-[1rem] ${
             state == title && "font-semibold"
           }`}
         >

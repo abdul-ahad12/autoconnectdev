@@ -14,7 +14,7 @@ const MyAvailibility = () => {
   ];
   return (
     <div className="w-full flex justify-center">
-      <div className="w-[80%] flex flex-col gap-6">
+      <div className="lg:w-[80%] flex flex-col gap-6">
         <DateScroll />
       </div>
     </div>

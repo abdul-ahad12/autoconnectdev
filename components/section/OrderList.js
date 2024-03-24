@@ -6,9 +6,9 @@ import axios from "axios";
 const OrdersList = ({ bookings }) => {
   return (
     <div className="w-full flex justify-center">
-      <div className="w-[80%] flex-col flex gap-5">
-        <Tabs defaultValue="account" className=" ">
-          <TabsList className="flex gap-3 items justify-start w-full bg-graycolor py-6 px-3 items-center    border-b-2 rounded-none">
+      <div className="lg:w-[90%] flex-col flex gap-5">
+        <Tabs defaultValue="account" className="">
+          <TabsList className="flex gap-3 items justify-start  lg:w-full bg-graycolor py-6 px-3 items-center    border-b-2 rounded-none">
             <TabsTrigger
               value="account"
               className="w-[100px] data-[state=active]:bg-graycolor "

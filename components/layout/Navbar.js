@@ -11,7 +11,7 @@ const Navbar = () => {
   const { isLoggedIn, userData } = useAuth();
   const [loggedin, setloggedin] = useState(false);
   // mobile navbar
-  const [mobileNav, setmobileNav] = useState(true);
+  const [mobileNav, setmobileNav] = useState(false);
 
   const handleMobileNavbar = () => {
     setmobileNav(!mobileNav);
@@ -113,8 +113,14 @@ const Navbar = () => {
                 />
               </div>
             ) : (
-              <div className="lg:hidden">
-                <Link href={"/login"}>Sign In</Link>
+              <div className="lg:hidden base:flex flex-col gap-5 ">
+                {/* <Link href={"/login"}>Sign In</Link> */}
+                <CusButton
+                  type={"secondary"}
+                  text={"Sign In"}
+                  href={"/login"}
+                />
+
                 <CusButton type={"primary"} text={"Sign Up"} href={"/signup"} />
               </div>
             )}
@@ -136,7 +142,7 @@ const Navbar = () => {
 
         {/* buttons */}
         {isLoggedIn ? (
-          <div className="base:hidden lg:flex lg:gap-6 lg:row-span-full lg:items-center lg:justify-end lG:col-start-1 lg:col-end-13">
+          <div className=" lg:flex lg:gap-6 lg:row-span-full lg:items-center lg:justify-end lg:col-start-1 lg:col-end-13">
             <div className="cursor-pointer" onClick={handleLogout}>
               Sign Out
             </div>{" "}
@@ -148,7 +154,9 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="base:hidden lg:flex gap-6 row-span-full items-center justify-end col-start-1 col-end-13">
-            <Link href={"/login"}>Sign In</Link>
+            <Link href={"/login"} className="">
+              Sign In
+            </Link>
             <CusButton type={"primary"} text={"Sign Up"} href={"/signup"} />
           </div>
         )}

@@ -136,9 +136,9 @@ const ServicesWeProvide = () => {
         </div>
 
         {/* Services listing section */}
-        <div className="flex lg:flex-row justify-between py-[3rem]">
+        <div className="flex base:flex-col lg:flex-row justify-between py-[3rem]">
           {/* Left section */}
-          <div className="w-[60%] grid grid-cols-2 gap-x-[4vw] gap-y-3">
+          <div className="lg:w-[60%] base:w-[100%] base:flex base:flex-col lg:grid base:grid-cols-1  lg:grid-cols-2 gap-x-[4vw] gap-y-3">
             {services.map((data, idx) => (
               <div
                 key={idx}
@@ -162,7 +162,9 @@ const ServicesWeProvide = () => {
               </div>
             ))}
             <div className="py-[1rem] w-full col-start-1 col-end-3">
-              <div className="text-[1.4rem]">Customize your booking</div>
+              <div className="base:text-[0.9rem] lg:text-[1.4rem]">
+                Customize your booking
+              </div>
               <textarea
                 rows={10}
                 className="w-full p-2 bg-graycolor rounded-lg"
@@ -172,7 +174,7 @@ const ServicesWeProvide = () => {
             </div>
           </div>
           {/* Right section */}
-          <div className="w-[30%] h-fit bg-customwhite shadow-md rounded-lg">
+          <div className="lg:w-[30%] h-fit bg-customwhite shadow-md rounded-lg">
             {/* Car image */}
             <div className="bg-[#DFDFDF] w-full shadow-lg p-[0.6rem] rounded-[1rem] flex justify-center items-center flex-col">
               <img

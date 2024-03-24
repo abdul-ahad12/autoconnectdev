@@ -44,8 +44,8 @@ const MechanicHome = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="grid grid-cols-3 gap-2">
+    <div className="flex flex-col  gap-10 w-full ">
+      <div className=" grid lg:grid-cols-3 gap-2 content-center base:mx-auto base:mt-10 lg:m-0">
         {items.map((item) => (
           <MechanicSingleHome
             key={item.id}
@@ -57,7 +57,7 @@ const MechanicHome = () => {
       <Image
         alt="graph"
         src={Graph}
-        className="border-[2px] w-full border-opacity-75 rounded-lg p-8"
+        className="border-[2px] items-center  lg:w-full border-opacity-75 rounded-lg p-8"
       />
     </div>
   );
@@ -76,7 +76,7 @@ const MechanicSingleHome = ({ number, name }) => {
           <p className="lg:text-[min(1.5vw,32px)] font-bold">{number}</p>
           <div className="flex gap-3">
             <Image src={Arrow} alt="arrowhomemechanic" className="w-8 h-8" />
-              {/* <div className="text-[#EA8F95] ">
+            {/* <div className="text-[#EA8F95] ">
                 {percentageChange}%<span> down from past week </span>
               </div> */}
           </div>

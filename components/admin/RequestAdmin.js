@@ -16,8 +16,6 @@ const RequestAdmin = ({
     setModalOpen(true);
   };
 
-  
-
   const handleApprove = (mechanicid) => {
     // Use Swal to confirm before hitting the route
     Swal.fire({
@@ -43,7 +41,7 @@ const RequestAdmin = ({
                 "success"
               );
             } else {
-              console.log(response)
+              console.log(response);
               // If request fails, show error message
               Swal.fire("Error!", "Failed to approve the request.", "error");
             }
@@ -84,7 +82,7 @@ const RequestAdmin = ({
                 "success"
               );
             } else {
-              console.log(response)
+              console.log(response);
               // If request fails, show error message
               Swal.fire("Error!", "Failed to approve the request.", "error");
             }
@@ -102,7 +100,7 @@ const RequestAdmin = ({
   };
 
   return (
-    <div className="grid grid-cols-4 gap-x-16 items-center border-[1px] py-3 px-3 rounded-lg">
+    <div className="grid base:grid-cols-2 lg:grid-cols-4 gap-x-16 items-center border-[1px] py-3 px-3 rounded-lg">
       <div className="flex flex-col gap-1">
         <div className="text-[0.9rem] font-semibold">#0{index}</div>
         <div className="text-[0.6rem]">{dateTime}</div>
@@ -144,15 +142,15 @@ const RequestAdmin = ({
             <div className="flex gap-2 justify-end">
               <button
                 className="mt-4 text-primary bg-graycolor px-4 py-2 rounded-full"
-                onClick={()=>{
-                  setModalOpen(false)
+                onClick={() => {
+                  setModalOpen(false);
                 }}
               >
                 cancel
               </button>
               <button
                 className="mt-4 bg-secondary text-white px-4 py-2 rounded-full"
-                onClick={()=>handleCloseModal(mechanicid)}
+                onClick={() => handleCloseModal(mechanicid)}
               >
                 Submit
               </button>
