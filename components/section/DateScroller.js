@@ -94,9 +94,9 @@ const MechanicAvailability = ({ mechanicId }) => {
   }
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 w-full">
       <h2 className="text-lg font-semibold mb-4">Mechanic Availability</h2>
-      <div className="flex space-x-2 mb-4">
+      <div className="flex lg:flex-row base:flex-col gap-3 lg:space-x-2 mb-4">
         {orderedDaysOfWeek.map((day) => (
           <button
             key={day}
@@ -114,7 +114,7 @@ const MechanicAvailability = ({ mechanicId }) => {
       {selectedDay && (
         <div>
           <h3 className="font-semibold">{selectedDay}</h3>
-          <div className="flex gap-4">
+          <div className="flex lg:flex-row base:flex-col  gap-4">
             {timingSlots.map((timeSlot, index) => (
               <div
                 key={index}

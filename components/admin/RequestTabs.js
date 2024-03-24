@@ -7,8 +7,8 @@ import MechanicInfo from "./MechanicInfo";
 const RequestTabs = ({ bookings }) => {
   return (
     <div>
-      <div className="w-[80%] flex-col flex gap-5">
-        <Tabs defaultValue="new" className=" ">
+      <div className=" lg:w-[80%] flex-col flex base:justify-center base:items-center lg:items-stretch gap-5">
+        <Tabs defaultValue="new" className="base:w-[90%] lg:w-full ">
           <TabsList className="flex gap-3 items justify-start w-full bg-graycolor py-6 px-3 items-center    border-b-2 rounded-none">
             <TabsTrigger
               value="new"

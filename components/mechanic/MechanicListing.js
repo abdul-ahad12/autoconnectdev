@@ -28,8 +28,8 @@ const MechanicListing = ({
   ];
 
   return (
-    <div className="w-full grid grid-cols-12 gap-9   py-[2rem]">
-      <div className="col-start-1  col-end-4 h-fit p-6 row-span-full  rounded-[2rem] bg-customwhite left-[5%] top-0   py-20">
+    <div className="w-full lg:grid  lg:grid-cols-12 gap-9   py-[2rem]">
+      <div className="base:col-start-1 base:col-end-11 lg:col-start-1  lg:col-end-4 h-fit p-6 row-span-full  rounded-[2rem] bg-customwhite left-[5%] top-0   py-20">
         <RangeBar
           location={location}
           setLocation={setLocation}
@@ -54,7 +54,7 @@ const MechanicListing = ({
             </div>
           ))
         ) : (
-          <div className="flex justify-center w-full pt-[5rem]">
+          <div className="base:hidden lg:flex justify-center w-full pt-[5rem]">
             No mechanics found
           </div>
         )}

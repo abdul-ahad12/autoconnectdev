@@ -17,8 +17,8 @@ const Auth = ({ children }) => {
 
   return (
     <div className="w-full flex justify-center bg-primary min-h-screen">
-      <div className="w-[90%] flex gap-8 items-center justify-center">
-        <div className="w-[30%] flex-col py-[6rem]">
+      <div className="w-[90%] flex base:flex-col lg:flex-row gap-8 items-center justify-center">
+        <div className="base:hidden lg:flex lg:w-[30%] flex-col py-[6rem]">
           <div className="lg:text-[min(1.5rem,1.5vw)] text-customwhite">
             Easiest way to get your car repaired
           </div>
@@ -31,7 +31,7 @@ const Auth = ({ children }) => {
             Are you a Mechanic? Register now !!
           </div>
         </div>
-        <div className="w-[70%] h-[95%] rounded-lg  bg-customwhite  flex justify-center py-7">
+        <div className="base:w-full lg:w-[70%] lg:h-[95%] rounded-lg  bg-customwhite  flex justify-center py-7">
           {children}
         </div>
       </div>

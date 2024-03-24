@@ -59,7 +59,7 @@ import RequestAdmin from "./RequestAdmin";
 
 const Requests = () => {
   const [mechanics, setMechanics] = useState([]);
-  console.log(mechanics)
+  console.log(mechanics);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -155,7 +155,7 @@ const Requests = () => {
 
   return (
     <div>
-      <div className="grid  grid-cols-4 gap-x-16 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
+      <div className="base:hidden lg:grid  grid-cols-4 gap-x-16 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
         <div>Request ID</div>
         <div>Mechanic Name</div>
         <div>Mechanic details</div>

@@ -15,8 +15,6 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false); // Add loading state
 
-
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -57,10 +55,14 @@ const Login = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("id", userData.id);
         localStorage.setItem("role", userData.role);
-        swal("Login successful!", "You have successfully logged in.", "success");
-        
+        swal(
+          "Login successful!",
+          "You have successfully logged in.",
+          "success"
+        );
+
         // Redirect to mechanic form if query parameter mechanic is true
-        if (router.query.mechanic === 'true') {
+        if (router.query.mechanic === "true") {
           router.push("/mechanic/form");
         } else {
           router.push("/"); // Redirect to home page after successful login
@@ -80,7 +82,7 @@ const Login = () => {
     <>
       <Navbar />
       <Auth>
-        <div className="text-black w-[65%] text-[min(2rem,2vw)] font-semibold flex flex-col justify-center">
+        <div className="text-black lg:w-[65%] lg:text-[min(2rem,2vw)] font-semibold flex flex-col justify-center">
           <div> Login</div>
           <form className="flex flex-col gap-5 py-8" onSubmit={handleSubmit}>
             <div className="flex flex-col w-full gap-1">
@@ -107,11 +109,13 @@ const Login = () => {
             </div>
             <div className="flex w-full justify-center">
               <button
-                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-[1rem] ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 type="submit"
                 disabled={loading} // Disable button while loading
               >
-                {loading ? 'Loading...' : 'Login'}
+                {loading ? "Loading..." : "Login"}
               </button>
             </div>
           </form>

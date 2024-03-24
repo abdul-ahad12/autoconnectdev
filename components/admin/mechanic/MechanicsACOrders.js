@@ -61,8 +61,8 @@ const MechanicsACOrders = () => {
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-4 mb-5 gap-x-28  items-center border-[1px] py-3 px-6 rounded-lg ">
+    <div className="w-full">
+      <div className="base:hidden lg:grid grid-cols-4 mb-5 gap-x-28  items-center border-[1px] py-3 px-6 rounded-lg ">
         <div className="col-span-1">
           <h3 className="text-graycolor2  font-semibold">Mechanics Name</h3>
         </div>
@@ -85,7 +85,7 @@ const MechanicsACOrders = () => {
         />
       ))}
       {/* Pagination controls */}
-      <div>
+      <div className="flex justify-between">
         <button
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}

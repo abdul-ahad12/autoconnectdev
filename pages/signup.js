@@ -142,7 +142,7 @@ const Signup = () => {
     <>
       <Navbar />
       <Auth>
-        <div className="text-black w-[65%] text-[min(2rem,2vw)] font-semibold flex flex-col">
+        <div className="text-black base:p-3 lg:p-0 lg:w-[65%] base:text-[min(3vw,25px)] lg:text-[min(2rem,2vw)] font-semibold flex flex-col">
           <div> Create Account</div>
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             {/* Form inputs */}
@@ -211,14 +211,14 @@ const Signup = () => {
                 required
               />
               {passwordError && <p className="text-red-500">{passwordError}</p>}
-              <p className="text-sm text-gray-500">
+              <p className="lg:text-sm text-gray-500">
                 Password must be at least 8 characters long and contain at least
                 one number and one special character
               </p>
             </div>
             <div className="flex justify-center">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-[1rem]"
                 type="submit"
                 disabled={isLoading} // Disable button while loading
               >

@@ -18,7 +18,6 @@ import axios from "axios";
 export default function Home() {
   // Function to fetch user details by ID
 
-
   // Usage example
 
   return (

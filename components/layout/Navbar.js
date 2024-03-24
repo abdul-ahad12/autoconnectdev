@@ -3,16 +3,26 @@ import CusButton from "../section/button";
 import Link from "next/link";
 import { useAuth } from "../context/AuthProvider";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import MobileLogo from "../../public/navbar/mobile.svg";
 
 const Navbar = () => {
   const router = useRouter();
   const { isLoggedIn, userData } = useAuth();
   const [loggedin, setloggedin] = useState(false);
+  // mobile navbar
+  const [mobileNav, setmobileNav] = useState(false);
+
+  const handleMobileNavbar = () => {
+    setmobileNav(!mobileNav);
+  };
+  //
+
   useEffect(() => {
     if (isLoggedIn == true) {
       setloggedin(true);
     }
-    setloggedin(false)
+    setloggedin(false);
   }, [isLoggedIn]);
 
   const menu = [
@@ -56,10 +66,66 @@ const Navbar = () => {
         {/* logo */}
         <Link
           href="/"
-          className="text-[2rem] z-50 row-span-full col-start-1 col-end-3 font-semibold "
+          className="lg:text-[2rem] base:text-[1.2rem] z-50 row-span-full col-start-1 col-end-3 font-semibold "
         >
           Auto<span className="text-secondary">connect</span>
         </Link>
+        {/* mobile hamburger */}
+        <div
+          className="lg:hidden col-start-13 flex items-center"
+          onClick={handleMobileNavbar}
+        >
+          {mobileNav ? (
+            <div className="">-</div>
+          ) : (
+            <div class=" curser-pointer">
+              <Image alt="mobilelogo" src={MobileLogo} />
+            </div>
+          )}
+        </div>
+
+        {mobileNav == true && (
+          <div class="flex flex-col gap-8 h-screen min-w-[300px] lg:hidden">
+            <div className="flex flex-col gap-6 mt-10 ">
+              {menu.map((data, idx) => (
+                <Link
+                  href={data.href}
+                  key={idx}
+                  className="z-50 hover:scale-[1.01]"
+                >
+                  {data.title}
+                </Link>
+              ))}
+            </div>
+
+            {isLoggedIn ? (
+              <div className="lg:hidden ">
+                <div
+                  className="cursor-pointer  text-white"
+                  onClick={handleLogout}
+                >
+                  Sign Out
+                </div>
+                <CusButton
+                  type={"primary"}
+                  text={"Dashboard"}
+                  href={"/customerDashboard"}
+                />
+              </div>
+            ) : (
+              <div className="lg:hidden base:flex flex-col gap-5 ">
+                {/* <Link href={"/login"}>Sign In</Link> */}
+                <CusButton
+                  type={"secondary"}
+                  text={"Sign In"}
+                  href={"/login"}
+                />
+
+                <CusButton type={"primary"} text={"Sign Up"} href={"/signup"} />
+              </div>
+            )}
+          </div>
+        )}
 
         {/* menu */}
         <div className="row-span-full col-start-1 col-end-13 base:hidden lg:flex gap-7 justify-center items-center font-normal text-[min(1rem,1vw)] ">
@@ -76,7 +142,7 @@ const Navbar = () => {
 
         {/* buttons */}
         {isLoggedIn ? (
-          <div className="base:hidden lg:flex gap-6 row-span-full items-center justify-end col-start-1 col-end-13">
+          <div className=" lg:flex lg:gap-6 lg:row-span-full lg:items-center lg:justify-end lg:col-start-1 lg:col-end-13">
             <div className="cursor-pointer" onClick={handleLogout}>
               Sign Out
             </div>{" "}
@@ -88,7 +154,9 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="base:hidden lg:flex gap-6 row-span-full items-center justify-end col-start-1 col-end-13">
-            <Link href={"/login"}>Sign In</Link>
+            <Link href={"/login"} className="">
+              Sign In
+            </Link>
             <CusButton type={"primary"} text={"Sign Up"} href={"/signup"} />
           </div>
         )}
