@@ -3,7 +3,7 @@ import Order from "./Order";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/common/Tabs";
 import axios from "axios";
 
-const OrdersList = ({ bookings }) => {
+const OrdersList = ({ bookings,role }) => {
   return (
     <div className="w-full flex justify-center">
       <div className="w-[80%] flex-col flex gap-5">
@@ -21,7 +21,7 @@ const OrdersList = ({ bookings }) => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="account">
-            <Order bookings={bookings} />
+            <Order role={role} bookings={bookings} />
           </TabsContent>
           <TabsContent aria-disabled value="password">
             get

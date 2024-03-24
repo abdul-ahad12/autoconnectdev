@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
+import { fetchUserData } from "../lib/utils";
+
 const Bookmechanic = () => {
   const router = useRouter();
   const [mechanicData, setMechanicData] = useState();
@@ -68,17 +70,8 @@ const Bookmechanic = () => {
 
   useEffect(() => {
     if (mechanicId !== undefined) {
-      const fetchUserData = async () => {
-        try {
-          const response = await axios.get(`/api/customer`, {
-            withCredentials: true,
-          });
-          setUserData(response.data.user);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      };
       fetchUserData();
+      setUserData(response.data.user);
       setDisplay(true);
     }
     if (mechanicId !== undefined) {
@@ -309,14 +302,15 @@ const Bookmechanic = () => {
                 {" "}
                 Services <span className="text-secondary">you</span> Opted for
               </div>
-              {services?.map((data, idx) => {
-                return (
-                  <div className="flex text-[1rem] font-medium">
-                    <div>{data.name}</div>
-                    <div>{data.price}</div>
-                  </div>
-                );
-              })}
+              <div className="flex flex-col gap-2 ml-3">
+                {selectedServicesData?.map((data, idx) => {
+                  return (
+                    <div className="flex text-[1rem] font-medium">
+                      <strong>{data.name}</strong> : <div>${data.price}</div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="my-5 bg-customwhite rounded-[2rem] p-[2rem]">

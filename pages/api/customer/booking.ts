@@ -17,6 +17,7 @@ export default async function handler(
     authorize(req, res, async () => {
       // Extract userId from the request object after authorization
       const userId = req["user"];
+      console.log("USER ID",userId.id)
 
       const {
         page = "1",
@@ -24,7 +25,7 @@ export default async function handler(
         filter = "all",
       } = req.query as CustomQuery;
 
-      let query: Record<string, any> = { user: userId };
+      let query: Record<string, any> = { user: userId.id };
       if (filter === "previous") {
         query.date = { $lt: new Date() }; // Filter for previous bookings
       } else if (filter === "upcoming") {

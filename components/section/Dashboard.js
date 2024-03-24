@@ -4,29 +4,52 @@ import OrdersList from "./OrderList";
 import MyProfile from "./MyProfile";
 import MyVehicles from "./MyVehicles";
 import Tab from "./Tab";
-import MyAvailibility from "./MyAvailability";
+import MyAvailability from "./MyAvailability";
 
-const Dashboard = ({bookings}) => {
-  const [current, setcurrent] = useState("Orders");
+const Dashboard = ({ bookings, role }) => {
+  const [current, setCurrent] = useState("Orders");
 
-  const tabs = [
-    {
-      title: "My Profile",
-      icons: "/icons/profile.svg",
-    },
-    {
-      title: "Orders",
-      icons: "/icons/orders.svg",
-    },
-    {
-      title: "My Vehicles",
-      icons: "/icons/profile.svg",
-    },
-    {
-      title: "My Availability",
-      icons: "/icons/profile.svg",
-    },
-  ];
+  // Define tabs based on role
+  let tabs = [];
+  if (role === "CUSTOMER") {
+    tabs = [
+      {
+        title: "My Profile",
+        icons: "/icons/profile.svg",
+      },
+      {
+        title: "Orders",
+        icons: "/icons/orders.svg",
+      },
+    ];
+  } else if (role === "MECHANIC") {
+    tabs = [
+      {
+        title: "My Profile",
+        icons: "/icons/profile.svg",
+      },
+      {
+        title: "Orders",
+        icons: "/icons/vehicles.svg",
+      },
+      {
+        title: "My Availability",
+        icons: "/icons/vehicles.svg",
+      },
+    ];
+  } else if (role === "ADMIN") {
+    tabs = [
+      {
+        title: "Dashboard",
+        icons: "/icons/dashboard.svg",
+      },
+      {
+        title: "Reports",
+        icons: "/icons/reports.svg",
+      },
+    ];
+  }
+
   return (
     <div className="w-full flex justify-center bg-white overflow-hidden">
       <div className="w-[90%] flex pt-[3rem] gap-[2rem]">
@@ -36,27 +59,25 @@ const Dashboard = ({bookings}) => {
             Dashboard
           </div>
           <div className="flex flex-col w-full gap-1 mb-[25vh]">
-            {tabs.map((data, idx) => {
-              return (
-                <Tab
-                  key={idx}
-                  title={data.title}
-                  icons={data.icons}
-                  statefn={setcurrent}
-                  state={current}
-                />
-              );
-            })} 
+            {tabs.map((data, idx) => (
+              <Tab
+                key={idx}
+                title={data.title}
+                icons={data.icons}
+                statefn={setCurrent}
+                state={current}
+              />
+            ))}
           </div>
           <CusButton type={"primary"} text={"Sign Out"} />
         </div>
 
         {/* right */}
         <div className="w-[90%] pb-[40vh] relative">
-          {current == "Orders" && <OrdersList bookings={bookings} />}
-          {current == "My Profile" && <MyProfile />}
-          {current == "My Vehicles" && <MyVehicles />}
-          {current == "My Availability" && <MyAvailibility />}
+          {current === "Orders" && <OrdersList role={role}  bookings={bookings} />}
+          {current === "My Profile" && <MyProfile />}
+          {current === "My Vehicles" && <MyVehicles />}
+          {current === "My Availability" && <MyAvailability />}
 
           <img
             className="absolute bottom-0 right-[-10%] w-[80%]"

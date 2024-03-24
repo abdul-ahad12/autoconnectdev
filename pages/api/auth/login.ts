@@ -4,7 +4,7 @@ import { User, UserModel } from "../../../lib/models/user";
 import bcrypt from "bcrypt";
 import dotevn from "dotenv";
 import { issueToken } from "../../../lib/auth";
-import { setCookie } from "../../../lib/cookie";
+import { setCookie, setTokensCookies } from "../../../lib/cookie";
 dotevn.config();
 
 export default async function handler(
@@ -38,14 +38,15 @@ export default async function handler(
           id: userAlreadyExists[0]._id,
           role: userAlreadyExists[0].role,
         });
-
+        
         setCookie(res, "access-token", accessToken, {
           maxAge: 30 * 24 * 60 * 60,
         });
         setCookie(res, "refresh-token", refreshToken, {
           maxAge: 30 * 24 * 60 * 60,
         });
-
+        setTokensCookies(res, accessToken, refreshToken);
+        
         res.status(200).json({ accessToken, refreshToken, user: result });
       } else {
         res.status(400).json({ message: "Wrong password" });

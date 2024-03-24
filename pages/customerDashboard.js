@@ -13,22 +13,9 @@ const CustomerDashboard = () => {
 
   console.log(userRole);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // Check if access token exists in localStorage
-      const accessToken = localStorage.getItem("accessToken");
-      const id = localStorage.getItem("id");
-      const role = localStorage.getItem("role");
-      setuserId(id);
-      setUserRole(role);
 
-      // setIsLoading(false); // Set isLoading to false after fetching data
-    };
 
-    fetchData();
-  }, []);
-
-  console.log(bookings);
+  console.log("bookings",bookings);
   useEffect(() => {
     // Define your fetch function
     const fetchBookings = async () => {
@@ -42,6 +29,8 @@ const CustomerDashboard = () => {
         // Extract the bookings data from the response
         const { bookings } = response.data;
 
+       
+
         // Set the fetched bookings in state
         setBookings(bookings);
       } catch (error) {
@@ -53,12 +42,12 @@ const CustomerDashboard = () => {
     fetchBookings();
 
     // Call the fetch function
-  }, [userID]);
+  }, []);
 
   return (
     <>
       <Navbar />
-      <Dashboard bookings={bookings} />
+      <Dashboard role={"CUSTOMER"} bookings={bookings} />
       <Footer />
     </>
   );

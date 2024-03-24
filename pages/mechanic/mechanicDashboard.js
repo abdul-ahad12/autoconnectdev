@@ -1,22 +1,18 @@
-import Footer from '@/components/layout/Footer'
-import Navbar from '@/components/layout/Navbar'
-import Dashboard from '@/components/section/Dashboard'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import Dashboard from "@/components/section/Dashboard";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const MechanicDashboard = () => {
   const [bookings, setBookings] = useState([]);
-  console.log(bookings)
+  console.log(bookings);
   useEffect(() => {
     // Define your fetch function
     const fetchBookings = async () => {
       try {
-        // Replace 'userId' with the actual user ID you want to fetch bookings for
-        const mechanicId = localStorage.getItem("mechanicId");
-
-
         // Send GET request to the API endpoint
-        const response = await axios.get(`/api/mechanic/getAllOrders/${mechanicId}`);
+        const response = await axios.get(`/api/mechanic/getAllOrders`);
 
         // Extract the bookings data from the response
         const { bookings } = response.data;
@@ -34,11 +30,11 @@ const MechanicDashboard = () => {
   }, []);
   return (
     <div>
-        <Navbar />
-        <Dashboard bookings={bookings} />
-        <Footer />
+      <Navbar />
+      <Dashboard role={"MECHANIC"} bookings={bookings} />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default MechanicDashboard
+export default MechanicDashboard;
