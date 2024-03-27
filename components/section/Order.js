@@ -74,7 +74,10 @@ const Order = ({ bookings, role }) => {
         {role !== "MECHANIC" &&
           orders &&
           bookings?.map((order, index) => (
-            <div className="p-[1.2rem] w-full bg-white rounded-lg flex flex-col border-gray-300 border  z-50">
+            <div
+              key={index}
+              className="p-[1.2rem] w-full bg-white rounded-lg flex flex-col border-gray-300 border  z-50"
+            >
               <div className="w-full  flex justify-between items-center">
                 <div className="text-[1.3rem]">
                   Order #{order?._id.slice(0, 4)}
@@ -123,13 +126,15 @@ const Order = ({ bookings, role }) => {
       {role === "MECHANIC" &&
         bookings.map((data, idx) => {
           return (
-            <OrderItem
-              orderNumber={data._id.slice(0, 4)}
-              dateTime={data.createdAt}
-              orderStatus={data.isCompleted}
-              modeOfService={data.deliveryMode}
-              bookingId={data._id}
-            />
+            <div key={idx}>
+              <OrderItem
+                orderNumber={data._id.slice(0, 4)}
+                dateTime={data.createdAt}
+                orderStatus={data.isCompleted}
+                modeOfService={data.deliveryMode}
+                bookingId={data._id}
+              />
+            </div>
           );
         })}
 

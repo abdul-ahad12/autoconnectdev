@@ -37,13 +37,15 @@ const MechanicsUser = () => {
   return (
     <div>
       <h1 className="lg:text-[min(1.5vw,32px)]">User Details</h1>
-      {users.map((data,idx) => {
+      {users.map((data, idx) => {
         return (
-          <SingleUser
-            username={data.name}
-            email={data.email}
-            role={data.role}
-          />
+          <div key={idx}>
+            <SingleUser
+              username={data.name}
+              email={data.email}
+              role={data.role}
+            />
+          </div>
         );
       })}
     </div>
