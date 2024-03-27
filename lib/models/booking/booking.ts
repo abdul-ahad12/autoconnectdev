@@ -35,6 +35,7 @@ export interface Booking extends Document {
   services: Service[]; // List of selected services with name and price
   customNote?: string; // Optional custom note for custom services
   isCompleted: boolean;
+  isCancelled: boolean;
   invoice?: Invoice; // Detailed invoice information
   address: {
     street: string;
@@ -73,6 +74,7 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
     services: [{ name: String, price: String }], // Update services array to include name and price
     customNote: { type: String },
     isCompleted: { type: Boolean, default: false },
+    isCancelled: { type: Boolean, default: false },
     // invoice: {
     //   // Detailed invoice information
     //   services: [

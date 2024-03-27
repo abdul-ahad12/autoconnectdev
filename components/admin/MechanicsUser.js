@@ -7,7 +7,7 @@ const MechanicsUser = () => {
     role: "mechanic",
   };
   const [users, setUsers] = useState([]);
-  console.log(users);
+  console.log("USERS", users);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,11 +37,15 @@ const MechanicsUser = () => {
   return (
     <div>
       <h1 className="lg:text-[min(1.5vw,32px)]">User Details</h1>
-      <SingleUser
-        username={user.username}
-        email={user.email}
-        role={user.role}
-      />
+      {users.map((data,idx) => {
+        return (
+          <SingleUser
+            username={data.name}
+            email={data.email}
+            role={data.role}
+          />
+        );
+      })}
     </div>
   );
 };
@@ -51,7 +55,7 @@ export default MechanicsUser;
 const SingleUser = ({ username, email, role }) => {
   return (
     <div className="w-full">
-      <div className="flex base:flex-col lg:flex-row justify-between border-[1px] border-opacity-70 rounded-lg p-5">
+      <div className="grid grid-cols-3 base:flex-col lg:flex-row justify-between border-[1px] border-opacity-70 rounded-lg p-5">
         <div className="flex gap-3">
           <div className="text-graycolor2">Username :</div>
           <p>{username}</p>

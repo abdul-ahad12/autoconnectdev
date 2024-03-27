@@ -70,9 +70,15 @@ const Bookmechanic = () => {
 
   useEffect(() => {
     if (mechanicId !== undefined) {
-      fetchUserData();
-      setUserData(response.data.user);
-      setDisplay(true);
+      const fn=async()=>{
+      const response= await fetchUserData();
+      console.log(response)
+        setUserData(response);
+        setDisplay(true);
+      }
+      fn()
+      
+      
     }
     if (mechanicId !== undefined) {
       const fetchMechanicData = async () => {

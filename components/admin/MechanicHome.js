@@ -30,16 +30,19 @@ const MechanicHome = () => {
       id: 1,
       number: stats?.totalUsers ? stats.totalUsers : 0,
       text: "Total Users",
+      image: "/admin/homeusers.png",
     },
     {
       id: 2,
       number: stats?.totalMechanics ? stats.totalMechanics : 0,
       text: "Total Mechanic",
+      image: "/plumber.svg",
     },
     {
       id: 3,
       number: stats?.totalBookings ? stats.totalBookings : 0,
       text: "Total Orders",
+      image: "/shoppingcart.svg",
     },
   ];
 
@@ -51,6 +54,7 @@ const MechanicHome = () => {
             key={item.id}
             number={item.number}
             name={item.text}
+            image={item.image}
           />
         ))}
       </div>
@@ -65,7 +69,7 @@ const MechanicHome = () => {
 
 export default MechanicHome;
 
-const MechanicSingleHome = ({ number, name }) => {
+const MechanicSingleHome = ({ number, name, image }) => {
   return (
     <div className="w-full">
       <div className="flex justify-between border-[1px] border-opacity-70 rounded-lg p-5">
@@ -75,15 +79,15 @@ const MechanicSingleHome = ({ number, name }) => {
           </div>
           <p className="lg:text-[min(1.5vw,32px)] font-bold">{number}</p>
           <div className="flex gap-3">
-            <Image src={Arrow} alt="arrowhomemechanic" className="w-8 h-8" />
+            {/* <Image src={Arrow} alt="arrowhomemechanic" className="w-8 h-8" /> */}
             {/* <div className="text-[#EA8F95] ">
                 {percentageChange}%<span> down from past week </span>
               </div> */}
           </div>
         </div>
         <div className="flex flex-col items-center justify-between">
-          <Image src={Users} alt="arrowhomemechanic" />
-          <CusButton text={"View All"} />
+         <div className="border border-black border-opacity-40 rounded-lg p-2"> <img className="h-[3rem]" src={image} alt="arrowhomemechanic" /></div>
+          {/* <CusButton text={"View All"} /> */}
         </div>
       </div>
     </div>

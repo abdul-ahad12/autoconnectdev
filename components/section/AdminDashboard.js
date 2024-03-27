@@ -1,23 +1,12 @@
 import React, { useState } from "react";
 import CusButton from "./button";
 import OrdersList from "./OrderList";
-import MyProfile from "./MyProfile";
-import MyVehicles from "./MyVehicles";
 import Tab from "./Tab";
 import MyAvailibility from "./MyAvailability";
-import RequestAdmin from "../admin/RequestAdmin";
-import Requests from "../admin/Requests";
 import RequestTabs from "../admin/RequestTabs";
-import MechanicInfo from "../admin/MechanicInfo";
-import MechanicsOrders from "../admin/mechanic/MechanicsOrders";
-import MechanicsDashbord from "../admin/mechanic/MechanicsDashbord";
-import MechanicAdminContainer from "../admin/mechanic/MechanicAdminContaine";
 import MechanicsACOrders from "../admin/mechanic/MechanicsACOrders";
-import Order from "./Order";
 import MechanicHome from "../admin/MechanicHome";
 import MechanicsUser from "../admin/MechanicsUser";
-import MobileLogo from "../../public/navbar/mobile.svg";
-import Image from "next/image";
 
 const AdminDashboard = ({ bookings }) => {
   const [current, setcurrent] = useState("Orders");

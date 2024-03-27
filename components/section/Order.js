@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { formatDate } from "../../lib/supportingFncs";
+import Swal from "sweetalert2";
 
 const Order = ({ bookings, role }) => {
   console.log("orders", bookings);
@@ -70,7 +71,7 @@ const Order = ({ bookings, role }) => {
         <div>Action</div>
       </div>
       <div className="flex flex-col gap-9">
-        {!role &&
+        {role !== "MECHANIC" &&
           orders &&
           bookings?.map((order, index) => (
             <div className="p-[1.2rem] w-full bg-white rounded-lg flex flex-col border-gray-300 border  z-50">
@@ -119,6 +120,19 @@ const Order = ({ bookings, role }) => {
             </div>
           ))}
       </div>
+      {role === "MECHANIC" &&
+        bookings.map((data, idx) => {
+          return (
+            <OrderItem
+              orderNumber={data._id.slice(0, 4)}
+              dateTime={data.createdAt}
+              orderStatus={data.isCompleted}
+              modeOfService={data.deliveryMode}
+              bookingId={data._id}
+            />
+          );
+        })}
+
       {/* <NoOrdersYet /> */}
       {/* <DateScroll /> */}
       {/* <RangeBar /> */}
@@ -146,30 +160,121 @@ const Order = ({ bookings, role }) => {
 
 export default Order;
 
-const OrderItem = ({ orderNumber, dateTime, service }) => (
-  <div className="grid grid-cols-6  gap-x-12 items-center border-[1px] py-3 px-3 rounded-lg">
-    <div className="flex flex-col gap-1">
-      <div className="text-[0.9rem] font-semibold">{orderNumber}</div>
-      <div className="text-[0.6rem]">{dateTime}</div>
-    </div>
-    <button className="text-primary w-fit text-[0.7rem] border-[1px] rounded-md p-1">
-      Click here
-    </button>
-    <div className="text-graycolor2 text-[0.7rem]">{dateTime}</div>
-    {/* <button
-      className={`text-primary w-fit ${
-        status ? "bg-green-500" : "bg-[pink]"
-      }  text-[0.7rem] border-[1px] rounded-md p-1`}
-    >
-      {status ? "Done" : "Not completed"}
-    </button> */}
-    <div className="text-graycolor2 text-[0.8rem]">{service}</div>
-    <div className="flex gap-1">
-      {/* <img src="../dashboard/receipt.svg" alt="receipt" /> */}
-      <button>Remove</button>
+const OrderItem = ({
+  orderNumber,
+  dateTime,
+  service,
+  orderStatus,
+  modeOfService,
+  bookingId, // Add bookingId prop
+}) => {
+  const [isCancelled, setIsCancelled] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
-      {/* <img src="../dashboard/cancel.svg" alt="cancel" /> */}
-      <button>Remove</button>
+  // Function to handle completion of the booking
+  const handleCompleteBooking = async () => {
+    // Display a confirmation pop-up
+    const result = await Swal.fire({
+      title: "Complete Booking",
+      text: "Are you sure you want to mark this booking as completed?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, mark it as completed",
+      cancelButtonText: "No, cancel",
+    });
+
+    // If user confirms, proceed with completion
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(
+          `/api/customer/bookings/action/${bookingId}?action=complete`,
+          {
+            method: "PUT",
+          }
+        );
+        if (response.ok) {
+          setIsCompleted(true);
+        } else {
+          // Handle error
+          console.error("Failed to complete booking:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error completing booking:", error.message);
+      }
+    }
+  };
+
+  // Function to handle cancellation of the booking
+  const handleCancelBooking = async () => {
+    // Display a confirmation pop-up
+    const result = await Swal.fire({
+      title: "Cancel Booking",
+      text: "Are you sure you want to cancel this booking?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it",
+      cancelButtonText: "No, keep it",
+    });
+
+    // If user confirms, proceed with cancellation
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(
+          `/api/customer/bookings/action/${bookingId}?action=cancel`,
+          {
+            method: "PUT",
+          }
+        );
+        if (response.ok) {
+          setIsCancelled(true);
+        } else {
+          // Handle error
+          console.error("Failed to cancel booking:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error cancelling booking:", error.message);
+      }
+    }
+  };
+
+  return (
+    <div className="grid grid-cols-6 gap-x-12 items-center border-[1px] py-3 px-3 rounded-lg">
+      <div className="flex flex-col gap-1">
+        <div className="text-[0.9rem] font-semibold">#{orderNumber}</div>
+        <div className="text-[0.6rem]">{formatDate(dateTime)}</div>
+      </div>
+      <button className="text-primary w-fit text-[0.7rem] border-[1px] rounded-md p-1">
+        Click here
+      </button>
+      <div className="text-graycolor2 text-[0.7rem]">
+        {formatDate(dateTime)}
+      </div>
+      <button
+        className={`text-primary w-fit ${
+          orderStatus ? "bg-green-500" : "bg-[pink]"
+        }  text-[0.7rem] border-[1px] rounded-md p-1`}
+      >
+        {orderStatus ? "Done" : "Not completed"}
+      </button>
+      <div className="text-graycolor2 text-[0.8rem]">
+        {modeOfService == "TO_MECHANIC" ? "At Mechanic" : "PickUp"}
+      </div>
+      <div className="flex gap-1">
+        {/* Clicking on receipt icon triggers completion of the booking */}
+        <img
+          className="w-6 cursor-pointer"
+          src="../dashboard/receipt.svg"
+          alt="receipt"
+          onClick={handleCompleteBooking}
+        />
+        {/* Clicking on cancel icon triggers cancellation of the booking */}
+        <img
+          className="w-6 cursor-pointer"
+          src="../dashboard/cancel.svg"
+          alt="cancel"
+          onClick={handleCancelBooking}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};

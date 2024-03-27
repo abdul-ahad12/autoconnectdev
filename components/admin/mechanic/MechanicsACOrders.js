@@ -3,19 +3,19 @@ import MechanicsDashbord from "./MechanicsDashbord";
 
 const MechanicsACOrders = () => {
   // Array of mechanics data (assuming it's available)
-  const mechanicsData = [
-    { acmotors: "AC Motor 1", dateofsignup: "2023-01-01", numberoforders: 5 },
-    { acmotors: "AC Motor 2", dateofsignup: "2023-02-01", numberoforders: 8 },
-    { acmotors: "AC Motor 3", dateofsignup: "2023-03-01", numberoforders: 3 },
-    { acmotors: "AC Motor 4", dateofsignup: "2023-04-01", numberoforders: 6 },
-    { acmotors: "AC Motor 5", dateofsignup: "2023-05-01", numberoforders: 7 },
-    { acmotors: "AC Motor 6", dateofsignup: "2023-06-01", numberoforders: 9 },
-    { acmotors: "AC Motor 3", dateofsignup: "2023-03-01", numberoforders: 3 },
-    { acmotors: "AC Motor 4", dateofsignup: "2023-04-01", numberoforders: 6 },
-    { acmotors: "AC Motor 5", dateofsignup: "2023-05-01", numberoforders: 7 },
-    { acmotors: "AC Motor 6", dateofsignup: "2023-06-01", numberoforders: 9 },
-    // Add more mechanics data as needed
-  ];
+  // const mechanicsData = [
+  //   { acmotors: "AC Motor 1", dateofsignup: "2023-01-01", numberoforders: 5 },
+  //   { acmotors: "AC Motor 2", dateofsignup: "2023-02-01", numberoforders: 8 },
+  //   { acmotors: "AC Motor 3", dateofsignup: "2023-03-01", numberoforders: 3 },
+  //   { acmotors: "AC Motor 4", dateofsignup: "2023-04-01", numberoforders: 6 },
+  //   { acmotors: "AC Motor 5", dateofsignup: "2023-05-01", numberoforders: 7 },
+  //   { acmotors: "AC Motor 6", dateofsignup: "2023-06-01", numberoforders: 9 },
+  //   { acmotors: "AC Motor 3", dateofsignup: "2023-03-01", numberoforders: 3 },
+  //   { acmotors: "AC Motor 4", dateofsignup: "2023-04-01", numberoforders: 6 },
+  //   { acmotors: "AC Motor 5", dateofsignup: "2023-05-01", numberoforders: 7 },
+  //   { acmotors: "AC Motor 6", dateofsignup: "2023-06-01", numberoforders: 9 },
+  //   // Add more mechanics data as needed
+  // ];
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,14 +47,17 @@ const MechanicsACOrders = () => {
   }, [currentPage]);
 
   const itemsPerPage = 6;
-  const totalPages = Math.ceil(mechanicsData.length / itemsPerPage);
+  const totalPages = Math.ceil(approvedMechanics.length / itemsPerPage);
 
   // Calculate start and end index based on currentPage
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, mechanicsData.length);
+  const endIndex = Math.min(
+    startIndex + itemsPerPage,
+    approvedMechanics.length
+  );
 
   // Slice mechanicsData array based on start and end index
-  const currentMechanics = mechanicsData.slice(startIndex, endIndex);
+  const currentMechanics = approvedMechanics.slice(startIndex, endIndex);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -73,14 +76,14 @@ const MechanicsACOrders = () => {
           <h3 className="text-primary font-semibold">Number of Orders</h3>
         </div>
         <div className="col-span-1">
-          <h3 className="text-primary font-semibold">Button</h3>
+          <h3 className="text-primary font-semibold">Info</h3>
         </div>
       </div>
       {currentMechanics.map((mechanic, index) => (
         <MechanicsDashbord
           key={index}
-          acmotors={mechanic.acmotors}
-          dateofsignup={mechanic.dateofsignup}
+          acmotors={mechanic.name}
+          dateofsignup={mechanic.createdAt}
           numberoforders={mechanic.numberoforders}
         />
       ))}

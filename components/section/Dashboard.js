@@ -5,9 +5,12 @@ import MyProfile from "./MyProfile";
 import MyVehicles from "./MyVehicles";
 import Tab from "./Tab";
 import MyAvailability from "./MyAvailability";
+import MyAvailibility from "./MyAvailability";
 
 const Dashboard = ({ bookings, role }) => {
   const [current, setCurrent] = useState("Orders");
+
+  const [Mleftbar, setMleftbar] = useState(false);
 
   // Define tabs based on role
   let tabs = [];
@@ -30,11 +33,11 @@ const Dashboard = ({ bookings, role }) => {
       },
       {
         title: "Orders",
-        icons: "/icons/vehicles.svg",
+        icons: "/icons/orders.svg",
       },
       {
         title: "My Availability",
-        icons: "/icons/vehicles.svg",
+        icons: "/icons/profile.svg",
       },
     ];
   } else if (role === "ADMIN") {
@@ -118,7 +121,7 @@ const Dashboard = ({ bookings, role }) => {
                     key={idx}
                     title={data.title}
                     icons={data.icons}
-                    statefn={setcurrent}
+                    statefn={setCurrent}
                     state={current}
                   />
                 );
@@ -132,7 +135,7 @@ const Dashboard = ({ bookings, role }) => {
         {/* <div className="lg:w-[90%] lg:pb-[40vh] relative"> */}
         <div className="w-full flex justify-center lg:w-[90%] lg:pb-[40vh] relative">
           <div className="  base:w-[100%] lg:w-full base:my-10 lg:my-0 ">
-            {current == "Orders" && <OrdersList bookings={bookings} />}
+            {current == "Orders" && <OrdersList bookings={bookings} role={role} />}
             {current == "My Profile" && <MyProfile />}
             {current == "My Vehicles" && <MyVehicles />}
             {current == "My Availability" && <MyAvailibility />}
