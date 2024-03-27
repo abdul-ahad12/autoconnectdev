@@ -289,13 +289,13 @@ const Form = () => {
         // Show success message using Swal
         Swal.fire({
           icon: "success",
-          title: "Your details have been submitted successfully and are under review",
+          title:
+            "Your details have been submitted successfully and are under review",
           text: "You will be mailed if we approve your registration",
           showConfirmButton: true,
           timer: 5000,
         });
         router.push("/");
-
       } else {
         throw new Error("Registration failed");
       }
@@ -472,13 +472,15 @@ const Form = () => {
                           <option className="pointer-events-none select-none selec">
                             Select Start time
                           </option>
-                          {Array.from({ length: 13 }, (_, i) => i + 8).map(
+                          {Array.from({ length: 7 }, (_, i) => i * 2 + 8).map(
                             (hour) => (
                               <option
-                                className="text-primary "
+                                className="text-primary"
                                 key={hour}
                                 value={`${hour}:00`}
-                              >{`${hour}:00`}</option>
+                              >
+                                {`${hour}:00`}
+                              </option>
                             )
                           )}
                         </select>
@@ -490,13 +492,15 @@ const Form = () => {
                           onChange={handleChange}
                         >
                           <option>Select End Time</option>
-                          {Array.from({ length: 13 }, (_, i) => i + 9).map(
+                          {Array.from({ length: 7 }, (_, i) => i * 2 + 10).map(
                             (hour) => (
                               <option
                                 className="text-primary"
                                 key={hour}
                                 value={`${hour}:00`}
-                              >{`${hour}:00`}</option>
+                              >
+                                {`${hour}:00`}
+                              </option>
                             )
                           )}
                         </select>

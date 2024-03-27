@@ -8,7 +8,27 @@ import MobileLogo from "../../public/navbar/mobile.svg";
 
 const Navbar = () => {
   const router = useRouter();
-  const { isLoggedIn, userData } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+
+  console.log(userData);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Check if access token exists in localStorage
+      const accessToken = localStorage.getItem("accessToken");
+      const id = localStorage.getItem("id");
+      const role = localStorage.getItem("role");
+      if (accessToken && id && role) {
+        setIsLoggedIn(true);
+        setUserData({ id, role });
+      }
+      setIsLoading(false); // Set isLoading to false after fetching data
+    };
+
+    fetchData();
+  }, []);
   const [loggedin, setloggedin] = useState(false);
   // mobile navbar
   const [mobileNav, setmobileNav] = useState(false);
@@ -23,7 +43,7 @@ const Navbar = () => {
       setloggedin(true);
     }
     setloggedin(false);
-  }, [isLoggedIn]);
+  }, [isLoggedIn, router]);
 
   const menu = [
     {
