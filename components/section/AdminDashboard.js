@@ -9,7 +9,7 @@ import MechanicHome from "../admin/MechanicHome";
 import MechanicsUser from "../admin/MechanicsUser";
 
 const AdminDashboard = ({ bookings }) => {
-  const [current, setcurrent] = useState("Orders");
+  const [current, setcurrent] = useState("Requests");
 
   const tabs = [
     {
@@ -33,6 +33,7 @@ const AdminDashboard = ({ bookings }) => {
       icons: "/icons/orders.svg",
     },
   ];
+  
   const [Mleftbar, setMleftbar] = useState(false);
   return (
     <div className="w-full flex lg:justify-center bg-white overflow-hidden relative">
@@ -110,7 +111,6 @@ const AdminDashboard = ({ bookings }) => {
                 );
               })}
             </div>
-            {/* <CusButton type={"primary"} text={"Sign Out"} /> */}
           </div>
         )}
 
