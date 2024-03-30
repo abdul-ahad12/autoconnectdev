@@ -3,6 +3,8 @@ import TitleDesc from "../section/TitleDesc";
 import Description from "../section/Description";
 import CusButton from "../section/button";
 import { useRouter } from "next/router";
+import Modal from "./ReusableModal";
+import ServicesModal from "./ServicesModal";
 
 const ServicesWeProvide = () => {
   const [selectedServices, setSelectedServices] = useState([]);
@@ -113,8 +115,16 @@ const ServicesWeProvide = () => {
     setSelectedServices(updatedServices);
   };
 
+  // modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSubmit = (formData) => {
+    console.log("Form submitted with data:", formData);
+    setIsModalOpen(false); // Close the modal after submission
+  };
+
   return (
-    <div className="w-full px-[5%] py-[5rem] bg-customwhite">
+    <div className="w-full px-[5%] py-[5rem] bg-customwhite ">
       <div className="w-[100%]">
         <div className="flex justify-between  w-full">
           <div className="w-[80%]">
@@ -165,12 +175,40 @@ const ServicesWeProvide = () => {
               <div className="base:text-[0.9rem] lg:text-[1.4rem]">
                 Customize your booking
               </div>
-              <textarea
+              {/* <textarea
                 rows={10}
                 className="w-full p-2 bg-graycolor rounded-lg"
                 value={customBookingText}
                 onChange={handleCustomBookingChange}
-              />
+              /> */}
+              {/* <div> */}
+              <div className="mt-7">
+                <CusButton
+                  text={"Click Here"}
+                  onClick={() => setIsModalOpen(true)}
+                  type={"primary"}
+                />
+
+                <ServicesModal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                  onSubmit={handleSubmit}
+                  showSubmitButton={true}
+                  fields={[
+                    { name: "Street", label: "Street" },
+                    { name: "City", label: "City" },
+                    { name: "Subrub", label: "Subrub" },
+
+                    { name: "Pincode", label: "Pincode" },
+
+                    { name: "Name of the Car", label: "Name of the Car" },
+                    { name: "Manufacturing Year", label: "Manufacturing Year" },
+                    { name: "Address", label: "Address" },
+
+                    // Add more fields as needed
+                  ]}
+                />
+              </div>
             </div>
           </div>
           {/* Right section */}

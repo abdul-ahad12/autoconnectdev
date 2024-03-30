@@ -24,7 +24,7 @@ const RequestTabs = ({ bookings }) => {
           <TabsContent value="new" className="flex flex-col gap-16 ">
             {/* <Order bookings={bookings} /> */}
             <Requests bookings={bookings} />
-            <MechanicInfo />
+            {/* <MechanicInfo /> */}
           </TabsContent>
           <TabsContent aria-disabled value="password">
             get

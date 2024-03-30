@@ -85,6 +85,15 @@ const MechanicsACOrders = () => {
           acmotors={mechanic.name}
           dateofsignup={mechanic.createdAt}
           numberoforders={mechanic.numberoforders}
+          firstname={mechanic.name}
+          lastname={mechanic.name}
+          phonenumber={mechanic.abn}
+          Aboutus={mechanic.aboutus}
+          email={mechanic?.email}
+          street={mechanic.address.street}
+          suburb={mechanic.address.suburb}
+          state={mechanic.address.state}
+          pincode={mechanic.address.pinCode}
         />
       ))}
       {/* Pagination controls */}

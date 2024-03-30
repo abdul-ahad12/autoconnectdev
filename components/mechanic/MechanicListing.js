@@ -40,7 +40,7 @@ const MechanicListing = ({
           handleClick={handleClick}
         />
       </div>
-      <div className=" col-start-4 ml-7 col-end-13 row-span-full grid grid-cols-2 gap-3">
+      <div className=" col-start-4 lg:ml-7 lg:col-end-13 row-span-full grid lg:grid-cols-2 gap-3">
         {mechanics.length > 0 ? (
           mechanics.map((data, idx) => (
             <div
@@ -109,7 +109,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
             {/* Main card */}
             <div className="rounded-lg bg-graycolor px-[1rem] lg:px-[2rem] py-[1rem] flex flex-row">
               <div className="lg:w-[75%] flex flex-col gap-6">
-                <div className="lg:text-[min(1.5rem,1.5vw)] text-[1.8rem] uppercase font-semibold">
+                <div className="lg:text-[min(1.5rem,1.5vw)] base:text-[1.2rem] uppercase font-semibold">
                   {modalContent.name}
                 </div>
                 <div className="flex flex-col gap-2  text-[1rem] text-graycolor2">
@@ -155,15 +155,44 @@ const Modal = ({ setmodalstate, modalContent }) => {
             </div>
 
             {/* Pricing */}
-            <div className="py-4">
+            {/* <div className="py-4">
               <SingleText text={"Pricing"} />
-              {/* Display selected services and their prices */}
+              
               {selectedServicesData.map((service) => (
                 <div key={service._id}>
                   <span>{service.name}</span>: <span>${service.price}</span>
                 </div>
               ))}
               <div>Total: ${totalPrice}</div>
+            </div> */}
+            <div class="py-4">
+              <SingleText text={"Pricing"} />
+              <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr>
+                    <th class="p-3 border border-gray-300">Service</th>
+                    <th class="p-3 border border-gray-300">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedServicesData.map((service) => (
+                    <tr key={service._id}>
+                      <td class="p-3 border border-gray-300">{service.name}</td>
+                      <td class="p-3 border border-gray-300">
+                        ${service.price}
+                      </td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td class="p-3 border border-gray-300 font-semibold">
+                      Total:
+                    </td>
+                    <td class="p-3 border border-gray-300 font-semibold">
+                      ${totalPrice}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             {/* Timings */}
@@ -207,7 +236,7 @@ const SingleCard = ({ data, selectedServices }) => {
   }, 0);
 
   return (
-    <div className="rounded-lg p-4 gap-4 grid grid-cols-[1fr_1.3fr] bg-customwhite relative cursor-pointer">
+    <div className="rounded-lg p-4 gap-4 grid base:grid-cols-1 lg:grid-cols-[1fr_1.3fr] bg-customwhite relative cursor-pointer">
       <img
         src="/services/dummy.png"
         className="rounded-lg w-full h-full object-cover "
@@ -226,7 +255,7 @@ const SingleCard = ({ data, selectedServices }) => {
           <img className="w-4" src="/icons/star.svg" />
         </div>
 
-        <div className="underline text-graycolor2">More info</div>
+        <div className="underline text-graycolor2 z-50">More info</div>
       </div>
       <div className="flex flex-col  absolute right-4 bottom-4 ">
         <div className="text-secondary font-semibold text-[1.2rem]">

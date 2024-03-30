@@ -13,9 +13,7 @@ const CustomerDashboard = () => {
 
   console.log(userRole);
 
-
-
-  console.log("bookings",bookings);
+  console.log("bookings", bookings);
   useEffect(() => {
     // Define your fetch function
     const fetchBookings = async () => {
@@ -28,8 +26,6 @@ const CustomerDashboard = () => {
 
         // Extract the bookings data from the response
         const { bookings } = response.data;
-
-       
 
         // Set the fetched bookings in state
         setBookings(bookings);
@@ -45,11 +41,11 @@ const CustomerDashboard = () => {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col gap-10 bg-white">
       <Navbar />
       <Dashboard role={"CUSTOMER"} bookings={bookings} />
       <Footer />
-    </>
+    </div>
   );
 };
 

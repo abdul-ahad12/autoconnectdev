@@ -20,7 +20,7 @@ const TitleDesc = ({ title, titleColor, desc, left, white, bold }) => {
         <span className="text-secondary ml-2">{titleColor}</span>
       </div>
       {desc && (
-        <div className="lg:text-[min(1.2vw,1.2rem)] base:text-[1.2rem] base:mt-[-0.12rem] lg:w-[60%] lg:mt-[-0,7rem]">
+        <div className="lg:text-[min(1.2vw,1.2rem)] base:text-[1.1rem] base:mt-[-0.12rem] lg:w-[60%] lg:mt-[-0,7rem]">
           {desc}
         </div>
       )}

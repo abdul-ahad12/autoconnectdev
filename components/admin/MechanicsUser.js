@@ -33,17 +33,32 @@ const MechanicsUser = () => {
 
     fetchUsers();
   }, [currentPage]);
+  // console.log("created at", users.data.createdAt);
 
   return (
     <div>
       <h1 className="lg:text-[min(1.5vw,32px)]">User Details</h1>
+      <div className="grid grid-cols-5 p-4 gap-x-8">
+        <div className="text-graycolor2">Username</div>
+        <div className="text-graycolor2">Email</div>
+        <div className="text-graycolor2">Role</div>
+        <div className="text-graycolor2">Phone Number</div>
+        <div className="text-graycolor2">Created At</div>
+      </div>
       {users.map((data, idx) => {
+        // let formatedDate = data.createdAt;
+        // console.log("heo", formatedDate);
+        let formatedDate = new Date(data.createdAt).toLocaleDateString("en-GB");
+        console.log("heo", formatedDate);
+
         return (
-          <div key={idx}>
+          <div key={idx} className="">
             <SingleUser
               username={data.name}
               email={data.email}
               role={data.role}
+              number={data.phoneNumber}
+              createdAt={formatedDate}
             />
           </div>
         );
@@ -54,21 +69,31 @@ const MechanicsUser = () => {
 
 export default MechanicsUser;
 
-const SingleUser = ({ username, email, role }) => {
+const SingleUser = ({ username, email, role, number, createdAt }) => {
   return (
     <div className="w-full">
-      <div className="grid grid-cols-3 base:flex-col lg:flex-row justify-between border-[1px] border-opacity-70 rounded-lg p-5">
-        <div className="flex gap-3">
-          <div className="text-graycolor2">Username :</div>
+      <div className="grid grid-cols-5  base:flex-col lg:flex-row justify-between border-[1px] border-opacity-70 rounded-lg p-5">
+        <div className="flex gap-1">
+          {/* <div className="text-graycolor2">Username :</div> */}
           <p>{username}</p>
         </div>
-        <div className="flex gap-3">
-          <div className="text-graycolor2">Email :</div>
+        <div className="flex gap-1">
+          {/* <div className="text-graycolor2">Email :</div> */}
           <p>{email}</p>
         </div>
         <div className="flex gap-3">
-          <div className="text-graycolor2">Role :</div>
-          <p>{role}</p>
+          {/* <div className="text-graycolor2">Role :</div> */}
+          <p className="bg-graycolor2 rounded-full p-1 text-[0.8rem] text-white">
+            {role}
+          </p>
+        </div>
+        <div className="flex gap-3 lg:ml-5">
+          {/* <div className="text-graycolor2">Phone Number :</div> */}
+          <p>{number}</p>
+        </div>
+        <div className="flex gap-3 lg:ml-5">
+          {/* <div className="text-graycolor2">Created At :</div> */}
+          <p>{createdAt}</p>
         </div>
       </div>
     </div>

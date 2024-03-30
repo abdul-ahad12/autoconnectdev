@@ -172,6 +172,15 @@ const Requests = () => {
                 dateTime={order.dateTime}
                 service={order.service}
                 mechanicid={order._id}
+                firstname={order.name}
+                // lastname={mechanic.name}
+                phonenumber={order.abn}
+                Aboutus={order.aboutus}
+                email={order?.email}
+                street={order.address.street}
+                suburb={order.address.suburb}
+                state={order.address.state}
+                pincode={order.address.pinCode}
               />
             </div>
           ))}

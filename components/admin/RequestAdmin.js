@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import Modal from "../services/ReusableModal";
 
 const RequestAdmin = ({
   orderNumber,
@@ -8,6 +9,16 @@ const RequestAdmin = ({
   acmotors,
   index,
   mechanicid,
+  firstname,
+  // lastname,
+  phonenumber,
+  email,
+  Aboutus,
+  street,
+  suburb,
+  state,
+  pincode,
+  link,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   console.log(mechanicid);
@@ -99,6 +110,28 @@ const RequestAdmin = ({
     });
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const CloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const fields = [
+    { name: "field1", label: "First Name", value: firstname },
+    // { name: "field2", label: "Last Name", value: lastname },
+    { name: "field2", label: "Phone Number", value: phonenumber },
+    { name: "field2", label: "Email", value: email },
+    { name: "field2", label: "About Us", value: Aboutus },
+    { name: "field2", label: "Street", value: street },
+    { name: "field2", label: "Subrub", value: suburb },
+    { name: "field2", label: "State", value: state },
+    { name: "field2", label: "Pincode", value: pincode },
+    { name: "field2", label: "Link", value: link },
+  ];
+
   return (
     <div className="grid base:grid-cols-2 lg:grid-cols-4 gap-x-16 items-center border-[1px] py-3 px-3 rounded-lg">
       <div className="flex flex-col gap-1">
@@ -110,9 +143,14 @@ const RequestAdmin = ({
           {acmotors}
         </span>
       </button>
-      <button className="text-primary w-fit text-[0.8rem] border-2 rounded-md p-1">
+      <button
+        onClick={handleOpenModal}
+        className="text-primary w-fit text-[0.8rem] border-2 rounded-md p-1"
+      >
         Click here
       </button>
+      <Modal isOpen={isModalOpen} onClose={CloseModal} fields={fields} />
+
       <div className="flex gap-3">
         <button
           onClick={() => handleApprove(mechanicid)}

@@ -61,7 +61,7 @@ const Order = ({ bookings, role }) => {
   // request admin array
 
   return (
-    <div>
+    <div className="">
       <div className="grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
         <div>ID Order</div>
         <div>Order details</div>
@@ -82,7 +82,7 @@ const Order = ({ bookings, role }) => {
                 <div className="text-[1.3rem]">
                   Order #{order?._id.slice(0, 4)}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <div className="flex items-center rounded-md border border-gray-500 gap-2 px-2 py-1">
                     <div className="w-1 h-1 bg-red-600" />
                     <div>Await payment</div>
@@ -91,6 +91,13 @@ const Order = ({ bookings, role }) => {
                     <div className="w-1 h-1 bg-blue-700" />
                     <div>
                       {bookings.isAvailability ? "Completed" : "Not Completed"}
+                    </div>
+                  </div>
+                  <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
+                    <div className="w-1 h-1 bg-blue-700" />
+                    <div>
+                      {/* {bookings.isAvailability ? "Completed" : "Not Completed"} */}
+                      No more
                     </div>
                   </div>
                   {bookings.isAvailability && (

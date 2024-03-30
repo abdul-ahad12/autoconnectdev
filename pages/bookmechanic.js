@@ -70,15 +70,13 @@ const Bookmechanic = () => {
 
   useEffect(() => {
     if (mechanicId !== undefined) {
-      const fn=async()=>{
-      const response= await fetchUserData();
-      console.log(response)
+      const fn = async () => {
+        const response = await fetchUserData();
+        console.log(response);
         setUserData(response);
         setDisplay(true);
-      }
-      fn()
-      
-      
+      };
+      fn();
     }
     if (mechanicId !== undefined) {
       const fetchMechanicData = async () => {
@@ -166,35 +164,40 @@ const Bookmechanic = () => {
           titleColor={" away!"}
         />
         <div></div>;
-        <div className="w-full flex gap-6 relative  my-7">
-          <div className="w-[65%]    ">
+        <div className="w-full flex lg:flex-row base:flex-col-reverse gap-6 relative  my-7">
+          <div className="lg:w-[65%]    ">
             {/* left side */}
-            <div className="flex justify-between rounded-t-[2rem] lg:p-[2rem] bg-customwhite gap-16">
-              <div className="w-[50%]  flex flex-col gap-3">
-                <div className="text-[1.5rem] font-semibold">
+            <div className="flex lg:flex-row base:flex-col justify-between rounded-t-[2rem] base:p-[1rem] lg:p-[2rem] bg-customwhite gap-16">
+              <div className="lg:w-[50%]  flex flex-col gap-3">
+                <div className="base:text-[1rem] lg:text-[1.5rem] font-semibold">
                   When do you wish to get the{" "}
                   <span className="text-secondary">service </span>done ?
                 </div>
-                <div className="w-[70%] h-[0.1px] bg-graycolor2"></div>
-                <div className="text-secondary text-[1.2rem]">
+                <div className="lg:w-[70%] h-[0.1px] bg-graycolor2"></div>
+
+                <div className="text-secondary base:text-[0.8rem] lg:text-[1.2rem]">
                   <span className="text-black">Prefered</span> Time Slot for{" "}
                   {selectedDay ? selectedDay : "--"}
                 </div>
 
                 <select
-                  className="input-class w-[50%]"
+                  className="input-class lg:w-[50%]"
                   onChange={(e) => setSelectedTime(e.target.value)}
                 >
                   {timings?.map((time, index) => (
-                    <option key={index} value={time}>
+                    <option
+                      key={index}
+                      value={time}
+                      className="border border-[1px]"
+                    >
                       {time}
                     </option>
                   ))}
                 </select>
               </div>
               <div>
-                Days availability
-                <div className="grid grid-cols-3 gap-2">
+                <div className="my-2 text-[1rem]">Days availability</div>
+                <div className="grid lg:grid-cols-3 gap-2">
                   {daysofweek?.map((day) => {
                     const currentDate = new Date();
                     const dayIndex = [
@@ -244,8 +247,8 @@ const Bookmechanic = () => {
               </div>
               {/* right side */}
             </div>
-            <div className="text-[1.5rem] font-semibold bg-customwhite p-[2rem] rounded-b-[2rem]">
-              <div>
+            <div className="base:text-[1rem] lg:text-[1.5rem] font-semibold bg-customwhite base:p-[1rem] lg:p-[2rem] rounded-b-[2rem]">
+              <div className="py-5">
                 {" "}
                 Add the <span className="text-secondary">
                   mode of delivery
@@ -276,24 +279,28 @@ const Bookmechanic = () => {
                 ))} */}
               </div>
 
-              <div className="flex flex-col text-[1rem] ">
-                <input
-                  type="checkbox"
-                  id="toMechanic"
-                  value="TO_MECHANIC"
-                  checked={selectedMode === "TO_MECHANIC"}
-                  onChange={() => handleCheckboxChange("TO_MECHANIC")}
-                />
-                <label htmlFor="toMechanic">To Mechanic</label>
+              <div className="flex flex-col font-normal gap-4  lg:text-[1.2rem] ">
+                <div className="flex flex-row gap-7 items-center">
+                  <label htmlFor="toMechanic">To Mechanic</label>
+                  <input
+                    type="checkbox"
+                    id="toMechanic"
+                    value="TO_MECHANIC"
+                    checked={selectedMode === "TO_MECHANIC"}
+                    onChange={() => handleCheckboxChange("TO_MECHANIC")}
+                  />
+                </div>
+                <div className="flex flex-row gap-11 items-center">
+                  <label htmlFor="thirdParty">Third Party</label>
 
-                <input
-                  type="checkbox"
-                  id="toCustomer"
-                  value="TO_CUSTOMER"
-                  checked={selectedMode === "TO_CUSTOMER"}
-                  onChange={() => handleCheckboxChange("TO_CUSTOMER")}
-                />
-                {/* <label htmlFor="toCustomer">To Customer</label>
+                  <input
+                    type="checkbox"
+                    id="toCustomer"
+                    value="TO_CUSTOMER"
+                    checked={selectedMode === "TO_CUSTOMER"}
+                    onChange={() => handleCheckboxChange("TO_CUSTOMER")}
+                  />
+                  {/* <label htmlFor="toCustomer">To Customer</label>
 
                 <input
                   type="checkbox"
@@ -302,9 +309,9 @@ const Bookmechanic = () => {
                   checked={selectedMode === "THIRD_PARTY"}
                   onChange={() => handleCheckboxChange("THIRD_PARTY")}
                 /> */}
-                <label htmlFor="thirdParty">Third Party</label>
+                </div>
               </div>
-              <div className="my-5">
+              {/* <div className="my-5">
                 {" "}
                 Services <span className="text-secondary">you</span> Opted for
               </div>
@@ -316,7 +323,7 @@ const Bookmechanic = () => {
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
             </div>
 
             <div className="my-5 bg-customwhite rounded-[2rem] p-[2rem]">
@@ -326,7 +333,7 @@ const Bookmechanic = () => {
                   booking.
                 </span>{" "}
               </div>
-              <form className="flex w-full flex-col gap-2 py-[2rem]">
+              <form className="flex  w-full flex-col gap-2 py-[2rem]">
                 <div className="flex w-full justify-between gap-2">
                   <div className="flex flex-col w-full gap-1">
                     <Description size={"inputlabel"} text={"First Name"} />
@@ -347,7 +354,7 @@ const Bookmechanic = () => {
                     className="input-class border w-full border-graycolor2"
                   />
                 </div>
-                <div className="flex w-full justify-between gap-2">
+                <div className="flex base:flex-col lg:flex-row w-full justify-between gap-2">
                   <div className="flex flex-col w-full gap-1">
                     <Description size={"inputlabel"} text={"Phone Number"} />
                     <input
@@ -360,52 +367,75 @@ const Bookmechanic = () => {
                     <input className="input-class border w-full border-graycolor2" />
                   </div>
                 </div>
-                <div>
-                  <div className="flex gap-2">
+                <div className="grid lg:grid-cols-2 gap-x-5 gap-y-5">
+                  {/* <div className="flex gap-2"> */}
+                  <div className="flex flex-col w-full gap-1">
+                    <Description size={"inputlabel"} text={"Street"} />
                     <input
+                      className="input-class border w-full border-graycolor2"
                       type="text"
                       name="street"
-                      placeholder="Street"
                       value={address.street}
                       onChange={handleAddressChange}
                     />
+                  </div>
+                  {/* <input
+                    type="text"
+                    name="street"
+                    placeholder="Street"
+                    value={address.street}
+                    onChange={handleAddressChange}
+                  /> */}
+                  <div className="flex flex-col w-full gap-1">
+                    <Description size={"inputlabel"} text={"Suburb"} />
                     <input
+                      className="input-class border w-full border-graycolor2"
                       type="text"
                       name="suburb"
-                      placeholder="Suburb"
                       value={address.suburb}
                       onChange={handleAddressChange}
                     />
+                  </div>
+
+                  {/* </div> */}
+                  {/* <div> */}
+                  <div className="flex flex-col w-full gap-1">
+                    <Description size={"inputlabel"} text={"State"} />
                     <input
+                      className="input-class border w-full border-graycolor2"
                       type="text"
                       name="state"
-                      placeholder="State"
                       value={address.state}
                       onChange={handleAddressChange}
                     />
+                  </div>
+
+                  <div className="flex flex-col w-full gap-1">
+                    <Description size={"inputlabel"} text={"Pincode"} />
                     <input
+                      className="input-class border w-full border-graycolor2"
                       type="text"
                       name="pinCode"
-                      placeholder="Pin Code"
                       value={address.pinCode}
                       onChange={handleAddressChange}
                     />
                   </div>
-                  <div className="flex flex-col w-full gap-1">
-                    <label htmlFor="note" className="inputlabel">
-                      Note
-                    </label>
-                    <textarea
-                      id="note"
-                      name="note"
-                      className="input-class border w-full border-graycolor2"
-                      onChange={handleNoteChange}
-                    />
-                  </div>
+                  {/* </div> */}
+                </div>
+                <div className="flex flex-col w-full gap-1">
+                  <label htmlFor="note" className="inputlabel">
+                    Note
+                  </label>
+                  <textarea
+                    id="note"
+                    name="note"
+                    className="input-class border w-full border-graycolor2"
+                    onChange={handleNoteChange}
+                  />
                 </div>
 
-                <div className="flex w-full flex-col items-center justify-center mt-5">
-                  <div className="flex items-center mb-9">
+                <div className="flex w-full flex-col lg:items-center justify-center mt-5">
+                  <div className="flex gap-3  items-center mb-9">
                     <input type="checkbox" />
                     <div className="text-[0.8rem]">
                       I have read the TC I agree to our Terms of use and Privacy
@@ -422,8 +452,24 @@ const Bookmechanic = () => {
           </div>
 
           {/* right */}
-          <div className="w-[35%]  h-fit bg-customwhite rounded-[2rem]">
+          <div className="lg:w-[35%] flex flex-col justify-center    h-fit bg-customwhite rounded-[2rem]">
             <img className="rounded-[2rem]" src="/mechanic/dummy.jpg" />
+
+            <div className="px-9 py-3 ml-2 flex flex-col">
+              <div className="my-5 font-semibold">
+                {" "}
+                Services <span className="text-secondary">you</span> Opted for
+              </div>
+              <div className="flex flex-col  gap-2  ">
+                {selectedServicesData?.map((data, idx) => {
+                  return (
+                    <div key={idx} className="flex text-[1rem] font-medium">
+                      <strong>{data.name}</strong> : <div>${data.price}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
             {/* <div className="flex flex-col  px-[5%] py-3">
               <div className="flex justify-between items-center py-4">
                 {" "}
