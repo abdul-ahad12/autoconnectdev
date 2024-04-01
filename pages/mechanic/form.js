@@ -322,16 +322,16 @@ const Form = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <Navbar />
-      <div className="w-[90%] max-w-[1440px] flex flex-col items-center">
+      <div className="lg:w-[90%] max-w-[1440px] flex flex-col items-center">
         <MechanicTop
-          title={"Hi Isra, complete your"}
+          title={"Hi , complete your"}
           titleColor={"profile setup"}
         />
         <div className="mt-[3rem] w-full bg-customwhite flex flex-col items-center pt-[4rem]">
           <TitleDesc title={"Register"} titleColor={"Yourself"} left />
 
           <form
-            className="flex flex-col gap-4 py-[2rem] w-[75%]"
+            className="flex flex-col gap-7 py-[2rem] base:w-[85%] lg:w-[70%]"
             onSubmit={handleSubmit}
           >
             {/* Name */}
@@ -352,7 +352,7 @@ const Form = () => {
             <div className="flex flex-col w-full gap-1">
               <Description size={"inputlabel"} text={"About Us"} />
               <textarea
-                className="input-class h-28 border w-full border-graycolor2"
+                className="input-class lg:h-28 border w-full border-graycolor2"
                 name="aboutus"
                 value={formData.aboutus}
                 onChange={handleChange}
@@ -360,7 +360,7 @@ const Form = () => {
             </div>
 
             {/* Address */}
-            <div className="flex w-full gap-3">
+            <div className="flex lg:flex-row base:flex-col w-full gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"Street"} />
                 <input
@@ -382,7 +382,7 @@ const Form = () => {
                 />
               </div>
             </div>
-            <div className="flex  gap-3">
+            <div className="flex lg:flex-row base:flex-col  gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"City"} />
                 <select
@@ -449,22 +449,43 @@ const Form = () => {
               {Object.entries(formData.availability).map(
                 ([day, { available }]) => (
                   <div
-                    className="flex border-2 p-3 rounded-lg items-center gap-8"
+                    className="flex base:flex-col lg:flex-row  border-2 p-3 rounded-lg lg:items-center base:gap-6 lg:justify-between "
                     key={day}
                   >
-                    <input
-                      type="checkbox"
-                      name={`availability.${day}.available`}
-                      checked={available}
-                      onChange={handleChange}
-                      style={{ backgroundColor: available ? "orange" : "" }}
-                    />
-                    <label className="text-primary capitalize">{day}</label>
+                    <div className="flex relative gap-4">
+                      <input
+                        type="checkbox"
+                        name={`availability.${day}.available`}
+                        checked={available}
+                        onChange={handleChange}
+                        // style={{ backgroundColor: available ? "orange" : "" }}
+                        id="red"
+                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md  border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity border-secondary border-2  "
+                      />
+                      <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-[4px] left-[3px] peer-checked:opacity-100">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-3.5 w-3.5"
+                          viewBox="0 0 20 20"
+                          fill="orange"
+                          stroke="orange"
+                          stroke-width="1"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                      </span>
+                      <label className="text-primary capitalize">{day}</label>
+                    </div>
+                    {/* <div className=""> */}
                     {available && (
                       <>
                         {/* Select field for start time */}
                         <select
-                          className="border-2 p-1 rounded-lg text-graycolor2"
+                          className="lg:w-[50%] border-2 border-secondary outline-none p-1 rounded-lg text-graycolor2"
                           name={`availability.${day}.startTime`}
                           value={formData.availability[day].startTime}
                           onChange={handleChange}
@@ -475,7 +496,7 @@ const Form = () => {
                           {Array.from({ length: 7 }, (_, i) => i * 2 + 8).map(
                             (hour) => (
                               <option
-                                className="text-primary"
+                                className="text-primary border-secondary"
                                 key={hour}
                                 value={`${hour}:00`}
                               >
@@ -486,7 +507,7 @@ const Form = () => {
                         </select>
                         {/* Select field for end time */}
                         <select
-                          className="border-2 p-1 rounded-lg text-graycolor2"
+                          className="lg:w-[50%] border-2 border-secondary outline-none p-1 rounded-lg text-graycolor2"
                           name={`availability.${day}.endTime`}
                           value={formData.availability[day].endTime}
                           onChange={handleChange}
@@ -507,6 +528,7 @@ const Form = () => {
                       </>
                     )}
                   </div>
+                  // </div>
                 )
               )}
             </div>
@@ -558,13 +580,13 @@ const Form = () => {
               ))}
             </div> */}
             <Description size={"inputlabel"} text={"Services"} />
-            <div className="grid grid-cols-2 p- gap-5 w-full">
+            <div className="grid lg:grid-cols-2 p- gap-5 w-full">
               {services.map((service, index) => (
                 <div
-                  className="flex  p-3 rounded-lg items-center gap-8"
+                  className="flex lg:flex-row base:flex-col  p-3 rounded-lg lg:items-center base:gap-3 lg:justify-between"
                   key={index}
                 >
-                  <label className="flex  h-fit items-center gap-9 cursor-context-menu">
+                  <label className="flex lg:flex-row relative   h-fit items-center base:gap-4 lg:gap-3 cursor-context-menu">
                     <input
                       type="checkbox"
                       name={`services.${index}`}
@@ -580,8 +602,26 @@ const Form = () => {
                           },
                         })
                       }
-                      className="w-5"
+                      className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md  border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity border-secondary border-2  "
+                      id="red"
                     />
+                    <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-[6px] left-[3px] peer-checked:opacity-100">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-3.5 w-3.5"
+                        viewBox="0 0 20 20"
+                        fill="orange"
+                        stroke="orange"
+                        stroke-width="1"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </span>
+
                     <span className="text-primary">{service}</span>
                   </label>
                   {formData.services.some((s) => s.name === service) && (
@@ -615,22 +655,47 @@ const Form = () => {
                 "TO_MECHANIC",
                 "TO_CUSTOMER" /* Add more delivery modes here */,
               ].map((mode, index) => (
-                <div className="flex items-center gap-10 p-4" key={index}>
+                <div
+                  className="flex relative items-center gap-10 p-4"
+                  key={index}
+                >
                   <input
                     type="checkbox"
                     name={`deliveryMode`}
                     value={mode}
                     checked={formData.deliveryMode.includes(mode)}
                     onChange={handleChange}
-                    className="h-4"
+                    // className="h-4"
+                    className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md  border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity border-secondary border-2  "
                   />
+                  <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-[21px] left-[19px] peer-checked:opacity-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-3.5 w-3.5"
+                      viewBox="0 0 20 20"
+                      fill="orange"
+                      stroke="orange"
+                      stroke-width="1"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </span>
                   <label className="text-primary">{mode}</label>
                 </div>
               ))}
             </div>
 
             {/* Submit button */}
-            <button type="submit">Submit</button>
+            <button
+              type="submit"
+              className="bg-secondary w-fit px-6 py-2 rounded-full flex justify-center items-center text-graycolor  hover:scale-[1.01] transition ease duration-200"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>
