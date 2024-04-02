@@ -62,7 +62,7 @@ const Order = ({ bookings, role }) => {
 
   return (
     <div className="">
-      <div className="grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
+      <div className="base:hidden lg:grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
         <div>ID Order</div>
         <div>Order details</div>
         <div>Service Date</div>
@@ -76,13 +76,13 @@ const Order = ({ bookings, role }) => {
           bookings?.map((order, index) => (
             <div
               key={index}
-              className="p-[1.2rem] w-full bg-white rounded-lg flex flex-col border-gray-300 border  z-50"
+              className="p-[1.2rem] lg:w-full bg-white rounded-lg flex flex-col border-gray-300 border  z-50"
             >
               <div className="w-full  flex justify-between items-center">
                 <div className="text-[1.3rem]">
                   Order #{order?._id.slice(0, 4)}
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex base:flex-col lg:flex-wrap gap-2">
                   <div className="flex items-center rounded-md border border-gray-500 gap-2 px-2 py-1">
                     <div className="w-1 h-1 bg-red-600" />
                     <div>Await payment</div>
@@ -111,7 +111,7 @@ const Order = ({ bookings, role }) => {
           </div> */}
                 </div>
               </div>
-              <div className="my-2 flex gap-3 items-center">
+              <div className="my-2 flex base:flex-col lg:flex-row gap-3 lg:items-center">
                 Date:<div>{formatDate(order.createdAt)}</div>
                 timeSlot:<div>{order.timeSlots.time}</div>
                 {/* <div>from</div>
