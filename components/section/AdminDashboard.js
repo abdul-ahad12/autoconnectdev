@@ -7,6 +7,7 @@ import RequestTabs from "../admin/RequestTabs";
 import MechanicsACOrders from "../admin/mechanic/MechanicsACOrders";
 import MechanicHome from "../admin/MechanicHome";
 import MechanicsUser from "../admin/MechanicsUser";
+import AdminServices from "../admin/AdminServices";
 
 const AdminDashboard = ({ bookings }) => {
   const [current, setcurrent] = useState("Requests");
@@ -32,8 +33,12 @@ const AdminDashboard = ({ bookings }) => {
       title: "Orders",
       icons: "/icons/orders.svg",
     },
+    {
+      title: "Services",
+      icons: "/icons/services.svg",
+    },
   ];
-  
+
   const [Mleftbar, setMleftbar] = useState(false);
   return (
     <div className="w-full flex lg:justify-center bg-white overflow-hidden relative">
@@ -123,6 +128,7 @@ const AdminDashboard = ({ bookings }) => {
             {current == "My Availability" && <MyAvailibility />}
             {current == "Orders" && <OrdersList bookings={bookings} />}
             {current == "Users" && <MechanicsUser />}
+            {current == "Services" && <AdminServices />}
 
             <img
               className="absolute bottom-0 right-[-10%] w-[80%]"
