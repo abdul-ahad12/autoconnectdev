@@ -82,7 +82,7 @@ const Order = ({ bookings, role }) => {
                 <div className="text-[1.3rem]">
                   Order #{order?._id.slice(0, 4)}
                 </div>
-                <div className="flex base:flex-col lg:flex-wrap gap-2">
+                <div className="flex base:flex-col lg:flex-row gap-2">
                   <div className="flex items-center rounded-md border border-gray-500 gap-2 px-2 py-1">
                     <div className="w-1 h-1 bg-red-600" />
                     <div>Await payment</div>
@@ -96,7 +96,7 @@ const Order = ({ bookings, role }) => {
                   <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
                     <div className="w-1 h-1 bg-blue-700" />
                     <div>
-                      {/* {bookings.isAvailability ? "Completed" : "Not Completed"} */}
+                      {/* {bookings.is  Availability ? "Completed" : "Not Completed"} */}
                       No more
                     </div>
                   </div>

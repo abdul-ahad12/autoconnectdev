@@ -44,7 +44,7 @@ const MyProfile = () => {
               />
             </div>
           </div>
-          <div className="flex gap-2 w-full">
+          <div className="flex lg:flex-row base:flex-col gap-2 w-full">
             <div className="w-full">
               <Description text={"Phone Number"} size={"inputlabel"} />
               <div>

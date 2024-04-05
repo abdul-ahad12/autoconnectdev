@@ -162,7 +162,7 @@ const Navbar = () => {
 
         {/* buttons */}
         {isLoggedIn ? (
-          <div className=" lg:flex lg:gap-6 lg:row-span-full lg:items-center lg:justify-end lg:col-start-1 lg:col-end-13">
+          <div className=" base:hidden lg:flex lg:gap-6 lg:row-span-full lg:items-center lg:justify-end lg:col-start-1 lg:col-end-13">
             <div className="cursor-pointer" onClick={handleLogout}>
               Sign Out
             </div>{" "}
