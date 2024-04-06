@@ -46,48 +46,48 @@ const Footer = () => {
         },
       ],
     },
-    {
-      title: "Company",
-      links: [
-        {
-          title: "About Us",
-          href: "/aboutus",
-        },
-        {
-          title: "Services",
-          href: "/services",
-        },
-        {
-          title: "FAQ",
-          href: "/",
-        },
-        {
-          title: "Contact Us",
-          href: "/",
-        },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        {
-          title: "About Us",
-          href: "/aboutus",
-        },
-        {
-          title: "Services",
-          href: "/services",
-        },
-        {
-          title: "FAQ",
-          href: "/",
-        },
-        {
-          title: "Contact Us",
-          href: "/",
-        },
-      ],
-    },
+    // {
+    //   title: "Company",
+    //   links: [
+    //     {
+    //       title: "About Us",
+    //       href: "/aboutus",
+    //     },
+    //     {
+    //       title: "Services",
+    //       href: "/services",
+    //     },
+    //     {
+    //       title: "FAQ",
+    //       href: "/",
+    //     },
+    //     {
+    //       title: "Contact Us",
+    //       href: "/",
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "Company",
+    //   links: [
+    //     {
+    //       title: "About Us",
+    //       href: "/aboutus",
+    //     },
+    //     {
+    //       title: "Services",
+    //       href: "/services",
+    //     },
+    //     {
+    //       title: "FAQ",
+    //       href: "/",
+    //     },
+    //     {
+    //       title: "Contact Us",
+    //       href: "/",
+    //     },
+    //   ],
+    // },
   ];
 
   const socials = [

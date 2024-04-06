@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CusButton from "./button";
 
 const MechanicAvailability = ({ mechanicId }) => {
   const [availability, setAvailability] = useState({});
@@ -96,47 +97,53 @@ const MechanicAvailability = ({ mechanicId }) => {
   return (
     <div className="mt-6 w-full">
       <h2 className="text-lg font-semibold mb-4">Mechanic Availability</h2>
-      <div className="flex lg:flex-row base:flex-col gap-3 lg:space-x-2 mb-4">
+      <div className="flex w-full lg:flex-row base:flex-col gap-3   lg:space-x-2 mb-4">
         {orderedDaysOfWeek.map((day) => (
-          <button
-            key={day}
+          <div
             onClick={() => handleDayClick(day)}
-            className={`px-4 py-2 rounded ${
-              selectedDay === day
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+            className={`lg:px-6 lg:py-4 base:py-3 rounded flex flex-col gap-1 items-center border ${
+              selectedDay === day ? "border-secondary " : " text-gray-700"
             }`}
           >
-            {day}
-          </button>
+            <button key={day}>{day}</button>
+            <p className="text-[1.6rem] font-medium">11</p>
+            <p>orders</p>
+          </div>
         ))}
       </div>
       {selectedDay && (
-        <div>
+        <div className="flex flex-col gap-7">
           <h3 className="font-semibold">{selectedDay}</h3>
-          <div className="flex lg:flex-row base:flex-col  gap-4">
+          <div className="base:flex  base:flex-col lg:grid lg:grid-cols-3  base:gap-4 lg:gap-x-20 lg:gap-y-7">
             {timingSlots.map((timeSlot, index) => (
               <div
                 key={index}
                 className={`
-                  px-3 py-2
-                  ${
-                    availability[selectedDay]?.timings.includes(timeSlot)
-                      ? "bg-green-200 cursor-pointer"
-                      : "bg-gray-200 cursor-pointer"
-                  }`}
+                px-3 py-2 rounded-lg   border w-
+                ${
+                  availability[selectedDay]?.timings.includes(timeSlot)
+                    ? "bg-orange-100 cursor-pointer"
+                    : "bg-white cursor-pointer"
+                }`}
                 onClick={() => updateTimeSlotAvailability(timeSlot)}
               >
                 {timeSlot}
               </div>
             ))}
           </div>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-            onClick={handleUpdateAvailability}
-          >
-            Update Availability
-          </button>
+          {/* <button
+          className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          onClick={handleUpdateAvailability}
+        >
+          Update Availability
+        </button> */}
+          <div className="flex w-full items-center lg:justify-center">
+            <CusButton
+              onClick={handleUpdateAvailability}
+              text={"Update"}
+              type={"secondary"}
+            />
+          </div>
         </div>
       )}
     </div>
