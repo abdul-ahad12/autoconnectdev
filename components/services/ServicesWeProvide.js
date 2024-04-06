@@ -5,6 +5,8 @@ import CusButton from "../section/button";
 import { useRouter } from "next/router";
 import Modal from "./ReusableModal";
 import ServicesModal from "./ServicesModal";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const ServicesWeProvide = () => {
   const [selectedServices, setSelectedServices] = useState([]);
@@ -118,9 +120,35 @@ const ServicesWeProvide = () => {
   // modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSubmit = (formData) => {
-    console.log("Form submitted with data:", formData);
-    setIsModalOpen(false); // Close the modal after submission
+  const handleSubmit = async (formData) => {
+    console.log(formData)
+    try {
+      const response = await axios.post('/api/customorder/customerbooking', formData);
+  
+      if (response.status === 201) {
+        // Success response
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Custom Order submitted successfully!,Keep checking your dashboard to get offers',
+        });
+        // Handle success, e.g., close the modal
+        setIsModalOpen(false);
+        router.push("/customerDashboard")
+      } else {
+        // Error response
+        throw new Error('Failed to submit the form');
+      }
+    } catch (error) {
+      console.error('Error submitting the form:', error.message);
+      // Show error message to the user using Swal
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong! Please try again later.',
+      });
+      // Handle error, e.g., show error message to the user
+    }
   };
 
   return (
@@ -195,15 +223,15 @@ const ServicesWeProvide = () => {
                   onSubmit={handleSubmit}
                   showSubmitButton={true}
                   fields={[
-                    { name: "Street", label: "Street" },
-                    { name: "City", label: "City" },
-                    { name: "Subrub", label: "Subrub" },
+                    { name: "street", label: "Street" },
+                    { name: "city", label: "City" },
+                    { name: "suburb", label: "Subrub" },
 
-                    { name: "Pincode", label: "Pincode" },
+                    { name: "pincode", label: "Pincode" },
 
-                    { name: "Name of the Car", label: "Name of the Car" },
-                    { name: "Manufacturing Year", label: "Manufacturing Year" },
-                    { name: "Address", label: "Address" },
+                    { name: "carName", label: "Name of the Car" },
+                    { name: "manufacturingYear", label: "Manufacturing Year" },
+                    { name: "detailedText", label: "Detailed Text" },
 
                     // Add more fields as needed
                   ]}

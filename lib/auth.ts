@@ -24,7 +24,6 @@ async function authorize(
   try {
     const accessToken: string = req.cookies["access-token"];
     const refreshToken: string = req.cookies["refresh-token"];
-    console.log("AccessToken",accessToken)
 
     if (!accessToken) return sendError(res, "Error: No Access Token");
 
@@ -47,7 +46,6 @@ async function authorize(
                 return sendError(res, "Error: Invalid refresh token");
               }
 
-              console.log("decoded token",decodedRefreshToken)
 
               const { id, role } = decodedRefreshToken;
 
@@ -64,7 +62,6 @@ async function authorize(
               // Set user information in req.user
               req.user = { id, role };
 
-              console.log(id,role)
 
               next();
             }
@@ -73,7 +70,6 @@ async function authorize(
           console.log(err);
           return sendError(res, "Error: Broken Token");
         } else {
-          console.log("in here",decodedToken)
           // Set user information in req.user
           req.user = decodedToken;
 

@@ -52,13 +52,13 @@ const ServicesModal = ({
           ))}
           <br />
           {showSubmitButton && (
-            // <button
-            //   type="submit"
-            //   className="bg-blue-500 text-white py-2 px-4 rounded"
-            // >
-            //   Submit
-            // </button>
-            <CusButton text={"Submit"} type={"primary"} />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+            >
+              Submit
+            </button>
+            // <CusButton text={"Submit"} type={"primary"} />
           )}
         </form>
       </div>
