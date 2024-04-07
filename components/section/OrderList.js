@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import Order from "./Order";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/common/Tabs";
 import axios from "axios";
+import CusButton from "./button";
+import Modal from "../services/ReusableModal";
+import ServicesModal from "../services/ServicesModal";
 
 const OrdersList = ({ bookings, role }) => {
   return (
@@ -88,21 +91,60 @@ export const CustomOrder = () => {
     }
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const CloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const fields = [
+    { name: "field1", label: "Car Name" },
+    // { name: "field2", label: "Last Name", value: lastname },
+    { name: "field2", label: "City" },
+    { name: "field3", label: "Detail Text" },
+    { name: "field4", label: "Pincode" },
+    { name: "field5", label: "Street" },
+    { name: "field6", label: "Subrub" },
+  ];
+
   return (
     <div className="w-full">
-      <div className="">
+      <div className=" flex flex-col gap-4 ">
         {customOrders.map((order, idx) => (
-          <div className="grid grid-cols-1" key={idx}>
+          <div className="mt-4" key={idx}>
             <form
-              className="flex gap-2"
+              className="flex flex-wrap gap-3 lg:justify-between items-center border  px-3 py-4 rounded-lg "
               onSubmit={(e) => handleSubmit(order._id, e)}
             >
+              <div className="">
+                <span className="text-graycolor2">Car Name :</span>{" "}
+                {order.carName}
+              </div>
+              <div className="">
+                <span className="text-graycolor2">Manufacturing Year :</span>{" "}
+                {order.manufacturingYear}
+              </div>
+              <button
+                onClick={handleOpenModal}
+                className="text-primary w-fit text-[0.8rem] border-2 rounded-md p-1"
+              >
+                Click here
+              </button>
+              <ServicesModal
+                isOpen={isModalOpen}
+                onClose={CloseModal}
+                fields={fields}
+              />
               <input
                 type="text"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Enter Price"
                 required
+                className="border p-2 rounded-lg"
               />
               <input
                 type="date"
@@ -160,17 +202,38 @@ export const CustomOrderCustomer = () => {
 
   return (
     <div>
+      <div className="base:hidden lg:grid lg:grid-cols-4 gap-x-12 items-center text-[1rem]  py-3 px-2 rounded-lg">
+        <div>Mechanic</div>
+        <div>Available Date</div>
+        <div>Price</div>
+        <div>Action</div>
+      </div>
       {customOrders.length > 0 &&
         customOrders[0].mechanicOffers?.map((data, idx) => {
           return (
-            <div className="text-black" key={idx}>
+            <div
+              className="text-black grid base:grid-cols-1 lg:grid-cols-4"
+              key={idx}
+            >
+              <div>{data.mechanic}</div>
+              <div>{data.availableDate}</div>
+
+              <div>{data.price}</div>
+
               <button
                 onClick={() =>
                   acceptBooking(customOrders[0]._id, data.mechanic)
                 }
               >
-                Click me
+                Accept
               </button>
+              {/* <CusButton
+                onClick={() =>
+                  acceptBooking(customOrders[0]._id, data.mechanic)
+                }
+                type="primary"
+                text={"Accept"}
+              /> */}
             </div>
           );
         })}

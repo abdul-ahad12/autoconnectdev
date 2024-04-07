@@ -187,6 +187,7 @@ const ServicesWeProvide = () => {
                 />
 
                 <ServicesModal
+                  formheading={"For Booking"}
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
                   onSubmit={handleSubmit}
