@@ -43,8 +43,6 @@ export interface Booking extends Document {
     state: string;
     pinCode: string;
   };
-
-  // vehicleType: string; // "bike" or "car"/
 }
 
 // Create a Mongoose schema for the Booking
@@ -75,26 +73,12 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
     customNote: { type: String },
     isCompleted: { type: Boolean, default: false },
     isCancelled: { type: Boolean, default: false },
-    // invoice: {
-    //   // Detailed invoice information
-    //   services: [
-    //     {
-    //       name: { type: String, required: true },
-    //       amount: { type: Number, required: true },
-    //     },
-    //   ],
-    //   tax: { type: Number, required: true },
-    //   total: { type: Number, required: true },
-    //   required:false
-    // },
     address: {
       street: { type: String, required: true },
       suburb: { type: String, required: true },
       state: { type: String, required: true },
       pinCode: { type: String, required: true },
     },
-
-    // vehicleType: { type: String, required: true },
   },
   {
     timestamps: true,

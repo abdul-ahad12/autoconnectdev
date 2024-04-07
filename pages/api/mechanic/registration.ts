@@ -18,14 +18,13 @@ export default async function handler(
       const dbConnector = new MongoDBConnector();
       const user = req["user"]; // Extract user ID from the authorization middleware
 
-      console.log("IN HERE", user);
       const {
         address,
         googleMapsLocation,
-        abn,
+        australianBusinessNumber,
         availability,
         services,
-        aboutus,
+        aboutUs,
         name,
         deliveryMode,
       } = req.body;
@@ -53,10 +52,10 @@ export default async function handler(
       const mechanicRegistration = new MechanicRegistrationModel({
         user: user.id, // Use the extracted user ID
         name,
-        aboutus,
+        aboutUs,
         address,
         googleMapsLocation,
-        abn,
+        australianBusinessNumber,
         approvalStatus: ApprovalStatus.PENDING,
         availability,
         services,

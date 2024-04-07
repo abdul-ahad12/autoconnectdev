@@ -1,17 +1,17 @@
-import Aboutusinfo from "@/components/aboutus/Aboutusinfo";
-import ContactUs from "@/components/aboutus/ContactUs";
-import FAQ from "@/components/aboutus/FAQ";
-import Values from "@/components/aboutus/Values";
+import AboutUsInfo from "@/components/aboutUs/AboutUsInfo";
+import ContactUs from "@/components/aboutUs/ContactUs";
+import FAQ from "@/components/aboutUs/FAQ";
+import Values from "@/components/aboutUs/Values";
 import SmartApp from "@/components/home/SmartApp";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import React from "react";
 
-const Aboutus = () => {
+const AboutUs = () => {
   return (
     <div>
       <Navbar />
-      <Aboutusinfo />
+      <AboutUsInfo />
       <Values />
       <SmartApp />
       <FAQ />
@@ -21,4 +21,4 @@ const Aboutus = () => {
   );
 };
 
-export default Aboutus;
+export default AboutUs;
