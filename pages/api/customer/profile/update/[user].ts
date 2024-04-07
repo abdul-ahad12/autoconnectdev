@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     user.name = name;
     user.email = email;
 
-    // Save the updated user document
+    // Save the updated user profile
     await user.save();
 
     res.status(200).json({ message: "User profile updated successfully" });

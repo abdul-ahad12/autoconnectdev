@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserModel } from "../../../lib/models/user"; // Assuming the path to the user model is correct
-import { MongoDBConnector } from "lib/database";
+import { UserModel } from "../../../lib/models/user";
 import { authorize } from "lib/auth";
 
 export default async function handler(
@@ -9,21 +8,17 @@ export default async function handler(
 ) {
   try {
     authorize(req, res, async () => {
-      const dbConnector = new MongoDBConnector();
-      const userId = req["user"]; // Extract user ID from the authorization middleware
-
-      console.log("USERID:", userId);
+      const userId = req["user"];
       if (!userId) {
         return res.status(400).json({ message: "User ID is required" });
       }
 
-      // Find user by ID
+      console.log(`Fetching user with id: ${userId.id}`);
       const user = await UserModel.findById(userId.id);
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
       res.status(200).json({ user });
     });
   } catch (error) {

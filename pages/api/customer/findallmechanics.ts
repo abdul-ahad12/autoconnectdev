@@ -6,37 +6,28 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  console.log(req.query)
   try {
     const {
-      location,
+      location: city,
       services: rawServices,
       deliveryMode,
       page: rawPage,
       limit: rawLimit,
     } = req.query;
 
-
     // Parse services into an array if it's a string with commas
     const services = Array.isArray(rawServices)
       ? rawServices
       : rawServices.split(",").map((service) => service.trim());
 
-
-console.log(services)
-
     // Parse query parameters
-    const city = location;
-    const page = parseInt(rawPage as string) || 1;
-    const limit = parseInt(rawLimit as string) || 10;
-
-    // Set default delivery mode to "TO_MECHANIC" if not provided
-    const defaultDeliveryMode = "TO_MECHANIC";
+    const page = parseInt(rawPage as string) || DEFAULT_PAGE;
+    const limit = parseInt(rawLimit as string) || DEFAULT_LIMIT;
 
     // Convert deliveryMode to an array if it's a single value
     const deliveryModes = Array.isArray(deliveryMode)
       ? deliveryMode
-      : [deliveryMode || defaultDeliveryMode];
+      : [deliveryMode || DEFAULT_DELIVERY_MODE];
 
     // Define the query criteria
     const query: any = {};
@@ -60,7 +51,7 @@ console.log(services)
       query.deliveryMode = { $in: deliveryModes };
     } else {
       // Default behavior: Show mechanics with TO_MECHANIC delivery mode if no delivery mode is specified
-      query.deliveryMode = defaultDeliveryMode;
+      query.deliveryMode = DEFAULT_DELIVERY_MODE;
     }
 
     // Find mechanics based on the query criteria
