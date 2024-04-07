@@ -1,16 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserModel } from "../../../lib/models/user"; // Assuming the path to the user model is correct
+import { UserModel } from "../../../lib/models/user";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { userId } = req.query;
-    console.log("user",userId)
 
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
     }
 
     // Find user by ID
+    console.log(`Fetching user with ID: ${userId}`);
     const user = await UserModel.findById(userId);
 
     if (!user) {

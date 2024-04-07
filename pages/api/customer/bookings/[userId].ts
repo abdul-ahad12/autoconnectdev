@@ -13,15 +13,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    // Call the authorize middleware to extract user ID from token
     authorize(req, res, async () => {
       // Extract userId from the request object after authorization
       const userId = req["user"];
 
       const {
-        page = "1",
-        limit = "10",
-        filter = "all",
+        page = DEFAULT_PAGE.toString(),
+        limit = DEFAULT_LIMIT.toString(),
+        filter = DEFAULT_FILTER,
       } = req.query as CustomQuery;
 
       let query: Record<string, any> = { user: userId };
