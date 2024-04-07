@@ -129,6 +129,8 @@ const ServicesWeProvide = () => {
       );
 
       if (response.status === 201) {
+        console.error("form submitting");
+
         // Success response
         Swal.fire({
           icon: "success",

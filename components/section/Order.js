@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { formatDate } from "../../lib/supportingFncs";
 import Swal from "sweetalert2";
+import Modal from "../services/ReusableModal";
 
 const Order = ({ bookings, role }) => {
   console.log("orders", bookings);
@@ -59,7 +60,22 @@ const Order = ({ bookings, role }) => {
   }, [currentPage]);
 
   // request admin array
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const CloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const fields = [
+    { name: "field1", label: "First Name", value: "first" },
+    // { name: "field2", label: "Last Name", value: lastname },
+    { name: "field2", label: "Phone Number", value: "number" },
+    { name: "field2", label: "Email", value: "email" },
+    { name: "field2", label: "About Us", value: "aboutus" },
+  ];
   return (
     <div className="">
       <div className="base:hidden lg:grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
@@ -95,10 +111,14 @@ const Order = ({ bookings, role }) => {
                   </div>
                   <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
                     <div className="w-1 h-1 bg-blue-700" />
-                    <div>
-                      {/* {bookings.is  Availability ? "Completed" : "Not Completed"} */}
-                      No more
-                    </div>
+                    {/* {bookings.is  Availability ? "Completed" : "Not Completed"} */}
+
+                    <button onClick={handleOpenModal}>Know More</button>
+                    <Modal
+                      isOpen={isModalOpen}
+                      onClose={CloseModal}
+                      fields={fields}
+                    />
                   </div>
                   {bookings.isAvailability && (
                     <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
