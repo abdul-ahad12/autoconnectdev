@@ -236,7 +236,7 @@ export const CustomOrderCustomer = () => {
 
               <div className="flex gap-2">
                 <span className="base:flex lg:hidden">Price : </span>
-                {data.price}
+                {data.price}$
               </div>
 
               <button

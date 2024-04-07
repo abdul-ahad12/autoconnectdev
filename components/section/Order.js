@@ -160,6 +160,10 @@ const Order = ({ bookings, role }) => {
                 orderStatus={data.isCompleted}
                 modeOfService={data.deliveryMode}
                 bookingId={data._id}
+                firstname={data.customNote}
+                aboutus={data.deliveryMode}
+                email={data.mechanic}
+                number={data.address.street}
               />
             </div>
           );
@@ -199,6 +203,10 @@ const OrderItem = ({
   orderStatus,
   modeOfService,
   bookingId, // Add bookingId prop
+  firstname,
+  number,
+  aboutus,
+  email,
 }) => {
   const [isCancelled, setIsCancelled] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -269,15 +277,36 @@ const OrderItem = ({
     }
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const CloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const fields = [
+    { name: "field1", label: "First Name", value: firstname },
+    // { name: "field2", label: "Last Name", value: lastname },
+    { name: "field2", label: "Phone Number", value: number },
+    { name: "field2", label: "Email", value: email },
+    { name: "field2", label: "About Us", value: aboutus },
+  ];
+
   return (
     <div className="grid grid-cols-6 gap-x-12 items-center border-[1px] py-3 px-3 rounded-lg">
       <div className="flex flex-col gap-1">
         <div className="text-[0.9rem] font-semibold">#{orderNumber}</div>
         <div className="text-[0.6rem]">{formatDate(dateTime)}</div>
       </div>
-      <button className="text-primary w-fit text-[0.7rem] border-[1px] rounded-md p-1">
+      <button
+        onClick={handleOpenModal}
+        className="text-primary w-fit text-[0.7rem] border-[1px] rounded-md p-1"
+      >
         Click here
       </button>
+      <Modal isOpen={isModalOpen} onClose={CloseModal} fields={fields} />
       <div className="text-graycolor2 text-[0.7rem]">
         {formatDate(dateTime)}
       </div>

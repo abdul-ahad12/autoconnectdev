@@ -135,7 +135,9 @@ const Dashboard = ({ bookings, role }) => {
         {/* <div className="lg:w-[90%] lg:pb-[40vh] relative"> */}
         <div className="w-full flex justify-center lg:w-[90%] lg:pb-[40vh] relative">
           <div className="  base:w-[100%] lg:w-full base:my-10 lg:my-0 ">
-            {current == "Orders" && <OrdersList bookings={bookings} role={role} />}
+            {current == "Orders" && (
+              <OrdersList bookings={bookings} role={role} />
+            )}
             {current == "My Profile" && <MyProfile />}
             {current == "My Vehicles" && <MyVehicles />}
             {current == "My Availability" && <MyAvailibility />}
