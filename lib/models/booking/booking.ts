@@ -62,7 +62,7 @@ const bookingSchema: Schema<Booking> = new mongoose.Schema(
     },
     timeSlots: {
       date: { type: String, required: true }, // Date in format "YYYY-MM-DD"
-      time: { type: String, required: true }, // Time slot in format "HH:mm AM/PM"
+      time: { type: String, required: true, default: "00:00" }, // Time slot in format "HH:mm AM/PM"
       available: { type: Boolean, default: true }, // Default to true indicating slot is available
     },
 
