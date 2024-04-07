@@ -61,7 +61,7 @@ const Form = () => {
 
   const [formData, setFormData] = useState({
     name: "",
-    aboutus: "",
+    aboutUs: "",
     address: {
       street: "",
       suburb: "",
@@ -69,7 +69,7 @@ const Form = () => {
       pinCode: "",
     },
     googleMapsLocation: "",
-    abn: "",
+    australianBusinessNumber: "",
     availability: {
       monday: {
         date: getNextDayOfWeek(1).toISOString().slice(0, 10),
@@ -151,10 +151,10 @@ const Form = () => {
               [field]: checked,
               timings: checked
                 ? generateTimings(
-                    day,
-                    prevData.availability[day].startTime,
-                    prevData.availability[day].endTime
-                  )
+                  day,
+                  prevData.availability[day].startTime,
+                  prevData.availability[day].endTime
+                )
                 : [],
             },
           },
@@ -353,8 +353,8 @@ const Form = () => {
               <Description size={"inputlabel"} text={"About Us"} />
               <textarea
                 className="input-class h-28 border w-full border-graycolor2"
-                name="aboutus"
-                value={formData.aboutus}
+                name="aboutUs"
+                value={formData.aboutUs}
                 onChange={handleChange}
               />
             </div>
@@ -424,14 +424,14 @@ const Form = () => {
               />
             </div>
 
-            {/* ABN */}
+            {/* AustralianBusinessNumber */}
             <div className="flex flex-col w-full gap-1">
-              <Description size={"inputlabel"} text={"ABN"} />
+              <Description size={"inputlabel"} text={"AustralianBusinessNumber"} />
               <input
                 className="input-class border w-full border-graycolor2"
                 type="text"
-                name="abn"
-                value={formData.abn}
+                name="AustralianBusinessNumber"
+                value={formData.australianBusinessNumber}
                 onChange={handleChange}
               />
             </div>

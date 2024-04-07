@@ -48,7 +48,7 @@ const Navbar = () => {
   const menu = [
     {
       title: "About",
-      href: "/aboutus",
+      href: "/aboutUs",
     },
     {
       title: "Services",
@@ -56,11 +56,11 @@ const Navbar = () => {
     },
     {
       title: "FAQ's",
-      href: "/aboutus#faqs",
+      href: "/aboutUs#faqs",
     },
     {
       title: "Contact Us",
-      href: "/aboutus#contactus",
+      href: "/aboutUs#contactus",
     },
   ];
 

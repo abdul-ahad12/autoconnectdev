@@ -47,7 +47,7 @@ const ContactUs = () => {
             })}
           </div>
           <div className="flex justify-center">
-            <img src="/aboutus/location.png" className="w-[90%]"></img>
+            <img src="/aboutUs/location.png" className="w-[90%]"></img>
           </div>
         </div>
       </div>

@@ -122,13 +122,13 @@ const Modal = ({ setmodalstate, modalContent }) => {
               </div>
             </div>
 
-            {/* aboutus */}
+            {/* aboutUs */}
             <div className="flex lg:flex-row base:flex-col-reverse pt-12 pb-6  gap-9  border-b-black">
               <div className="lg:w-[75%] flex flex-col ">
                 <div className="text-secondary font-semibold pb-2 lg:text-unique">
-                  About us
+                  About Us
                 </div>
-                <div className="lg:text-unique">{modalContent.aboutus}</div>
+                <div className="lg:text-unique">{modalContent.aboutUs}</div>
               </div>
               <div className="flex lg:w-[25%] justify-center items-center">
                 <div className="flex lg:flex-col flex-row gap-2  text-[0.7rem] text-graycolor2">

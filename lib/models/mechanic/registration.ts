@@ -22,7 +22,7 @@ interface DayAvailability {
 export interface MechanicRegistration extends Document {
   user: mongoose.Types.ObjectId;
   name: string;
-  aboutus: string;
+  aboutUs: string;
   address: {
     street: string;
     suburb: string;
@@ -56,7 +56,7 @@ const mechanicRegistrationSchema: Schema<MechanicRegistration> =
         unique: true,
       },
       name: { type: String, required: true },
-      aboutus: { type: String, required: true },
+      aboutUs: { type: String, required: true },
       address: {
         street: { type: String, required: true },
         suburb: { type: String, required: true },

@@ -1,7 +1,7 @@
 import React from "react";
 import TitleDesc from "../section/TitleDesc";
 import CusButton from "../section/button";
-import AboutusInfo from "../../public/aboutus/aboutusinfo.png";
+import AboutUsInfo from "../../public/aboutUs/aboutUsInfo.png";
 import Image from "next/image";
 
 const HowAutoConnect = () => {
@@ -37,7 +37,7 @@ const HowAutoConnect = () => {
         <div className="flex lg:flex-row base:flex-col gap-10 lg:gap-1 w-full base:pt-10 lg:pt-[7rem]">
           {/* left section */}
           <div className="lg:w-[55%] flex justify-center ">
-            <Image src={AboutusInfo} alt="pic" className="w-[600px]" />
+            <Image src={AboutUsInfo} alt="pic" className="w-[600px]" />
           </div>
           {/* right section */}
           <div className="lg:w-[45%] flex-col gap-7 flex justify-center  ">

@@ -9,7 +9,7 @@ const Footer = () => {
       links: [
         {
           title: "About Us",
-          href: "/aboutus",
+          href: "/aboutUs",
         },
         {
           title: "Services",
@@ -30,7 +30,7 @@ const Footer = () => {
       links: [
         {
           title: "About Us",
-          href: "/aboutus",
+          href: "/aboutUs",
         },
         {
           title: "Services",
@@ -51,7 +51,7 @@ const Footer = () => {
       links: [
         {
           title: "About Us",
-          href: "/aboutus",
+          href: "/aboutUs",
         },
         {
           title: "Services",
@@ -72,7 +72,7 @@ const Footer = () => {
       links: [
         {
           title: "About Us",
-          href: "/aboutus",
+          href: "/aboutUs",
         },
         {
           title: "Services",
