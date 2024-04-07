@@ -10,19 +10,17 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      // Call the authorize middleware to extract user ID from token
       authorize(req, res, async () => {
         const user = req["user"];
-        const userId = user.id;
 
         // Validate user ID
-        if (!userId) {
+        if (!user?.id) {
           return res.status(400).json({ message: "User ID is required" });
         }
 
         // Find mechanic by user ID
         const mechanic = await MechanicRegistrationModel.findOne({
-          user: userId,
+          user: user.id,
         });
 
         if (!mechanic) {
