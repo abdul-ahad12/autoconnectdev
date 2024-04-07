@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TitleDesc from "../section/TitleDesc";
 import Description from "../section/Description";
 import CusButton from "../section/button";
@@ -13,71 +13,32 @@ const ServicesWeProvide = () => {
   const [customBookingText, setCustomBookingText] = useState("");
   const router = useRouter();
   const { location } = router.query;
+  const [services, setservices] = useState();
 
+  const [servicesArray, setServicesArray] = useState([]);
   console.log(selectedServices);
 
-  const services = [
-    {
-      title: "Windscreen Replacement",
-      noOfServices: "8",
-      img: "/services/airconditioningbg.jpg",
-      id: "windscreen",
-    },
-    {
-      title: "Brake Inspection",
-      noOfServices: "5",
-      img: "/services/airconditioningbg.jpg",
-      id: "brake-inspection",
-    },
-    {
-      title: "Oil Change",
-      noOfServices: "10",
-      img: "/services/airconditioningbg.jpg",
-      id: "oil-change",
-    },
-    {
-      title: "Wheel Alignment",
-      noOfServices: "3",
-      img: "/services/airconditioningbg.jpg",
-      id: "wheel-alignment",
-    },
-    {
-      title: "Engine Diagnostic",
-      noOfServices: "6",
-      img: "/services/airconditioningbg.jpg",
-      id: "engine-diagnostic",
-    },
-    {
-      title: "Tire Rotation",
-      noOfServices: "7",
-      img: "/services/airconditioningbg.jpg",
-      id: "tire-rotation",
-    },
-    {
-      title: "Battery Replacement",
-      noOfServices: "4",
-      img: "/services/airconditioningbg.jpg",
-      id: "battery-replacement",
-    },
-    {
-      title: "Coolant Flush",
-      noOfServices: "5",
-      img: "/services/airconditioningbg.jpg",
-      id: "coolant-flush",
-    },
-    {
-      title: "Spark Plug Replacement",
-      noOfServices: "6",
-      img: "/services/airconditioningbg.jpg",
-      id: "spark-plug-replacement",
-    },
-    {
-      title: "Transmission Flush",
-      noOfServices: "3",
-      img: "/services/airconditioningbg.jpg",
-      id: "transmission-flush",
-    },
-  ];
+  useEffect(() => {
+    // Fetch data when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/services");
+        console.log(response);
+        const serviceData = response.data.services.map((service) => ({
+          title: service.name,
+          img: "/services/airconditioningbg.jpg",
+          id: service.name.toLowerCase().replace(/\s+/g, "-"),
+        }));
+        setservices(serviceData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(servicesArray);
 
   const handleServiceSelection = (serviceId) => {
     if (selectedServices.includes(serviceId)) {
@@ -121,31 +82,34 @@ const ServicesWeProvide = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async (formData) => {
-    console.log(formData)
+    console.log(formData);
     try {
-      const response = await axios.post('/api/customorder/customerbooking', formData);
-  
+      const response = await axios.post(
+        "/api/customorder/customerbooking",
+        formData
+      );
+
       if (response.status === 201) {
         // Success response
         Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Custom Order submitted successfully!,Keep checking your dashboard to get offers',
+          icon: "success",
+          title: "Success!",
+          text: "Custom Order submitted successfully!,Keep checking your dashboard to get offers",
         });
         // Handle success, e.g., close the modal
         setIsModalOpen(false);
-        router.push("/customerDashboard")
+        router.push("/customerDashboard");
       } else {
         // Error response
-        throw new Error('Failed to submit the form');
+        throw new Error("Failed to submit the form");
       }
     } catch (error) {
-      console.error('Error submitting the form:', error.message);
+      console.error("Error submitting the form:", error.message);
       // Show error message to the user using Swal
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong! Please try again later.',
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Please try again later.",
       });
       // Handle error, e.g., show error message to the user
     }
@@ -176,29 +140,34 @@ const ServicesWeProvide = () => {
         {/* Services listing section */}
         <div className="flex base:flex-col lg:flex-row justify-between py-[3rem]">
           {/* Left section */}
-          <div className="lg:w-[60%] base:w-[100%] base:flex base:flex-col lg:grid base:grid-cols-1  lg:grid-cols-2 gap-x-[4vw] gap-y-3">
-            {services.map((data, idx) => (
-              <div
-                key={idx}
-                className="p-[7px] flex gap-5 justify-between w-full rounded-lg hover:shadow-lg transition ease duration-150 shadow-md"
-              >
-                <div className="flex gap-3">
-                  <img src={data.img} alt={data.title} className="rounded-lg" />
-                  <div className="flex flex-col justify-between py-2 w-full">
-                    <div className="text-[0.8rem] w-full font-bold">
-                      {data.title}
+          <div className="lg:w-[60%] h-full base:w-[100%] base:flex base:flex-col lg:grid base:grid-cols-1  lg:grid-cols-2 gap-x-[4vw] gap-y-3">
+            {services &&
+              services.map((data, idx) => (
+                <div
+                  key={idx}
+                  className="p-[7px] flex gap-5 justify-between w-full rounded-lg hover:shadow-lg transition ease duration-150 shadow-md"
+                >
+                  <div className="flex gap-3">
+                    <img
+                      src={data.img}
+                      alt={data.title}
+                      className="rounded-lg"
+                    />
+                    <div className="flex flex-col justify-between py-2 w-full">
+                      <div className="text-[0.8rem] w-full font-bold">
+                        {data.title}
+                      </div>
+                      {/* <Description text={`${data.noOfServices} services`} /> */}
                     </div>
-                    {/* <Description text={`${data.noOfServices} services`} /> */}
                   </div>
+                  <input
+                    className="cursor-pointer"
+                    type="checkbox"
+                    onChange={() => handleServiceSelection(data.id)}
+                    checked={selectedServices.includes(data.id)}
+                  />
                 </div>
-                <input
-                  className="cursor-pointer"
-                  type="checkbox"
-                  onChange={() => handleServiceSelection(data.id)}
-                  checked={selectedServices.includes(data.id)}
-                />
-              </div>
-            ))}
+              ))}
             <div className="py-[1rem] w-full col-start-1 col-end-3">
               <div className="base:text-[0.9rem] lg:text-[1.4rem]">
                 Customize your booking

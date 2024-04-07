@@ -18,6 +18,8 @@ const Form = () => {
   const [userID, setuserId] = useState();
   const [userRole, setUserRole] = useState();
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+  const [services, setservices] = useState();
+  const [servicesArray, setServicesArray] = useState();
 
   console.log(userRole);
 
@@ -38,19 +40,39 @@ const Form = () => {
   }, []);
   // console.log(userData);
 
-  const services = [
-    "Oil Change",
-    "Brake Inspection",
-    "Tire Rotation",
-    "Engine Tune-Up",
-    "Wheel Alignment",
-    "Battery Replacement",
-    "Coolant Flush",
-    "Transmission Service",
-    "Air Filter Replacement",
-    "Spark Plug Replacement",
-    "Exhaust System Repair",
-  ];
+  useEffect(() => {
+    // Fetch data when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/services");
+        console.log(response);
+        setServicesArray(response.data.services);
+        console.log(response);
+        const serviceData = response.data.services.map(
+          (service) => service.name
+        );
+        setservices(serviceData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // const services = [
+  //   "Oil Change",
+  //   "Brake Inspection",
+  //   "Tire Rotation",
+  //   "Engine Tune-Up",
+  //   "Wheel Alignment",
+  //   "Battery Replacement",
+  //   "Coolant Flush",
+  //   "Transmission Service",
+  //   "Air Filter Replacement",
+  //   "Spark Plug Replacement",
+  //   "Exhaust System Repair",
+  // ];
 
   const getNextDayOfWeek = (dayOfWeek) => {
     const today = new Date();
@@ -188,36 +210,36 @@ const Form = () => {
         },
       }));
     } else if (name.startsWith("services")) {
+      // Handle services
+      const serviceName = value;
       if (checked) {
         setFormData((prevData) => ({
           ...prevData,
-          services: [...prevData.services, { name: value, price: "" }],
+          services: [
+            ...prevData.services,
+            { name: serviceName, price: "", id: serviceName }, // Use service name as identifier
+          ],
         }));
       } else {
-        const serviceIndex = parseInt(name.split(".")[1]);
-        const updatedServices = [...formData.services];
-        updatedServices.splice(serviceIndex, 1);
         setFormData((prevData) => ({
           ...prevData,
-          services: updatedServices,
+          services: prevData.services.filter(
+            (service) => service.name !== serviceName
+          ),
         }));
       }
     } else if (name.startsWith("price")) {
-      const serviceIndex = parseInt(name.split(".")[1]);
-      const updatedServices = [...formData.services];
-      if (updatedServices[serviceIndex]) {
-        updatedServices[serviceIndex] = {
-          ...updatedServices[serviceIndex],
-          price: value,
-        };
-        setFormData((prevData) => ({
-          ...prevData,
-          services: updatedServices,
-        }));
-      } else {
-        console.error("Service does not exist at index:", serviceIndex);
-      }
+      // Handle price
+      const serviceName = name.split(".")[1];
+      const updatedServices = formData.services.map((service) =>
+        service.name === serviceName ? { ...service, price: value } : service
+      );
+      setFormData((prevData) => ({
+        ...prevData,
+        services: updatedServices,
+      }));
     } else {
+      // Handle other form fields
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
@@ -382,6 +404,7 @@ const Form = () => {
                 />
               </div>
             </div>
+
             <div className="flex lg:flex-row base:flex-col  gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"City"} />
@@ -435,6 +458,7 @@ const Form = () => {
                 onChange={handleChange}
               />
             </div>
+
             {/* Availability */}
             <div className="flex flex-col gap-5 w-full ">
               <Description
@@ -581,71 +605,55 @@ const Form = () => {
             </div> */}
             <Description size={"inputlabel"} text={"Services"} />
             <div className="grid lg:grid-cols-2 p- gap-5 w-full">
-              {services.map((service, index) => (
-                <div
-                  className="flex lg:flex-row base:flex-col  p-3 rounded-lg lg:items-center base:gap-3 lg:justify-between"
-                  key={index}
-                >
-                  <label className="flex lg:flex-row relative   h-fit items-center base:gap-4 lg:gap-3 cursor-context-menu">
-                    <input
-                      type="checkbox"
-                      name={`services.${index}`}
-                      checked={formData.services.some(
-                        (s) => s.name === service
-                      )}
-                      onChange={(e) =>
-                        handleChange({
-                          target: {
-                            name: "services",
-                            value: service,
-                            checked: e.target.checked,
-                          },
-                        })
-                      }
-                      className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md  border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity border-secondary border-2  "
-                      id="red"
-                    />
-                    <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-[6px] left-[3px] peer-checked:opacity-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-3.5 w-3.5"
-                        viewBox="0 0 20 20"
-                        fill="orange"
-                        stroke="orange"
-                        stroke-width="1"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                    </span>
+              {services &&
+                services.map((service, index) => (
+                  <div
+                    className="flex lg:flex-row base:flex-col  p-3 rounded-lg lg:items-center base:gap-3 lg:justify-between"
+                    key={index}
+                  >
+                    <label className="flex lg:flex-row relative   h-fit items-center base:gap-4 lg:gap-3 cursor-context-menu">
+                      <input
+                        type="checkbox"
+                        name={`services.${service}`} // Use unique identifier (service name)
+                        checked={formData.services.some(
+                          (s) => s.name === service
+                        )}
+                        onChange={(e) =>
+                          handleChange({
+                            target: {
+                              name: "services", // Update the name attribute to "services"
+                              value: service,
+                              checked: e.target.checked,
+                            },
+                          })
+                        }
+                      />
 
-                    <span className="text-primary">{service}</span>
-                  </label>
-                  {formData.services.some((s) => s.name === service) && (
-                    <input
-                      className="border-2 border-secondary p-1 rounded-lg text-graycolor2"
-                      type="number"
-                      name={`services.${index}.price`}
-                      value={
-                        formData.services.find((s) => s.name === service)
-                          ?.price || ""
-                      }
-                      placeholder="Price"
-                      onChange={(e) =>
-                        handleChange({
-                          target: {
-                            name: `price.${index}`,
-                            value: e.target.value,
-                          },
-                        })
-                      }
-                    />
-                  )}
-                </div>
-              ))}
+                      {/* Label and price input */}
+                      <span className="text-primary">{service}</span>
+                      {formData.services.some((s) => s.name === service) && (
+                        <input
+                          className="border-2 border-secondary p-1 rounded-lg text-graycolor2"
+                          type="number"
+                          name={`price.${service}`} // Use unique identifier (service name)
+                          value={
+                            formData.services.find((s) => s.name === service)
+                              ?.price || ""
+                          }
+                          placeholder="Price"
+                          onChange={(e) =>
+                            handleChange({
+                              target: {
+                                name: `price.${service}`, // Use unique identifier (service name)
+                                value: e.target.value,
+                              },
+                            })
+                          }
+                        />
+                      )}
+                    </label>
+                  </div>
+                ))}
             </div>
 
             {/* Delivery Mode */}

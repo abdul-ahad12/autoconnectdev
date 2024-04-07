@@ -1,46 +1,119 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CusButton from "../section/button";
-import Input from "postcss/lib/input";
+import axios from "axios";
 
 const AdminServices = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isNewServiceModalOpen, setIsNewServiceModalOpen] = useState(false);
   const [selectedServiceText, setSelectedServiceText] = useState("");
+  const [selectedServiceIndex, setSelectedServiceIndex] = useState(null);
+  const [servicesArray, setServicesArray] = useState([]);
+  console.log(servicesArray);
 
-  const handleEditClick = (text) => {
+  useEffect(() => {
+    // Fetch data when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/services");
+        console.log(response);
+        setServicesArray(response.data.services);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleEditClick = (text, index) => {
     setSelectedServiceText(text);
-    setIsModalOpen(true);
+    setSelectedServiceIndex(index);
+    setIsEditModalOpen(true);
+  };
+
+  const handleAddServiceClick = () => {
+    setSelectedServiceText("");
+    setIsNewServiceModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsEditModalOpen(false);
+    setIsNewServiceModalOpen(false);
   };
 
-  const servicesArray = [
-    { id: 1, name: "Service 1" },
-    { id: 2, name: "Service 2" },
-    { id: 3, name: "Service 3" },
-    { id: 4, name: "Service 4" },
-  ];
+  const handleSaveService = (updatedText, index) => {
+    const updatedServices = [...servicesArray];
+    updatedServices[index].name = updatedText;
+    setServicesArray(updatedServices);
+    handleCloseModal();
+  };
+
+  const handleAddService = (newServiceName) => {
+    const newService = {
+      id: servicesArray.length + 1,
+      name: newServiceName,
+    };
+    setServicesArray([...servicesArray, newService]);
+    handleCloseModal();
+  };
+
+  const handleDeleteService = (index) => {
+    const updatedServices = [...servicesArray];
+    updatedServices.splice(index, 1);
+    setServicesArray(updatedServices);
+  };
+  const handleUpdate = async () => {
+    try {
+      // Extract names from servicesArray
+      const namesArray = servicesArray.map((service) => service.name);
+
+      // Send only the array of names
+      await axios.post("/api/services", namesArray);
+      console.log("Services updated successfully");
+    } catch (error) {
+      console.error("Error updating services:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-5">
       <div className="w-full flex items-end justify-end bg-graycolor p-4">
-        <CusButton text={"+ New Service"} />
+        <CusButton text={"+ New Service"} onClick={handleAddServiceClick} />
       </div>
+      {servicesArray.length === 0 && (
+        <div className="w-full flex justify-center ">No Service</div>
+      )}
       {servicesArray.map((service, index) => (
         <SingleService
           key={index}
           text={service.name}
-          onEditClick={() => handleEditClick(service.name)}
+          onEditClick={() => handleEditClick(service.name, index)}
+          onDeleteClick={() => handleDeleteService(index)}
         />
       ))}
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+
+      <CusButton onClick={handleUpdate} type={"primary"} text={"Update"} />
+      {/* Edit Service Modal */}
+      {isEditModalOpen && (
+        <div className="fixed z-[100000000000] top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white p-8 rounded-lg">
             <ServicesModal
               initialText={selectedServiceText}
               onCancel={handleCloseModal}
+              onSave={(updatedText) =>
+                handleSaveService(updatedText, selectedServiceIndex)
+              }
+            />
+          </div>
+        </div>
+      )}
+      {/* New Service Modal */}
+      {isNewServiceModalOpen && (
+        <div className="fixed z-[100000000000] top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg">
+            <NewServiceModal
+              onCancel={handleCloseModal}
+              onAdd={handleAddService}
             />
           </div>
         </div>
@@ -51,7 +124,7 @@ const AdminServices = () => {
 
 export default AdminServices;
 
-const SingleService = ({ text, onEditClick }) => {
+const SingleService = ({ text, onEditClick, onDeleteClick }) => {
   return (
     <div className="flex justify-between w-full border rounded-lg p-6">
       <p>{text}</p>
@@ -72,7 +145,7 @@ const SingleService = ({ text, onEditClick }) => {
           </svg>
         </button>
         {/* Delete button */}
-        <button>
+        <button onClick={onDeleteClick}>
           <svg
             width="25"
             height="25"
@@ -92,17 +165,21 @@ const SingleService = ({ text, onEditClick }) => {
               </clipPath>
             </defs>
           </svg>
-        </button>
+        </button>{" "}
       </div>
     </div>
   );
 };
 
-const ServicesModal = ({ initialText, onCancel }) => {
+const ServicesModal = ({ initialText, onCancel, onSave }) => {
   const [text, setText] = useState(initialText);
 
   const handleCancel = () => {
     onCancel();
+  };
+
+  const handleSave = () => {
+    onSave(text);
   };
 
   return (
@@ -116,7 +193,36 @@ const ServicesModal = ({ initialText, onCancel }) => {
         onChange={(e) => setText(e.target.value)}
       />
       <div className="flex gap-3 w-full items-end mt-4 justify-end">
-        <CusButton text={"Edit"} type={"primary"} />
+        <CusButton text={"Save"} type={"primary"} onClick={handleSave} />
+        <CusButton text={"Cancel"} type={"secondary"} onClick={handleCancel} />
+      </div>
+    </div>
+  );
+};
+
+const NewServiceModal = ({ onCancel, onAdd }) => {
+  const [text, setText] = useState("");
+
+  const handleCancel = () => {
+    onCancel();
+  };
+
+  const handleAdd = () => {
+    onAdd(text);
+  };
+
+  return (
+    <div className="flex flex-col gap-5 lg:min-w-[400px]">
+      <p className="text-lg">
+        Add <span className="text-secondary">New Service</span>
+      </p>
+      <input
+        className="border border-gray-300 rounded-md p-2 mt-2"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <div className="flex gap-3 w-full items-end mt-4 justify-end">
+        <CusButton text={"Add"} type={"primary"} onClick={handleAdd} />
         <CusButton text={"Cancel"} type={"secondary"} onClick={handleCancel} />
       </div>
     </div>
