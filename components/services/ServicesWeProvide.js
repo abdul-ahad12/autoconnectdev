@@ -121,31 +121,34 @@ const ServicesWeProvide = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async (formData) => {
-    console.log(formData)
+    console.log(formData);
     try {
-      const response = await axios.post('/api/customorder/customerbooking', formData);
-  
+      const response = await axios.post(
+        "/api/customorder/customerbooking",
+        formData
+      );
+
       if (response.status === 201) {
         // Success response
         Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Custom Order submitted successfully!,Keep checking your dashboard to get offers',
+          icon: "success",
+          title: "Success!",
+          text: "Custom Order submitted successfully!,Keep checking your dashboard to get offers",
         });
         // Handle success, e.g., close the modal
         setIsModalOpen(false);
-        router.push("/customerDashboard")
+        router.push("/customerDashboard");
       } else {
         // Error response
-        throw new Error('Failed to submit the form');
+        throw new Error("Failed to submit the form");
       }
     } catch (error) {
-      console.error('Error submitting the form:', error.message);
+      console.error("Error submitting the form:", error.message);
       // Show error message to the user using Swal
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong! Please try again later.',
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Please try again later.",
       });
       // Handle error, e.g., show error message to the user
     }
@@ -218,6 +221,7 @@ const ServicesWeProvide = () => {
                 />
 
                 <ServicesModal
+                  formheading={"For Booking"}
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
                   onSubmit={handleSubmit}

@@ -7,6 +7,7 @@ const ServicesModal = ({
   onSubmit,
   showSubmitButton = true,
   fields = [],
+  formheading,
 }) => {
   const [formData, setFormData] = useState({});
 
@@ -35,7 +36,7 @@ const ServicesModal = ({
           X
         </button>
         <div className="font-bold text-lg my-5 text-secondary ">
-          For booking
+          {formheading}
         </div>
         <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-x-8">
           {fields.map((field, index) => (
