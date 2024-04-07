@@ -12,7 +12,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const dbConnector = new MongoDBConnector();
-  console.log(req.body);
   const user: User = req.body;
   const userAlreaduExists = await dbConnector.find(UserModel, {
     email: user.email,
@@ -27,7 +26,6 @@ export default async function handler(
   user.password = hashedPassword;
 
   const result = await UserModel.create(user);
-  console.log(result);
   const { accessToken, refreshToken } = issueToken({
     id: result._id,
     role: result.role,

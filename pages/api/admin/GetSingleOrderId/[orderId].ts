@@ -1,6 +1,8 @@
 import { BookingModel } from "lib/models/booking/booking";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest,
+  res: NextApiResponse) {
   const { orderId } = req.query;
 
   try {

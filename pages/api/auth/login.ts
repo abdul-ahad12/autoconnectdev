@@ -13,12 +13,11 @@ export default async function handler(
 ) {
   const dbConnector = new MongoDBConnector();
   const user: User = req.body;
-  console.log(user);
 
   const userAlreadyExists = await dbConnector.find(UserModel, {
     email: user.email,
   });
-  console.log("user details:",userAlreadyExists)
+  console.log("user details:", userAlreadyExists)
 
   if (!userAlreadyExists) {
     res.status(400).json({ message: "User doesn't exists" });
@@ -38,7 +37,7 @@ export default async function handler(
           id: userAlreadyExists[0]._id,
           role: userAlreadyExists[0].role,
         });
-        
+
         setCookie(res, "access-token", accessToken, {
           maxAge: 30 * 24 * 60 * 60,
         });
@@ -46,7 +45,7 @@ export default async function handler(
           maxAge: 30 * 24 * 60 * 60,
         });
         setTokensCookies(res, accessToken, refreshToken);
-        
+
         res.status(200).json({ accessToken, refreshToken, user: result });
       } else {
         res.status(400).json({ message: "Wrong password" });

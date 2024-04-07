@@ -1,6 +1,8 @@
 import { UserModel } from "lib/models/user";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest,
+  res: NextApiResponse) {
   const { userId } = req.query;
 
   try {
