@@ -19,15 +19,15 @@ const AdminDashboard = ({ bookings }) => {
     },
     {
       title: "Requests",
-      icons: "/icons/orders.svg",
+      icons: "/icons/request.png",
     },
     {
       title: "Mechanics",
-      icons: "/icons/profile.svg",
+      icons: "/icons/mechanic.png",
     },
     {
       title: "Users",
-      icons: "/icons/orders.svg",
+      icons: "/icons/users.png",
     },
     {
       title: "Orders",
