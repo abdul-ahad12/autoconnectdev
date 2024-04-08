@@ -640,7 +640,7 @@ const Form = () => {
                             formData.services.find((s) => s.name === service)
                               ?.price || ""
                           }
-                          placeholder="Price"
+                          placeholder="Price in $"
                           onChange={(e) =>
                             handleChange({
                               target: {

@@ -5,6 +5,8 @@ import axios from "axios";
 import CusButton from "./button";
 import Modal from "../services/ReusableModal";
 import ServicesModal from "../services/ServicesModal";
+import Swal from "sweetalert2";
+import { formatDate } from "../../lib/supportingFncs";
 
 const OrdersList = ({ bookings, role }) => {
   return (
@@ -84,7 +86,11 @@ export const CustomOrder = () => {
         }
       );
 
-      console.log("Response:", response.data);
+      Swal.fire({
+        icon: "success",
+        text: "Wait for an email if you are selected by the Customer",
+        title: "Price Submitted",
+      });
       // Handle successful submission
     } catch (error) {
       // Handle error
@@ -145,7 +151,7 @@ export const CustomOrder = () => {
                 type="text"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                placeholder="Enter Price"
+                placeholder="Enter Price in $"
                 required
                 className="border p-2 rounded-lg"
               />
@@ -184,7 +190,11 @@ export const CustomOrderCustomer = () => {
           withCredentials: true, // Set withCredentials to true
         }
       );
-      console.log("Booking accepted:", response.data.message);
+      Swal.fire({
+        icon: "success",
+        title: "Booking Created Successfully",
+        text: "Your booking has been created successfully!",
+      });
       // Optionally, you can update the UI or state based on the response
     } catch (error) {
       console.error("Error accepting custom booking:", error);
@@ -226,17 +236,17 @@ export const CustomOrderCustomer = () => {
             >
               <div className="flex gap-2">
                 <span className="base:flex lg:hidden">Mechanic ID :</span>
-                {data.mechanic &&
+               # {data.mechanic &&
                   data.mechanic.substring(data.mechanic.length - 4)}
               </div>
               <div className="flex gap-2">
                 <span className="base:flex lg:hidden">Date : </span>
-                {data.availableDate}
+                {formatDate(data.availableDate)}
               </div>
 
               <div className="flex gap-2">
                 <span className="base:flex lg:hidden">Price : </span>
-                {data.price}$
+                ${data.price}
               </div>
 
               <button

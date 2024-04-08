@@ -58,6 +58,7 @@ const Order = ({ bookings, role }) => {
 
     fetchOrders();
   }, [currentPage]);
+  console.log(bookings)
 
   // request admin array
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,12 +103,12 @@ const Order = ({ bookings, role }) => {
                 <div className="flex base:flex-col lg:flex-row gap-2">
                   <div className="flex items-center rounded-md border border-gray-500 gap-2 px-2 py-1">
                     <div className="w-1 h-1 bg-red-600" />
-                    <div>Await payment</div>
+                    <div>Pay Now</div>
                   </div>
                   <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
                     <div className="w-1 h-1 bg-blue-700" />
                     <div>
-                      {bookings.isCompleted ? "Completed" : "Not Completed"}
+                      {order.isCompleted ? "Completed" : "Not Completed"}
                     </div>
                   </div>
                   {/* <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2"> */}
@@ -121,7 +122,7 @@ const Order = ({ bookings, role }) => {
                       fields={fields}
                     /> */}
                   {/* </div> */}
-                  {bookings.isCompleted && (
+                  {order.isCompleted && (
                     <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
                       <button>View INVOICE</button>
                     </div>

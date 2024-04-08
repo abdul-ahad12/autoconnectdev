@@ -98,8 +98,9 @@ const MechanicAvailability = ({ mechanicId }) => {
     <div className="mt-6 w-full">
       <h2 className="text-lg font-semibold mb-4">Mechanic Availability</h2>
       <div className="flex w-full lg:flex-row base:flex-col gap-3   lg:space-x-2 mb-4">
-        {orderedDaysOfWeek.map((day) => (
+        {orderedDaysOfWeek.map((day,idx) => (
           <div
+          key={idx}
             onClick={() => handleDayClick(day)}
             className={`lg:px-6 lg:py-4 base:py-3 rounded flex flex-col gap-1 items-center border ${
               selectedDay === day ? "border-secondary " : " text-gray-700"

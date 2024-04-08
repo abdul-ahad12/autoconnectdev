@@ -3,6 +3,9 @@ import React from "react";
 
 const Auth = ({ children }) => {
   const router = useRouter();
+  const isMechanic = router.query.mechanic === "true";
+
+  console.log(isMechanic)
 
   const handlemechanic = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -28,7 +31,7 @@ const Auth = ({ children }) => {
             onClick={handlemechanic}
             className="flex text-center mt-6 underline font-medium text-secondary cursor-pointer"
           >
-            Are you a Mechanic? Register now !!
+            {!isMechanic && <div>Are you a Mechanic? Register now !!</div>}
           </div>
         </div>
         <div className="base:w-full lg:w-[70%] lg:h-[95%] rounded-lg  bg-customwhite  flex justify-center py-7">

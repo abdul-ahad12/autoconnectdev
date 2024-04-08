@@ -46,7 +46,7 @@ const Bookmechanic = () => {
   const [address, setAddress] = useState({
     street: "",
     suburb: "",
-    state: "",
+    state: "Melbourne",
     pinCode: "",
   });
 
@@ -410,7 +410,7 @@ const Bookmechanic = () => {
                       className="input-class border w-full border-graycolor2"
                       type="text"
                       name="state"
-                      value={"Melbourne"}
+                      value={address.state}
                       onChange={handleAddressChange}
                     />
                   </div>
