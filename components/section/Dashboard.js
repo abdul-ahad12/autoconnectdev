@@ -37,7 +37,7 @@ const Dashboard = ({ bookings, role }) => {
       },
       {
         title: "My Availability",
-        icons: "/icons/profile.svg",
+        icons: "/icons/accesstime.png",
       },
     ];
   } else if (role === "ADMIN") {
