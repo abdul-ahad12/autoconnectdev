@@ -143,7 +143,7 @@ const Signup = () => {
       <Navbar />
       <Auth>
         <div className="text-black base:p-3 lg:p-0 lg:w-[65%] base:text-[min(3vw,25px)] lg:text-[min(2rem,2vw)] font-semibold flex flex-col">
-          <div> Create Account</div>
+          <div> Create Account {isMechanic && "for Mechanic"}</div>
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             {/* Form inputs */}
             <div className="flex gap-2 mt-4">

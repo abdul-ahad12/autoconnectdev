@@ -3,25 +3,34 @@ import { useRouter } from "next/router";
 import Description from "../section/Description";
 import CusButton from "../section/button";
 
-export const citiesAustralia = [
-  "Sydney",
-  "Melbourne",
-  "Brisbane",
-  "Perth",
-  "Adelaide",
-  "Gold Coast",
-  "Newcastle",
-  "Canberra",
-  "Sunshine Coast",
-  "Wollongong",
-  "Hobart",
-  "Geelong",
-  "Townsville",
-  "Cairns",
-  "Darwin",
-  "Hyderabad"
+// Array of top 25 suburbs of Melbourne
+export const melbourneSuburbs = [
+  "Carlton",
+  "Fitzroy",
+  "Richmond",
+  "South Yarra",
+  "St Kilda",
+  "Prahran",
+  "Brunswick",
+  "Northcote",
+  "Footscray",
+  "Collingwood",
+  "Essendon",
+  "Coburg",
+  "Kew",
+  "Hawthorn",
+  "Ascot Vale",
+  "Thornbury",
+  "Port Melbourne",
+  "Williamstown",
+  "Moonee Ponds",
+  "Box Hill",
+  "Camberwell",
+  "Malvern",
+  "Glen Iris",
+  "Elwood",
+  "Albert Park",
 ];
-
 
 const Form = () => {
   const [city, setCity] = useState("");
@@ -32,9 +41,9 @@ const Form = () => {
   const handleSubmit = () => {
     // Validation
     if (
-      city.trim() === "" ||
+      // city.trim() === "" ||
       suburb.trim() === "" ||
-      postalCode.trim() === "" ||
+      // postalCode.trim() === "" ||
       isNaN(postalCode)
     ) {
       alert("Please fill out all fields correctly.");
@@ -42,7 +51,7 @@ const Form = () => {
     }
 
     // Construct query string
-    const queryString = `?location=${city}`;
+    const queryString = `?location=${suburb}`;
 
     // Navigate to "/service" route with query string
     router.push(`/services${queryString}`);
@@ -55,7 +64,7 @@ const Form = () => {
           {/* location */}
           <div className="flex flex-col gap-1">
             <Description text={"City"} />
-            <select
+            {/* <select
               className="input-class border-black border"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -66,17 +75,28 @@ const Form = () => {
                   {city}
                 </option>
               ))}
-            </select>
-          </div>
-          {/* Vehicle Type */}
-          <div className="flex flex-col gap-1">
-            <Description text={"Suburb"} />
+            </select> */}
             <input
-              className="input-class border-black border"
-              value={suburb}
-              onChange={(e) => setSuburb(e.target.value)}
+              className="input-class border border-black"
+              value={"Melbourne"}
             />
           </div>
+          
+          <div className="flex flex-col gap-1">
+          <Description text={"Suburb"} />
+          {/* Suburb */}
+          <select
+            className="input-class border-black border"
+            value={suburb}
+            onChange={(e) => setSuburb(e.target.value)}
+          >
+            <option className="input-class">Select Suburb</option>
+            {melbourneSuburbs.map((suburb) => (
+              <option className="input-class" key={suburb} value={suburb}>
+                {suburb}
+              </option>
+            ))}
+          </select></div>
           {/* Fuel Type  */}
           <div className="flex flex-col gap-1">
             <Description text={"Postal Code"} />

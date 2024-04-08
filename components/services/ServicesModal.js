@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CusButton from "../section/button";
+import { melbourneSuburbs } from "../home/Form";
 
 const ServicesModal = ({
   isOpen,
@@ -42,13 +43,30 @@ const ServicesModal = ({
           {fields.map((field, index) => (
             <label key={index} className="block mb-4">
               {`${field.label}:`}
-              <input
-                type="text"
-                name={field.name}
-                value={formData[field.name] || ""}
-                onChange={handleChange}
-                className="border border-gray-400 p-2 w-full rounded-md"
-              />
+              {field.name === "suburb" ? (
+              <select
+              name={field.name}
+              value={formData[field.name] || ""}
+              onChange={handleChange}
+              className="border border-gray-400 p-2 w-full rounded-md"
+            >
+              <option value="">Select Suburb</option>
+              {/* Map over the topSuburbs array to create options */}
+              {melbourneSuburbs.map((suburb, idx) => (
+                <option key={idx} value={suburb}>
+                  {suburb}
+                </option>
+              ))}
+            </select>
+              ) : (
+                <input
+                  type="text"
+                  name={field.name}
+                  value={formData[field.name] || ""}
+                  onChange={handleChange}
+                  className="border border-gray-400 p-2 w-full rounded-md"
+                />
+              )}
             </label>
           ))}
           <br />

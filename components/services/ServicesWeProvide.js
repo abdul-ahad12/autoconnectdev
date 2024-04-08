@@ -53,23 +53,27 @@ const ServicesWeProvide = () => {
   };
 
   const handleGetMechanics = () => {
-    // Construct URL with selected services' titles and location data
-    const selectedServiceTitles = selectedServices.map((serviceId) => {
-      const service = services.find((service) => service.id === serviceId);
-      return service.title;
-    });
-    const locationData = {
-      location,
-    };
-    const query = {
-      selectedServices: selectedServiceTitles.join(","),
-      location: JSON.stringify(locationData),
-    };
-    const queryString = new URLSearchParams(query).toString();
-    const url = `/mechanic?${queryString}`;
+    if (selectedServices.length == 0) {
+      alert("Select a service");
+    } else {
+      const selectedServiceTitles = selectedServices.map((serviceId) => {
+        const service = services.find((service) => service.id === serviceId);
+        return service.title;
+      });
+      const locationData = {
+        location,
+      };
+      const query = {
+        selectedServices: selectedServiceTitles.join(","),
+        location: JSON.stringify(locationData),
+      };
+      const queryString = new URLSearchParams(query).toString();
+      const url = `/mechanic?${queryString}`;
 
-    // Navigate to the /mechanic page with the constructed URL
-    router.push(url);
+      // Navigate to the /mechanic page with the constructed URL
+      router.push(url);
+    }
+    // Construct URL with selected services' titles and location data
   };
 
   const handleRemoveService = (index) => {
@@ -168,6 +172,11 @@ const ServicesWeProvide = () => {
                   />
                 </div>
               ))}
+            {services.length == 0 && (
+              <div className="py-12 text-[1.5rem] w-full text-center">
+                No Services to show
+              </div>
+            )}
             <div className="py-[1rem] w-full col-start-1 col-end-3">
               <div className="base:text-[0.9rem] lg:text-[1.4rem]">
                 Customize your booking
@@ -181,7 +190,7 @@ const ServicesWeProvide = () => {
               {/* <div> */}
               <div className="mt-7">
                 <CusButton
-                  text={"Click Here"}
+                  text={"Submit A Form"}
                   onClick={() => setIsModalOpen(true)}
                   type={"primary"}
                 />
@@ -195,7 +204,7 @@ const ServicesWeProvide = () => {
                   fields={[
                     { name: "street", label: "Street" },
                     { name: "city", label: "City" },
-                    { name: "suburb", label: "Subrub" },
+                    { name: "suburb", label: "Suburb" },
 
                     { name: "pincode", label: "Pincode" },
 

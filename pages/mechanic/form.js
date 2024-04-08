@@ -10,7 +10,7 @@ import { useAuth } from "../../components/context/AuthProvider";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { citiesAustralia } from "../../components/home/Form";
+import { citiesAustralia, melbourneSuburbs } from "../../components/home/Form";
 
 const Form = () => {
   const router = useRouter();
@@ -87,7 +87,7 @@ const Form = () => {
     address: {
       street: "",
       suburb: "",
-      state: "",
+      state: "Melbourne",
       pinCode: "",
     },
     googleMapsLocation: "",
@@ -395,32 +395,32 @@ const Form = () => {
               </div>
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"Suburb"} />
-                <input
+                <select
                   className="input-class border w-full border-graycolor2"
-                  type="text"
                   name="address.suburb"
                   value={formData.address.suburb}
                   onChange={handleChange}
-                />
+                >
+                  <option>Select A Suburb</option>
+                  {/* Mapping over suburbOptions array to create options */}
+                  {melbourneSuburbs.map((suburb, index) => (
+                    <option key={index} value={suburb}>
+                      {suburb}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="flex lg:flex-row base:flex-col  gap-3">
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"City"} />
-                <select
+                <input
                   className="input-class border w-full border-graycolor2"
                   name="address.state"
-                  value={formData.address.state}
+                  value={"Melbourne"}
                   onChange={handleChange}
-                >
-                  <option value="">Select State</option>
-                  {citiesAustralia.map((state, index) => (
-                    <option key={index} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
+                ></input>
               </div>
               <div className="flex flex-col w-full gap-1">
                 <Description size={"inputlabel"} text={"Pincode"} />
@@ -658,7 +658,7 @@ const Form = () => {
 
             {/* Delivery Mode */}
             <div className="flex items-start flex-col w-full gap-5">
-              <Description size={"inputlabel"} text={"Delivery Mode"} />
+              <Description size={"inputlabel"} text={"Delivery Modes You can Provide"} />
               {[
                 "TO_MECHANIC",
                 "TO_CUSTOMER" /* Add more delivery modes here */,
