@@ -41,6 +41,7 @@ const OrdersList = ({ bookings, role }) => {
 
 export default OrdersList;
 
+// mechanic dashboard
 export const CustomOrder = () => {
   const [customOrders, setCustomOrders] = useState([]);
   console.log(customOrders);
@@ -100,15 +101,6 @@ export const CustomOrder = () => {
   const CloseModal = () => {
     setIsModalOpen(false);
   };
-  const fields = [
-    { name: "field1", label: "Car Name" },
-    // { name: "field2", label: "Last Name", value: lastname },
-    { name: "field2", label: "City" },
-    { name: "field3", label: "Detail Text" },
-    { name: "field4", label: "Pincode" },
-    { name: "field5", label: "Street" },
-    { name: "field6", label: "Subrub" },
-  ];
 
   return (
     <div className="w-full">
@@ -133,10 +125,21 @@ export const CustomOrder = () => {
               >
                 Click here
               </button>
-              <ServicesModal
+              <Modal
                 isOpen={isModalOpen}
                 onClose={CloseModal}
-                fields={fields}
+                fields={[
+                  { name: "field1", label: "Car Name", value: order.carName },
+                  { name: "field2", label: "City", value: order.city },
+                  {
+                    name: "field3",
+                    label: "Detail Text",
+                    value: order.detailedText,
+                  },
+                  { name: "field4", label: "Pincode", value: order.pincode },
+                  { name: "field5", label: "Street", value: order.street },
+                  { name: "field6", label: "Suburb", value: order.suburb },
+                ]}
               />
               <input
                 type="text"
@@ -152,7 +155,12 @@ export const CustomOrder = () => {
                 onChange={(e) => setSelectedDate(e.target.value)}
                 required
               />
-              <button type="submit">Submit</button>
+              <button
+                type="submit"
+                className="bg-graycolor2 w-fit border  rounded-full px-4 py-1 text-white"
+              >
+                Submit
+              </button>
             </form>
           </div>
         ))}
@@ -161,6 +169,7 @@ export const CustomOrder = () => {
   );
 };
 
+// customerdashboard
 export const CustomOrderCustomer = () => {
   const [customOrders, setCustomOrders] = useState([]);
   console.log(customOrders);
@@ -202,8 +211,8 @@ export const CustomOrderCustomer = () => {
 
   return (
     <div>
-      <div className="base:hidden lg:grid lg:grid-cols-4 gap-x-12 items-center text-[1rem]  py-3 px-2 rounded-lg">
-        <div>Mechanic</div>
+      <div className="base:hidden lg:grid lg:grid-cols-4 lg:gap-x-28 items-center text-[1rem]  py-3 px-2 rounded-lg">
+        <div>Mechanic Id</div>
         <div>Available Date</div>
         <div>Price</div>
         <div>Action</div>
@@ -212,15 +221,26 @@ export const CustomOrderCustomer = () => {
         customOrders[0].mechanicOffers?.map((data, idx) => {
           return (
             <div
-              className="text-black grid base:grid-cols-1 lg:grid-cols-4"
+              className="text-black grid base:gap-y-4 base:grid-cols-1  lg:grid-cols-4 gap-x-20 border p-5 rounded-lg "
               key={idx}
             >
-              <div>{data.mechanic}</div>
-              <div>{data.availableDate}</div>
+              <div className="flex gap-2">
+                <span className="base:flex lg:hidden">Mechanic ID :</span>
+                {data.mechanic &&
+                  data.mechanic.substring(data.mechanic.length - 4)}
+              </div>
+              <div className="flex gap-2">
+                <span className="base:flex lg:hidden">Date : </span>
+                {data.availableDate}
+              </div>
 
-              <div>{data.price}</div>
+              <div className="flex gap-2">
+                <span className="base:flex lg:hidden">Price : </span>
+                {data.price}$
+              </div>
 
               <button
+                className="bg-graycolor2 w-fit border  rounded-full px-4 py-1 text-white"
                 onClick={() =>
                   acceptBooking(customOrders[0]._id, data.mechanic)
                 }
