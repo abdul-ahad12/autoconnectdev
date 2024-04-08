@@ -56,7 +56,7 @@ const RequestAdmin = () => {
       <Navbar />
       {/* <Dashboard bookings={bookings} /> */}
       <AdminDashboard bookings={bookings} />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

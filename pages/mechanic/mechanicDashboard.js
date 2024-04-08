@@ -32,7 +32,7 @@ const MechanicDashboard = () => {
     <div>
       <Navbar />
       <Dashboard role={"MECHANIC"} bookings={bookings} />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
