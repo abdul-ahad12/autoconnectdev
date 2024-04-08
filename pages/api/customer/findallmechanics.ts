@@ -1,12 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { MechanicRegistrationModel } from "../../../lib/models/mechanic/registration";
+import {
+  MechanicRegistrationModel,
+  ApprovalStatus,
+} from "../../../lib/models/mechanic/registration";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
-  console.log(req.query)
+  console.log(req.query);
   try {
     const {
       location,
@@ -16,14 +18,12 @@ export default async function handler(
       limit: rawLimit,
     } = req.query;
 
-
     // Parse services into an array if it's a string with commas
     const services = Array.isArray(rawServices)
       ? rawServices
       : rawServices.split(",").map((service) => service.trim());
 
-
-console.log(services)
+    console.log(services);
 
     // Parse query parameters
     const city = location;
@@ -52,7 +52,7 @@ console.log(services)
 
     // Add city criteria if provided
     if (city) {
-      query["address.state"] = city;
+      query["address.suburb"] = city;
     }
 
     // Add delivery mode criteria
@@ -62,6 +62,9 @@ console.log(services)
       // Default behavior: Show mechanics with TO_MECHANIC delivery mode if no delivery mode is specified
       query.deliveryMode = defaultDeliveryMode;
     }
+
+    // Add approvalStatus criteria
+    query.approvalStatus = ApprovalStatus.APPROVED;
 
     // Find mechanics based on the query criteria
     const mechanics = await MechanicRegistrationModel.find(query)

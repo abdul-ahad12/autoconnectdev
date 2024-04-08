@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CusButton from "../section/button";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const AdminServices = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -69,8 +70,20 @@ const AdminServices = () => {
 
       // Send only the array of names
       await axios.post("/api/services", namesArray);
+      Swal.fire({
+        icon: "success",
+        title: "Updated Succesfully",
+        text: "New Services Updated Succesfully",
+      });
+
       console.log("Services updated successfully");
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error In Updating",
+        text: "An error in Updating Occured",
+      });
+
       console.error("Error updating services:", error);
     }
   };

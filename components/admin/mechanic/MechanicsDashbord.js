@@ -28,10 +28,10 @@ const MechanicsDashbord = ({
   };
 
   const fields = [
-    { name: "field1", label: "First Name", value: firstname },
-    { name: "field2", label: "Last Name", value: lastname },
-    { name: "field2", label: "Phone Number", value: phonenumber },
-    { name: "field2", label: "Email", value: email },
+    { name: "field1", label: "Name OF Company", value: firstname },
+    // { name: "field2", label: "Last Name", value: lastname },
+    // { name: "field2", label: "Phone Number", value: phonenumber },
+    // { name: "field2", label: "Email", value: email },
     { name: "field2", label: "About Us", value: Aboutus },
     { name: "field2", label: "Street", value: street },
     { name: "field2", label: "Subrub", value: suburb },
@@ -51,7 +51,7 @@ const MechanicsDashbord = ({
         {formatDate(dateofsignup)}
       </div>
       <div className="text-graycolor2  text-[min(4vw,19px)] lg:text-[min(0.8vw,14px)]">
-        {numberoforders}
+        {suburb}
       </div>
       {/* <button className="text-primary w-fit text-[min(3vw,19px)]  lg:text-[0.8rem] border-2 rounded-md p-1 base:ml-10 lg:ml-0">
         Click here

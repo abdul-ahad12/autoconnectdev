@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { citiesAustralia } from "../home/Form";
+import { citiesAustralia, melbourneSuburbs } from "../home/Form";
 
 const RangeBar = ({
   mechanics,
@@ -40,9 +40,9 @@ const RangeBar = ({
         <label htmlFor="location">Location</label>
         <select id="location" value={location} onChange={handleChangeLocation}>
           <option value="">Select Location</option>
-          {citiesAustralia.map((city) => (
-            <option key={city} value={city}>
-              {city}
+          {melbourneSuburbs.map((suburb) => (
+            <option key={suburb} value={suburb}>
+              {suburb}
             </option>
           ))}
         </select>

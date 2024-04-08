@@ -126,7 +126,7 @@ const AdminDashboard = ({ bookings }) => {
             {current == "Home" && <MechanicHome />}
             {current == "Mechanics" && <MechanicsACOrders />}
             {current == "My Availability" && <MyAvailibility />}
-            {current == "Orders" && <OrdersList bookings={bookings} />}
+            {current == "Orders" && <OrdersList bookings={bookings} role="ADMIN" />}
             {current == "Users" && <MechanicsUser />}
             {current == "Services" && <AdminServices />}
 

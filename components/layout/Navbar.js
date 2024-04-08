@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthProvider";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import MobileLogo from "../../public/navbar/mobile.svg";
+import axios from "axios";
 
 const Navbar = () => {
   const router = useRouter();
@@ -13,6 +14,61 @@ const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   console.log(userData);
+  const [isAdmin, setIsAdmin] = useState(null);
+  const [isCustomer, setIsCustomer] = useState(null);
+  const [isMechanic, setIsMechanic] = useState(null);
+
+  console.log("admin", isAdmin);
+  console.log("customer", isCustomer);
+  console.log("isMechanic", isMechanic);
+
+  useEffect(() => {
+    axios
+      .get("/api/roles/admin", { withCredentials: true })
+      .then((response) => {
+        const data = response.data;
+        if (data.success) {
+          setIsAdmin(true);
+        } else {
+          console.log("here"); // Redirect to login page if not authorized
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking admin role:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("/api/roles/customer", { withCredentials: true })
+      .then((response) => {
+        const data = response.data;
+        if (data.success) {
+          setIsCustomer(true);
+        } else {
+          console.log("here"); // Redirect to login page if not authorized
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking customer role:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("/api/roles/mechanic", { withCredentials: true })
+      .then((response) => {
+        const data = response.data;
+        if (data.success) {
+          setIsMechanic(true);
+        } else {
+          console.log("here"); // Redirect to login page if not authorized
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking mechanic role:", error);
+      });
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,7 +141,15 @@ const Navbar = () => {
       <div className="w-[90%] grid grid-cols-12">
         {/* logo */}
         <Link
-          href="/"
+          href={
+            isCustomer
+              ? "/"
+              : isAdmin
+              ? "/admin/requestadmin"
+              : isMechanic
+              ? "/mechanic/mechanicDashboard"
+              : "/"
+          }
           className="lg:text-[2rem] base:text-[1.2rem] z-50 row-span-full col-start-1 col-end-3 font-semibold "
         >
           Auto<span className="text-secondary">connect</span>
@@ -104,7 +168,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {mobileNav == true && (
+        {isCustomer && mobileNav == true && (
           <div class="flex flex-col gap-8 h-screen min-w-[300px] lg:hidden">
             <div className="flex flex-col gap-6 mt-10 ">
               {menu.map((data, idx) => (
@@ -147,18 +211,19 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* menu */}
-        <div className="row-span-full col-start-1 col-end-13 base:hidden lg:flex gap-7 justify-center items-center font-normal text-[min(1rem,1vw)] ">
-          {menu.map((data, idx) => (
-            <Link
-              href={data.href}
-              key={idx}
-              className="z-50 hover:scale-[1.01]"
-            >
-              {data.title}
-            </Link>
-          ))}
-        </div>
+        {isCustomer && (
+          <div className="row-span-full col-start-1 col-end-13 base:hidden lg:flex gap-7 justify-center items-center font-normal text-[min(1rem,1vw)] ">
+            {menu.map((data, idx) => (
+              <Link
+                href={data.href}
+                key={idx}
+                className="z-50 hover:scale-[1.01]"
+              >
+                {data.title}
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* buttons */}
         {isLoggedIn ? (
@@ -169,7 +234,15 @@ const Navbar = () => {
             <CusButton
               type={"primary"}
               text={"Dashboard"}
-              href={"/customerDashboard"}
+              href={
+                isCustomer
+                  ? "/customerDashboard"
+                  : isAdmin
+                  ? "/admin/requestadmin"
+                  : isMechanic
+                  ? "/mechanic/mechanicDashboard"
+                  : "/"
+              }
             />
           </div>
         ) : (

@@ -55,12 +55,15 @@ const Login = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("id", userData.id);
         localStorage.setItem("role", userData.role);
-        if (userData.role === "MECHANIC") {
-          router.push("/mechanic/mechanicDashboard");
-        }
 
-        if (userData.role === "ADMIN") {
-          router.push("/admin/requestadmin");
+        if (userData) {
+          if (userData.role === "MECHANIC") {
+            router.push("/mechanic/mechanicDashboard");
+          }
+
+          if (userData.role === "ADMIN") {
+            router.push("/admin/requestadmin");
+          }
         }
 
         swal(

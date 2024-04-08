@@ -174,7 +174,7 @@ const ServicesWeProvide = () => {
                   />
                 </div>
               ))}
-            {services.length == 0 && (
+            {services?.length == 0 && (
               <div className="py-12 text-[1.5rem] w-full text-center">
                 No Services to show
               </div>

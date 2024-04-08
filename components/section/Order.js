@@ -96,8 +96,9 @@ const Order = ({ bookings, role }) => {
             >
               <div className="w-full  flex justify-between items-center">
                 <div className="text-[1.3rem]">
-                  Order #{order?._id.slice(0, 4)}
+                  Order #{order?._id.slice(-4)}
                 </div>
+
                 <div className="flex base:flex-col lg:flex-row gap-2">
                   <div className="flex items-center rounded-md border border-gray-500 gap-2 px-2 py-1">
                     <div className="w-1 h-1 bg-red-600" />
@@ -106,21 +107,21 @@ const Order = ({ bookings, role }) => {
                   <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
                     <div className="w-1 h-1 bg-blue-700" />
                     <div>
-                      {bookings.isAvailability ? "Completed" : "Not Completed"}
+                      {bookings.isCompleted ? "Completed" : "Not Completed"}
                     </div>
                   </div>
-                  <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
-                    <div className="w-1 h-1 bg-blue-700" />
+                  {/* <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2"> */}
+                    {/* <div className="w-1 h-1 bg-blue-700" /> */}
                     {/* {bookings.is  Availability ? "Completed" : "Not Completed"} */}
 
-                    <button onClick={handleOpenModal}>Know More</button>
-                    <Modal
+                    {/* <button onClick={handleOpenModal}>Know More</button> */}
+                    {/* <Modal
                       isOpen={isModalOpen}
                       onClose={CloseModal}
                       fields={fields}
-                    />
-                  </div>
-                  {bookings.isAvailability && (
+                    /> */}
+                  {/* </div> */}
+                  {bookings.isCompleted && (
                     <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
                       <button>View INVOICE</button>
                     </div>

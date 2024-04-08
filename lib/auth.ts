@@ -13,7 +13,7 @@ const accessTokenExpiryTime = process.env.ACCESS_TOKEN_EXPIRY_TIME;
 const refreshTokenExpiryTime = process.env.REFRESH_TOKEN_EXPIRY_TIME;
 
 function sendError(res: NextApiResponse, msg: string) {
-  return res.status(403).json({ message: msg });
+  return res.status(403).json({ success: false, message: msg });
 }
 
 async function authorize(
@@ -31,7 +31,6 @@ async function authorize(
       accessToken,
       secretToken,
       async (err: Error, decodedToken: any) => {
-        
         if (err instanceof jwt.TokenExpiredError) {
           if (!refreshToken) {
             return sendError(res, "Error: Refresh token missing");
@@ -45,7 +44,6 @@ async function authorize(
                 console.log(refreshErr);
                 return sendError(res, "Error: Invalid refresh token");
               }
-
 
               const { id, role } = decodedRefreshToken;
 
@@ -61,7 +59,6 @@ async function authorize(
 
               // Set user information in req.user
               req.user = { id, role };
-
 
               next();
             }

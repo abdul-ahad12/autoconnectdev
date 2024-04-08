@@ -17,9 +17,9 @@ const RequestTabs = ({ bookings }) => {
               {" "}
               New
             </TabsTrigger>
-            <TabsTrigger disabled className="w-[100px]" value="password">
+            {/* <TabsTrigger disabled className="w-[100px]" value="password">
               Customs
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
           <TabsContent value="new" className="flex flex-col gap-16 ">
             {/* <Order bookings={bookings} /> */}

@@ -219,7 +219,11 @@ const Bookmechanic = () => {
 
                     return (
                       <button
-                        className="text-[0.8rem] bg-slate-200 px-5 py-1 border border-black"
+                        className={`text-[0.8rem] ${
+                          mechanicData?.availability[day].available
+                            ? "bg-gray-400"
+                            : "bg-white"
+                        } bg-white rounded-full px-5 py-1 border border-black`}
                         key={day}
                         style={{
                           color: mechanicData?.availability[day].available
@@ -401,12 +405,12 @@ const Bookmechanic = () => {
                   {/* </div> */}
                   {/* <div> */}
                   <div className="flex flex-col w-full gap-1">
-                    <Description size={"inputlabel"} text={"State"} />
+                    <Description size={"inputlabel"} text={"City"} />
                     <input
                       className="input-class border w-full border-graycolor2"
                       type="text"
                       name="state"
-                      value={address.state}
+                      value={"Melbourne"}
                       onChange={handleAddressChange}
                     />
                   </div>

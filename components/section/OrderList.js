@@ -20,7 +20,7 @@ const OrdersList = ({ bookings, role }) => {
               All Orders
             </TabsTrigger>
             <TabsTrigger className="w-[100px] " value="password">
-              Customs
+              {role !== "ADMIN" && "Customs"}
             </TabsTrigger>
           </TabsList>
           <TabsContent value="account">

@@ -73,7 +73,7 @@ const MechanicsACOrders = () => {
           <h3 className="text-primary font-semibold">Date of Sign Up</h3>
         </div>
         <div className="col-span-1">
-          <h3 className="text-primary font-semibold">Number of Orders</h3>
+          <h3 className="text-primary font-semibold">Suburb</h3>
         </div>
         <div className="col-span-1">
           <h3 className="text-primary font-semibold">Info</h3>
@@ -94,6 +94,7 @@ const MechanicsACOrders = () => {
           suburb={mechanic.address.suburb}
           state={mechanic.address.state}
           pincode={mechanic.address.pinCode}
+          link={mechanic.googleMapsLocation}
         />
       ))}
       {/* Pagination controls */}
