@@ -138,7 +138,7 @@ const Navbar = () => {
   return (
     <div
       className={`w-full text-graycolor bg-primary flex justify-center py-[1rem] ${
-        !isCustomer && "absolute"
+        isAdmin || isMechanic && "absolute"
       }   top-0 z-20`}
     >
       <div className="w-[90%] grid grid-cols-12">
