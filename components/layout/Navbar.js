@@ -171,8 +171,8 @@ const Navbar = () => {
           )}
         </div>
 
-        {isCustomer && mobileNav == true && (
-          <div class="flex flex-col gap-8 h-screen min-w-[300px] z-[100000000000000000000] lg:hidden">
+        { mobileNav == true && (
+          <div class="flex flex-col gap-8 h-screen min-w-[300px] w-full z-[100000000000000000000] lg:hidden">
             <div className="flex flex-col gap-6 mt-10 ">
               {menu.map((data, idx) => (
                 <Link
