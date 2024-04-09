@@ -159,20 +159,20 @@ const Navbar = () => {
         </Link>
         {/* mobile hamburger */}
         <div
-          className="lg:hidden col-start-13 flex items-center"
+          className="lg:hidden col-start-13 flex items-center z-[100000000000000000000]"
           onClick={handleMobileNavbar}
         >
           {mobileNav ? (
-            <div className="">-</div>
+            <div className="">X</div>
           ) : (
-            <div class=" curser-pointer">
+            <div class=" curser-pointer z-[100000000000000000000]">
               <Image alt="mobilelogo" src={MobileLogo} />
             </div>
           )}
         </div>
 
         {isCustomer && mobileNav == true && (
-          <div class="flex flex-col gap-8 h-screen min-w-[300px] lg:hidden">
+          <div class="flex flex-col gap-8 h-screen min-w-[300px] z-[100000000000000000000] lg:hidden">
             <div className="flex flex-col gap-6 mt-10 ">
               {menu.map((data, idx) => (
                 <Link
