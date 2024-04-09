@@ -119,25 +119,28 @@ const Navbar = () => {
       href: "/aboutus#contactus",
     },
   ];
-
   const handleLogout = () => {
     // Clear localStorage
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("id");
     localStorage.removeItem("role");
-
+  
     // Clear cookies
-    document.cookie =
-      "access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie =
-      "refresh-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
+    document.cookie = "access-token=; path=/;";
+    document.cookie = "refresh-token=; path=/;";
+  
+    // Redirect to login page
     router.push("/login");
   };
+  
 
   return (
-    <div className="w-full text-graycolor bg-primary flex justify-center py-[1rem] z-20">
+    <div
+      className={`w-full text-graycolor bg-primary flex justify-center py-[1rem] ${
+        !isCustomer && "absolute"
+      }   top-0 z-20`}
+    >
       <div className="w-[90%] grid grid-cols-12">
         {/* logo */}
         <Link
@@ -145,9 +148,9 @@ const Navbar = () => {
             isCustomer
               ? "/"
               : isAdmin
-              ? "/admin/requestadmin"
+              ? "#"
               : isMechanic
-              ? "/mechanic/mechanicDashboard"
+              ? "#"
               : "/"
           }
           className="lg:text-[2rem] base:text-[1.2rem] z-50 row-span-full col-start-1 col-end-3 font-semibold "
@@ -231,19 +234,24 @@ const Navbar = () => {
             <div className="cursor-pointer" onClick={handleLogout}>
               Sign Out
             </div>{" "}
-            <CusButton
-              type={"primary"}
-              text={"Dashboard"}
-              href={
-                isCustomer
-                  ? "/customerDashboard"
-                  : isAdmin
-                  ? "/admin/requestadmin"
-                  : isMechanic
-                  ? "/mechanic/mechanicDashboard"
-                  : "/"
-              }
-            />
+            {isCustomer && (
+              <CusButton
+                type={"primary"}
+                text={"Dashboard"}
+                href={
+                  isCustomer
+                    ? "/customerDashboard"
+                    : isAdmin
+                    ? "/admin/requestadmin"
+                    : isMechanic
+                    ? "/mechanic/mechanicDashboard"
+                    : "/"
+                }
+              />
+            )}
+            {!isCustomer && (
+              <CusButton href={"#"} type={"primary"} text={"042 9023989"} />
+            )}
           </div>
         ) : (
           <div className="base:hidden lg:flex gap-6 row-span-full items-center justify-end col-start-1 col-end-13">

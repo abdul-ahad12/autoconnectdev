@@ -41,7 +41,7 @@ const AdminDashboard = ({ bookings }) => {
 
   const [Mleftbar, setMleftbar] = useState(false);
   return (
-    <div className="w-full flex lg:justify-center bg-white overflow-hidden relative">
+    <div className="w-full flex lg:justify-center bg-white overflow-hidden relative h-screen pt-9">
       <div className="base:w-full lg:w-[90%] flex pt-[3rem] gap-[2rem]">
         {/* left bar */}
         <div className="lg:w-[25%] base:hidden lg:flex lg:items-center flex-col h-[80vh]  justify-between rounded-lg border border-graycolor2 p-7  ">
@@ -61,7 +61,7 @@ const AdminDashboard = ({ bookings }) => {
               );
             })}
           </div>
-          <CusButton type={"primary"} text={"Sign Out"} />
+          {/* <CusButton type={"primary"} text={"Sign Out"} /> */}
         </div>
         {/* mobile left bar */}
         <button

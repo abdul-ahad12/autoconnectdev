@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 import { fetchUserData } from "../lib/utils";
+import { melbourneSuburbs } from "../components/home/Form";
 
 const Bookmechanic = () => {
   const router = useRouter();
@@ -393,13 +394,19 @@ const Bookmechanic = () => {
                   /> */}
                   <div className="flex flex-col w-full gap-1">
                     <Description size={"inputlabel"} text={"Suburb"} />
-                    <input
+                    <select
                       className="input-class border w-full border-graycolor2"
-                      type="text"
                       name="suburb"
                       value={address.suburb}
                       onChange={handleAddressChange}
-                    />
+                    >
+                      <option value="">Select Suburb</option>
+                      {melbourneSuburbs.map((suburb) => (
+                        <option key={suburb} value={suburb}>
+                          {suburb}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   {/* </div> */}

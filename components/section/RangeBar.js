@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { citiesAustralia, melbourneSuburbs } from "../home/Form";
+import CusButton from "./button";
 
 const RangeBar = ({
   mechanics,
@@ -38,7 +39,7 @@ const RangeBar = ({
       {/* Location select dropdown */}
       <div className="flex flex-col">
         <label htmlFor="location">Location</label>
-        <select id="location" value={location} onChange={handleChangeLocation}>
+        <select id="location" value={location} className="py-[0.4rem] cursor-pointer rounded-[0.7rem]"  onChange={handleChangeLocation}>
           <option value="">Select Location</option>
           {melbourneSuburbs.map((suburb) => (
             <option key={suburb} value={suburb}>
@@ -73,9 +74,9 @@ const RangeBar = ({
       </div> */}
 
       {/* Button */}
-      <button className="btn-primary" onClick={handleClick}>
-        Apply Filters
-      </button>
+      <CusButton type={"primary"} text={"Apply Filters"} onClick={handleClick} />
+        
+      
     </div>
   );
 };

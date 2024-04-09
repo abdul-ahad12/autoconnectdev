@@ -9,7 +9,7 @@ const MechanicTop = ({ title, titleColor, servicesstate, services }) => {
       <div className="lg:w-[40%] z-30 flex flex-col">
         <TitleDesc left title={title} titleColor={titleColor} bold />
         {/* steps */}
-        <ImageConnector />
+        {/* <ImageConnector /> */}
         <div></div>
       </div>
 

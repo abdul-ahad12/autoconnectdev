@@ -58,7 +58,7 @@ const Order = ({ bookings, role }) => {
 
     fetchOrders();
   }, [currentPage]);
-  console.log(bookings)
+  console.log(bookings);
 
   // request admin array
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,15 +79,17 @@ const Order = ({ bookings, role }) => {
   ];
   return (
     <div className="">
-      <div className="base:hidden lg:grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
-        <div>ID Order</div>
-        <div>Order details</div>
-        <div>Service Date</div>
-        <div>Order details</div>
-        <div>Mode of service</div>
-        <div>Action</div>
-      </div>
-      <div className="flex flex-col gap-9">
+      {role === "MECHANIC" && (
+        <div className="base:hidden lg:grid grid-cols-6 gap-x-12 items-center text-[0.7rem]  py-3 px-2 rounded-lg">
+          <div>ID Order</div>
+          <div>Order details</div>
+          <div>Service Date</div>
+          <div>Order status</div>
+          <div>Mode of service</div>
+          <div>Action</div>
+        </div>
+      )}
+      <div className="flex flex-col gap-9 ">
         {role !== "MECHANIC" &&
           orders &&
           bookings?.map((order, index) => (
@@ -103,7 +105,7 @@ const Order = ({ bookings, role }) => {
                 <div className="flex base:flex-col lg:flex-row gap-2">
                   <div className="flex items-center rounded-md border border-gray-500 gap-2 px-2 py-1">
                     <div className="w-1 h-1 bg-red-600" />
-                    <div>Pay Now</div>
+                    <div className="hover:cursor-not-allowed">Pay Now</div>
                   </div>
                   <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2">
                     <div className="w-1 h-1 bg-blue-700" />
@@ -112,11 +114,11 @@ const Order = ({ bookings, role }) => {
                     </div>
                   </div>
                   {/* <div className="flex items-center rounded-md border-gray-500 border px-2 py-1 gap-2"> */}
-                    {/* <div className="w-1 h-1 bg-blue-700" /> */}
-                    {/* {bookings.is  Availability ? "Completed" : "Not Completed"} */}
+                  {/* <div className="w-1 h-1 bg-blue-700" /> */}
+                  {/* {bookings.is  Availability ? "Completed" : "Not Completed"} */}
 
-                    {/* <button onClick={handleOpenModal}>Know More</button> */}
-                    {/* <Modal
+                  {/* <button onClick={handleOpenModal}>Know More</button> */}
+                  {/* <Modal
                       isOpen={isModalOpen}
                       onClose={CloseModal}
                       fields={fields}
@@ -313,8 +315,8 @@ const OrderItem = ({
         {formatDate(dateTime)}
       </div>
       <button
-        className={`text-primary w-fit ${
-          orderStatus ? "bg-green-500" : "bg-[pink]"
+        className={`text-primary w-full ${
+          orderStatus ? "bg-[#AAE198]" : "bg-[pink]"
         }  text-[0.7rem] border-[1px] rounded-md p-1`}
       >
         {orderStatus ? "Done" : "Not completed"}
@@ -325,14 +327,20 @@ const OrderItem = ({
       <div className="flex gap-1">
         {/* Clicking on receipt icon triggers completion of the booking */}
         <img
-          className="w-6 cursor-pointer"
+          className={`w-6  hover:scale-105 transition ease ${
+            orderStatus ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
           src="../dashboard/receipt.svg"
           alt="receipt"
-          onClick={handleCompleteBooking}
+          onClick={
+            orderStatus ? () => console.log("here") : handleCompleteBooking
+          }
         />
         {/* Clicking on cancel icon triggers cancellation of the booking */}
         <img
-          className="w-6 cursor-pointer"
+          className={`w-6  hover:scale-105 transition ease ${
+            orderStatus ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
           src="../dashboard/cancel.svg"
           alt="cancel"
           onClick={handleCancelBooking}

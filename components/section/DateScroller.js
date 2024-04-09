@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CusButton from "./button";
+import Swal from "sweetalert2";
 
 const MechanicAvailability = ({ mechanicId }) => {
   const [availability, setAvailability] = useState({});
@@ -26,13 +27,13 @@ const MechanicAvailability = ({ mechanicId }) => {
 
   useEffect(() => {
     const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
     ];
     const today = new Date();
     const todayDayIndex = today.getDay(); // Returns 0 for Sunday, 1 for Monday, etc.
@@ -59,6 +60,7 @@ const MechanicAvailability = ({ mechanicId }) => {
   // Update availability status for the selected time slot
   const updateTimeSlotAvailability = (timeSlot) => {
     const updatedAvailability = { ...availability };
+    console.log("hello", updatedAvailability);
     const updatedTimings = [...updatedAvailability[selectedDay].timings];
 
     if (updatedTimings.includes(timeSlot)) {
@@ -84,14 +86,14 @@ const MechanicAvailability = ({ mechanicId }) => {
       setAvailability(updatedAvailability);
       Swal.fire({
         icon: "success",
-        title: "Upated Successfully",
+        title: "Updated Successfully",
         text: "Your booking has been created successfully!",
       });
     } catch (error) {
       Swal.fire({
-        icon: "console.error();",
-        title: "Not Upated",
-        text: "Your booking has been created successfully!",
+        icon: "error",
+        title: "Not Updated",
+        text: "There was an error updating availability.",
       });
       console.error("Error updating availability:", error);
     }
@@ -106,9 +108,9 @@ const MechanicAvailability = ({ mechanicId }) => {
   }
 
   return (
-    <div className="mt-6 w-full">
-      <h2 className="text-lg font-semibold mb-4">Mechanic Availability</h2>
-      <div className="flex w-full lg:flex-row base:flex-col gap-3 lg:space-x-2 mb-4">
+    <div className="mt-6 w-full z-[100]">
+      <h2 className="text-lg font-semibold mb-4">Update Your Availability</h2>
+      <div className="flex w-full flex-row base:gap-1 lg:gap-3 base:overflow-x-scroll lg:overflow-hidden lg:space-x-2 mb-4">
         {orderedDaysOfWeek.map((day, idx) => {
           const today = new Date();
           const nextDay = new Date(today.getTime() + idx * 24 * 60 * 60 * 1000);
@@ -121,19 +123,24 @@ const MechanicAvailability = ({ mechanicId }) => {
             <div
               key={idx}
               onClick={() => handleDayClick(day)}
-              className={`lg:px-6 lg:py-4 base:py-3 rounded flex flex-col gap-1 items-center border ${
+              className={`lg:px-6 lg:py-4 base:py-3 rounded flex flex-col gap-1 px-[1px] items-center border cursor-pointer ${
                 selectedDay === day ? "border-secondary " : " text-gray-700"
               }`}
             >
-              <button>{day}</button>
-              <p className="text-[1.6rem] font-medium">{nextDate}</p>
-              <p>{nextMonth}</p>
+              <button key={day} className="base:text-[0.5rem] lg:text-[1rem]">
+                {day}
+              </button>
+              <p className="lg:text-[1.3rem] font-medium base:text-[0.8rem] ">
+                {nextDate}
+              </p>
+              <p className="lg:text-[1.3rem] base:text-[0.8rem]">{nextMonth}</p>
             </div>
           );
         })}
       </div>
+
       {selectedDay && (
-        <div className="flex flex-col gap-7">
+        <div className="flex flex-col gap-7 w-full">
           <h3 className="font-semibold">{selectedDay}</h3>
           <div className="base:flex base:flex-col lg:grid lg:grid-cols-3 base:gap-4 lg:gap-x-20 lg:gap-y-7">
             {timingSlots.map((timeSlot, index) => (
@@ -143,7 +150,7 @@ const MechanicAvailability = ({ mechanicId }) => {
                   px-3 py-2 rounded-lg border w-
                   ${
                     availability[selectedDay]?.timings.includes(timeSlot)
-                      ? "bg-orange-100 cursor-pointer"
+                      ? "bg-[#bfffbf] cursor-pointer"
                       : "bg-white cursor-pointer"
                   }`}
                 onClick={() => updateTimeSlotAvailability(timeSlot)}

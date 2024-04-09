@@ -317,7 +317,7 @@ const Form = () => {
           showConfirmButton: true,
           timer: 5000,
         });
-        router.push("/");
+        router.push("/login");
       } else {
         throw new Error("Registration failed");
       }
