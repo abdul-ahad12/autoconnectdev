@@ -54,14 +54,14 @@ const Dashboard = ({ bookings, role }) => {
   }
 
   return (
-    <div className="w-full flex justify-center bg-white overflow-hidden relative">
+    <div className="w-full flex justify-center bg-white overflow-hidden relative  min-h-[80vh]">
       <div className="w-[90%] flex pt-[3rem] gap-[2rem]">
         {/* left bar */}
         <div className="base:hidden w-[25%] lg:flex items-center flex-col h-[90vh]  justify-between rounded-lg border border-graycolor2 p-7  ">
           <div className="text-secondary text-[min(1.7rem,1.7vw)] font-semibold h-[15%]">
             Dashboard
           </div>
-          <div className="flex flex-col w-full gap-1 mb-[25vh]">
+          <div className="flex flex-col w-full gap-1 mb-[35vh]">
             {tabs.map((data, idx) => (
               <Tab
                 key={idx}
@@ -72,7 +72,7 @@ const Dashboard = ({ bookings, role }) => {
               />
             ))}
           </div>
-          <CusButton type={"primary"} text={"Sign Out"} />
+          {/* <CusButton type={"primary"} text={"Sign Out"} /> */}
         </div>
 
         <button
@@ -143,7 +143,7 @@ const Dashboard = ({ bookings, role }) => {
             {current == "My Availability" && <MyAvailibility />}
 
             <img
-              className="absolute bottom-0 right-[-10%] w-[80%]"
+              className="absolute bottom-0 right-[-10%] opacity-30 w-[80%]"
               src="/mechanic/bgmech.svg"
             />
           </div>

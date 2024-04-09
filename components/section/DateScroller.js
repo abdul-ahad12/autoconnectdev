@@ -24,26 +24,28 @@ const MechanicAvailability = ({ mechanicId }) => {
     fetchAvailability();
   }, [mechanicId]);
 
-  // Default to today's day
   useEffect(() => {
     const daysOfWeek = [
-      "sunday",
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
     ];
     const today = new Date();
-    const dayOfWeekIndex = today.getDay(); // Returns 0 for Sunday, 1 for Monday, etc.
-    const todayDay = daysOfWeek[dayOfWeekIndex];
-    setSelectedDay(todayDay);
+    const todayDayIndex = today.getDay(); // Returns 0 for Sunday, 1 for Monday, etc.
+    const todayDate = today.getDate();
+    const todayMonth = today.toLocaleString("default", { month: "long" }); // Full name of the month
+
+    // Set the selected day to the upcoming day
+    setSelectedDay(daysOfWeek[todayDayIndex]);
 
     // Reorder days of the week array based on today's index
     const reorderedDaysOfWeek = [
-      ...daysOfWeek.slice(dayOfWeekIndex),
-      ...daysOfWeek.slice(0, dayOfWeekIndex),
+      ...daysOfWeek.slice(todayDayIndex),
+      ...daysOfWeek.slice(0, todayDayIndex),
     ];
 
     setOrderedDaysOfWeek(reorderedDaysOfWeek);
@@ -80,8 +82,17 @@ const MechanicAvailability = ({ mechanicId }) => {
         availability: updatedAvailability,
       });
       setAvailability(updatedAvailability);
-      console.log("Availability updated successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Upated Successfully",
+        text: "Your booking has been created successfully!",
+      });
     } catch (error) {
+      Swal.fire({
+        icon: "console.error();",
+        title: "Not Upated",
+        text: "Your booking has been created successfully!",
+      });
       console.error("Error updating availability:", error);
     }
   };
@@ -97,47 +108,50 @@ const MechanicAvailability = ({ mechanicId }) => {
   return (
     <div className="mt-6 w-full">
       <h2 className="text-lg font-semibold mb-4">Mechanic Availability</h2>
-      <div className="flex w-full lg:flex-row base:flex-col gap-3   lg:space-x-2 mb-4">
-        {orderedDaysOfWeek.map((day,idx) => (
-          <div
-          key={idx}
-            onClick={() => handleDayClick(day)}
-            className={`lg:px-6 lg:py-4 base:py-3 rounded flex flex-col gap-1 items-center border ${
-              selectedDay === day ? "border-secondary " : " text-gray-700"
-            }`}
-          >
-            <button key={day}>{day}</button>
-            <p className="text-[1.6rem] font-medium">11</p>
-            <p>orders</p>
-          </div>
-        ))}
+      <div className="flex w-full lg:flex-row base:flex-col gap-3 lg:space-x-2 mb-4">
+        {orderedDaysOfWeek.map((day, idx) => {
+          const today = new Date();
+          const nextDay = new Date(today.getTime() + idx * 24 * 60 * 60 * 1000);
+          const nextDate = nextDay.getDate();
+          const nextMonth = nextDay.toLocaleString("default", {
+            month: "long",
+          }); // Full name of the month
+
+          return (
+            <div
+              key={idx}
+              onClick={() => handleDayClick(day)}
+              className={`lg:px-6 lg:py-4 base:py-3 rounded flex flex-col gap-1 items-center border ${
+                selectedDay === day ? "border-secondary " : " text-gray-700"
+              }`}
+            >
+              <button>{day}</button>
+              <p className="text-[1.6rem] font-medium">{nextDate}</p>
+              <p>{nextMonth}</p>
+            </div>
+          );
+        })}
       </div>
       {selectedDay && (
         <div className="flex flex-col gap-7">
           <h3 className="font-semibold">{selectedDay}</h3>
-          <div className="base:flex  base:flex-col lg:grid lg:grid-cols-3  base:gap-4 lg:gap-x-20 lg:gap-y-7">
+          <div className="base:flex base:flex-col lg:grid lg:grid-cols-3 base:gap-4 lg:gap-x-20 lg:gap-y-7">
             {timingSlots.map((timeSlot, index) => (
               <div
                 key={index}
                 className={`
-                px-3 py-2 rounded-lg   border w-
-                ${
-                  availability[selectedDay]?.timings.includes(timeSlot)
-                    ? "bg-orange-100 cursor-pointer"
-                    : "bg-white cursor-pointer"
-                }`}
+                  px-3 py-2 rounded-lg border w-
+                  ${
+                    availability[selectedDay]?.timings.includes(timeSlot)
+                      ? "bg-orange-100 cursor-pointer"
+                      : "bg-white cursor-pointer"
+                  }`}
                 onClick={() => updateTimeSlotAvailability(timeSlot)}
               >
                 {timeSlot}
               </div>
             ))}
           </div>
-          {/* <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-          onClick={handleUpdateAvailability}
-        >
-          Update Availability
-        </button> */}
           <div className="flex w-full items-center lg:justify-center">
             <CusButton
               onClick={handleUpdateAvailability}
