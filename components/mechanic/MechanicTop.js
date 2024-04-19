@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import TitleDesc from "../section/TitleDesc";
 import ImageConnector from "../ui/common/ImageConnector";
+import gsap, { Power3 } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const MechanicTop = ({ title, titleColor, servicesstate, services }) => {
+  gsap.registerPlugin(ScrollTrigger);
+  const formImageRef = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      formImageRef.current.children,
+      { opacity: 0, scale: 0.7 },
+      { opacity: 1, scale: 1, duration: 1, stagger: 0.2 }
+    );
+
+    ScrollTrigger.create({
+      trigger: formImageRef.current,
+      animation: tl,
+      start: "top bottom",
+      end: "bottom center",
+      // scrub: 1,
+      // markers: true,
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, [formImageRef]);
+
   // const services = ["Services added", "Services added", "Services added"];
   return (
-    <div className="w-full px-[7%] bg-customwhite py-[5rem] rounded-b-[2rem]  flex base:flex-col lg:flex-row relative justify-between">
+    <div
+      ref={formImageRef}
+      className="w-full px-[7%] bg-customwhite py-[5rem] rounded-b-[2rem]  flex base:flex-col lg:flex-row relative justify-between"
+    >
       <div className="lg:w-[40%] z-30 flex flex-col">
         <TitleDesc left title={title} titleColor={titleColor} bold />
         {/* steps */}

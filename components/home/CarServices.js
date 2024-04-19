@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import TitleDesc from "../section/TitleDesc";
 import CusButton from "../section/button";
+import gsap, { Power3 } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const CarServices = () => {
+  gsap.registerPlugin(ScrollTrigger);
+
   const services = [
     {
       img: "/services/carmechanic.svg",
@@ -56,9 +60,63 @@ const CarServices = () => {
     },
   ];
 
+  const CarServicesRef = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      CarServicesRef.current.children,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, stagger: 0.2 }
+    );
+
+    ScrollTrigger.create({
+      trigger: CarServicesRef.current,
+      animation: tl,
+      start: "top bottom",
+      end: "bottom center",
+      // scrub: 1,
+      // markers: true,
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top center",
+        },
+      });
+
+      tl.fromTo(
+        titleRef.current,
+        {
+          scale: 0.5,
+          opacity: 0,
+        },
+        {
+          duration: 0.5,
+          scale: 1,
+          opacity: 1,
+        }
+      );
+    }
+  }, []);
+
   return (
     <div className="w-full flex justify-center items-center flex-col py-8">
-      <div className="  w-[90%] flex items-center justify-center">
+      <div
+        ref={titleRef}
+        className="  w-[90%] flex items-center justify-center"
+      >
         <TitleDesc
           title={"Car Services"}
           titleColor={"We Provide"}
@@ -66,7 +124,7 @@ const CarServices = () => {
         />
       </div>
       {/* cards */}
-      <div className="grid lg:grid-cols-5 gap-8 my-[3rem]">
+      <div ref={CarServicesRef} className="grid lg:grid-cols-5 gap-8 my-[3rem]">
         {services.map((data, idx) => {
           return (
             <div

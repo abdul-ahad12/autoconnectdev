@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Description from "../section/Description";
 import CusButton from "../section/button";
 import Link from "next/link";
+import gsap, { Power3 } from "gsap";
 
 const Hero = () => {
+  const heroRef = useRef(null);
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      heroRef.current.children,
+      { opacity: 0 },
+      { opacity: 1, duration: 1, stagger: 0.2 }
+    );
+
+    // Optionally return a cleanup function
+    // return () => {
+    //   tl.kill(); // Kills the timeline to prevent memory leaks
+    // };
+  }, []);
+
   return (
     <div className="w-full flex justify-center items-center  lg:h-screen">
-      <div className="w-[90%] flex lg:flex-row base:flex-col base:gap-20 lg:gap-0">
+      <div
+        ref={heroRef}
+        className="w-[90%] flex lg:flex-row base:flex-col base:gap-20 lg:gap-0"
+      >
         {/*  */}
         <div className="lg:w-[55%] flex flex-col gap-5 justify-center">
           <div className="font-[Bebas] base:text-[min(6vw,25px)] tracking-wide lg:text-[min(4.5rem,4.5vw)] mt-10 lg:mt-1 text-primary lg:w-[70%] lg:leading-[min(5vw,5rem)]">

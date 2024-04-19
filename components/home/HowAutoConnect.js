@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import TitleDesc from "../section/TitleDesc";
 import CusButton from "../section/button";
 import AboutusInfo from "../../public/aboutus/aboutusinfo.png";
 import Image from "next/image";
+import gsap, { Power3 } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const HowAutoConnect = () => {
+  gsap.registerPlugin(ScrollTrigger);
+
   const steps = [
     {
       title: "GET THE QUOTE",
@@ -24,9 +28,34 @@ const HowAutoConnect = () => {
     },
   ];
 
+  const howRef = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      howRef.current.children,
+      { opacity: 0, scale: 0.8 },
+      { opacity: 1, scale: 1, duration: 0.5, stagger: 0.3 }
+    );
+
+    ScrollTrigger.create({
+      trigger: howRef.current,
+      animation: tl,
+      start: "top bottom",
+      end: "bottom center",
+      // scrub: 1,
+      // markers: true,
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
   return (
     <div className="w-full flex flex-col items-center justify-center py-[6rem] bg-[#fbfbfb]">
-      <div className="w-[90%]">
+      <div ref={howRef} className="w-[90%]">
         <TitleDesc
           title={"How AutoConnect"}
           titleColor={"Works"}

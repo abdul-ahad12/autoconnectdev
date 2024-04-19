@@ -7,8 +7,13 @@ import Modal from "./ReusableModal";
 import ServicesModal from "./ServicesModal";
 import axios from "axios";
 import Swal from "sweetalert2";
+import gsap, { Power3 } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useRef } from "react";
 
 const ServicesWeProvide = () => {
+  gsap.registerPlugin(ScrollTrigger);
+
   const [selectedServices, setSelectedServices] = useState([]);
   const [customBookingText, setCustomBookingText] = useState("");
   const router = useRouter();
@@ -17,6 +22,32 @@ const ServicesWeProvide = () => {
 
   const [servicesArray, setServicesArray] = useState([]);
   console.log(selectedServices);
+
+  // gsap
+  const servicesRef = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      servicesRef.current.children,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, stagger: 0.2 }
+    );
+
+    ScrollTrigger.create({
+      trigger: servicesRef.current,
+      animation: tl,
+      start: "top bottom",
+      end: "bottom center",
+      // scrub: 1,
+      // markers: true,
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
 
   useEffect(() => {
     // Fetch data when the component mounts
@@ -123,7 +154,7 @@ const ServicesWeProvide = () => {
 
   return (
     <div className="w-full px-[5%] py-[5rem] bg-customwhite ">
-      <div className="w-[100%]">
+      <div ref={servicesRef} className="w-[100%]">
         <div className="flex justify-between  w-full">
           <div className="w-[80%]">
             <TitleDesc

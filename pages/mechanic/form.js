@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import MechanicTop from "@/components/mechanic/MechanicTop";
@@ -11,9 +11,15 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { citiesAustralia, melbourneSuburbs } from "../../components/home/Form";
+import gsap, { Power3 } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const Form = () => {
+  gsap.registerPlugin(ScrollTrigger);
+
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userID, setuserId] = useState();
   const [userRole, setUserRole] = useState();
@@ -291,6 +297,7 @@ const Form = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -339,16 +346,45 @@ const Form = () => {
         text: errorMessage,
       });
     }
+    setLoading(false);
   };
+
+  const mechanicFormRef = useRef(null);
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      mechanicFormRef.current.children,
+      { opacity: 0 },
+      { opacity: 1, duration: 1, stagger: 0.3 }
+    );
+
+    ScrollTrigger.create({
+      trigger: mechanicFormRef.current,
+      animation: tl,
+      start: "top bottom",
+      end: "bottom center",
+      // scrub: 1,
+      // markers: true,
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <Navbar />
-      <div className="lg:w-[90%] max-w-[1440px] flex flex-col items-center">
+      <div
+        ref={mechanicFormRef}
+        className="lg:w-[90%] max-w-[1440px] flex flex-col items-center"
+      >
         <MechanicTop
           title={"Hi , complete your"}
           titleColor={"profile setup"}
         />
+
         <div className="mt-[3rem] w-full bg-customwhite flex flex-col items-center pt-[4rem]">
           <TitleDesc title={"Register"} titleColor={"Yourself"} left />
 
@@ -658,7 +694,10 @@ const Form = () => {
 
             {/* Delivery Mode */}
             <div className="flex items-start flex-col w-full gap-5">
-              <Description size={"inputlabel"} text={"Delivery Modes You can Provide"} />
+              <Description
+                size={"inputlabel"}
+                text={"Delivery Modes You can Provide"}
+              />
               {[
                 "TO_MECHANIC",
                 "TO_CUSTOMER" /* Add more delivery modes here */,
@@ -702,7 +741,7 @@ const Form = () => {
               type="submit"
               className="bg-secondary w-fit px-6 py-2 rounded-full flex justify-center items-center text-graycolor  hover:scale-[1.01] transition ease duration-200"
             >
-              Submit
+              {loading ? "Submittting..." : "Submit"}
             </button>
           </form>
         </div>

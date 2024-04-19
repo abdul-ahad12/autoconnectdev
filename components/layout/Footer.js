@@ -1,8 +1,12 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import CusButton from "../section/button";
+import { Power3 } from "gsap";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const Footer = () => {
+  gsap.registerPlugin(ScrollTrigger);
   const navigationlinks = [
     {
       title: "Company",
@@ -109,9 +113,35 @@ const Footer = () => {
     },
   ];
 
+  const footerRef = useRef(null);
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      footerRef.current.children,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, stagger: 0.2 }
+    );
+
+    ScrollTrigger.create({
+      trigger: footerRef.current,
+      animation: tl,
+      start: "top bottom",
+      end: "bottom center",
+      // scrub: 1,
+      // markers: true,
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
   return (
     <div className="bg-primary flex justify-center w-full">
-      <div className="w-[90%] max-w-[1440px] lg:text-[min(1rem,1vw)]">
+      <div
+        ref={footerRef}
+        className="w-[90%] max-w-[1440px] lg:text-[min(1rem,1vw)]"
+      >
         <div className="text-[2rem] py-[3rem] row-span-full text-customwhite col-start-1 col-end-13 font-semibold ">
           Auto<span className="text-secondary">connect</span>
         </div>

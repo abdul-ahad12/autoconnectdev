@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import TitleDesc from "../section/TitleDesc";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap, { Power3 } from "gsap";
 
 const YouLiveUs = () => {
+  gsap.registerPlugin(ScrollTrigger);
+  const testimonialsRef = useRef(null);
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: Power3.easeInOut } });
+
+    tl.fromTo(
+      testimonialsRef.current.children,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, stagger: 0.2 }
+    );
+
+    ScrollTrigger.create({
+      trigger: testimonialsRef.current,
+      animation: tl,
+      start: "top bottom",
+      end: "bottom center",
+      // scrub: 1,
+      // markers: true,
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
   const testimonial = [
     {
       img: "/testimonial/dp1.jpg",
@@ -51,7 +78,10 @@ const YouLiveUs = () => {
           title={"YOU WILL LOVE US JUST LIKE"}
           titleColor={"OTHERS DO!"}
         />
-        <div className="grid lg:grid-cols-4 gap-[2rem]     pt-[5rem]">
+        <div
+          ref={testimonialsRef}
+          className="grid lg:grid-cols-4 gap-[2rem] pt-[5rem]"
+        >
           {testimonial.map((data, idx) => (
             <div
               key={idx}
