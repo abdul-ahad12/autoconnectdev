@@ -18,22 +18,15 @@ export default async function handler(
           address,
           customNote,
         } = req.body;
-        const user = req["user"]; // Extract user ID from the authorization middleware
+        const user = req["user"];
         // Extract user ID from the authorization middleware
         const userId = user.id;
 
-        console.log("user", userId);
-
-        // Validate required fields
-        if (
-          !userId ||
-          !mechanicId ||
-          !timeSlots ||
-          !deliveryMode ||
-          !services ||
-          !address
-        ) {
-          return res.status(400).json({ message: "All fields are required" });
+        // Find the first missing field
+        const requiredFields = ["mechanicId", "timeSlots", "deliveryMode", "services", "address"];
+        const missingField = requiredFields.find(field => !req.body[field]);
+        if (missingField) {
+          return res.status(400).json({ message: `Field '${missingField}' is required` });
         }
 
         // Create a new booking
