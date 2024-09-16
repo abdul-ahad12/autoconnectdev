@@ -93,20 +93,20 @@ const Footer = () => {
   const socials = [
     {
       src: "/socials/facebook.svg",
-      url: "/",
+      url: "https://www.facebook.com/autolinkx?_rdr",
     },
     {
       src: "/socials/twitter.svg",
-      url: "/",
+      url: "https://www.instagram.com/autolinkx/",
     },
-    {
-      src: "/socials/vimeo.svg",
-      url: "/",
-    },
-    {
-      src: "/socials/youtube.svg",
-      url: "/",
-    },
+    // {
+    //   src: "/socials/vimeo.svg",
+    //   url: "/",
+    // },
+    // {
+    //   src: "/socials/youtube.svg",
+    //   url: "/",
+    // },
   ];
 
   return (

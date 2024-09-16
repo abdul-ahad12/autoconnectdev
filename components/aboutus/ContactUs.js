@@ -5,19 +5,14 @@ const ContactUs = () => {
   const content = [
     {
       img: "/icons/email.png",
-      title: "Pickup and drop facility",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      title: "Email",
+      desc: "support@autolinkx.com",
     },
     {
       img: "/icons/phone.png",
-      title: "Pickup and drop facility",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    {
-      img: "/icons/location.png",
-      title: "Pickup and drop facility",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
+      title: "Phone",
+      desc: "+61415599996.",
+    }
   ];
   return (
     <div
