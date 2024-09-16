@@ -185,7 +185,7 @@ const Bookmechanic = () => {
                   className="input-class lg:w-[50%]"
                   onChange={(e) => setSelectedTime(e.target.value)}
                 >
-                  <option>Select Date</option>
+                  <option>Select TimeSlot</option>
                   {timings?.map((time, index) => (
                     <option
                       key={index}

@@ -6,7 +6,7 @@ const Values = () => {
       img: "/icons/Accuracy.svg",
 
       title: "Mission",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.e world to more aggressively tackle the challenge of climate change. We will do this by offering riders more ways to ride green, helping drivers go electric, making",
+      desc: "Our mission is to transform the auto service industry by providing a versatile and efficient platform that meets the diverse needs of car owners. We aim to deliver top-quality service options, exceptional customer experiences, and foster a network of reliable and professional service providers.",
     },
     {
       img: "/icons/lightbulb.svg",
@@ -18,7 +18,7 @@ const Values = () => {
       img: "/icons/Scales.svg",
 
       title: "Vision",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.e world to more aggressively tackle the challenge of climate change. We will do this by offering riders more ways to ride green, helping drivers go electric, making",
+      desc: "We envision a future where car maintenance and additions are as flexible and convenient as your daily routine. By leveraging innovative technology and fostering robust partnerships, we aim to set a new standard in the car service industry, making car care easier, faster, and more reliable",
     },
   ];
 

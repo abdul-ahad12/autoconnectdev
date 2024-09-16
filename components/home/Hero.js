@@ -10,7 +10,7 @@ const Hero = () => {
         {/*  */}
         <div className="lg:w-[55%] flex flex-col gap-5 justify-center">
           <div className="font-[Bebas] base:text-[min(6vw,25px)] tracking-wide lg:text-[min(4.5rem,4.5vw)] mt-10 lg:mt-1 text-primary lg:w-[70%] lg:leading-[min(5vw,5rem)]">
-            Accompany your journey with comfort
+            Where Convenience meets quality
           </div>
           <Description
             text={

@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/termsandconditions.js"  ],
   "exclude": [
     "node_modules"
 
