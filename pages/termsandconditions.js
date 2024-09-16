@@ -13,20 +13,20 @@ const terms = [
     content: (
       <ul className="list-disc ml-6">
         <li>
-          <strong>"Auto LinkX"</strong>: Refers to the platform operated by
+          <strong>Auto LinkX</strong>: Refers to the platform operated by
           [Auto LinkX], acting as a mediator between car owners and car service
           providers.
         </li>
         <li>
-          <strong>"User"</strong>: Refers to any individual or entity using the
+          <strong>User</strong>: Refers to any individual or entity using the
           Auto LinkX platform.
         </li>
         <li>
-          <strong>"Car Owner"</strong>: Refers to users seeking automotive
+          <strong>Car Owner</strong>: Refers to users seeking automotive
           services for their vehicles.
         </li>
         <li>
-          <strong>"Vendor"</strong>: Refers to businesses or individuals
+          <strong>Vendor</strong>: Refers to businesses or individuals
           offering automotive services registered on the Auto LinkX platform.
         </li>
       </ul>
