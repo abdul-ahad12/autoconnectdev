@@ -8,30 +8,23 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const dbConnector = new MongoDBConnector();
   try {
     authorize(req, res, async () => {
-      const user = req["user"]; // Extract user ID from the authorization middleware
-      const userId = user.id;
-      console.log("UserId", userId);
+      const user = req["user"];
 
       // Find the mechanic ID based on the user ID
       const mechanic = await MechanicRegistrationModel.findOne({
-        user: userId,
-      });
-
-      console.log("mechanic", mechanic);
+        user: user.id,
+      }, { _id: 1 });
 
       if (!mechanic) {
         // Mechanic not found for the given user ID
         return res.status(404).json({ message: "Mechanic not found" });
       }
 
-      // Extract the mechanic ID
-      const mechanicId = mechanic._id;
-
+      console.log(`Fetching bookings for mechanic: ${mechanic._id}`);
       // Find all bookings associated with the mechanic ID
-      const bookings = await BookingModel.find({ mechanic: mechanicId });
+      const bookings = await BookingModel.find({ mechanic: mechanic._id });
 
       res.status(200).json({ bookings });
     });
