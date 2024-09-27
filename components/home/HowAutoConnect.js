@@ -7,20 +7,20 @@ import Image from "next/image";
 const HowAutoConnect = () => {
   const steps = [
     {
-      title: "GET THE QUOTE",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      title: "Choose Your Service",
+      desc: "Select the type of service you need: mobile services, onsite services, or third-party pick and drop-off services. AUTO LINKX offers a wide range of options to fit your schedule and preferences.",
     },
     {
-      title: "GET THE QUOTE",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      title: "Book an Appointment",
+      desc: "Once you've selected the service, book an appointment through our intuitive online booking system. Choose a convenient time, and our certified service provider will handle the rest.",
     },
     {
-      title: "GET THE QUOTE",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      title: "Service Completion",
+      desc: "Whether you opt for mobile services or visit a certified provider's facility, we ensure your vehicle receives top-quality care. For third-party pick and drop-off, we'll handle everything from pickup to return.",
     },
     {
-      title: "GET THE QUOTE",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      title: "Enjoy the Results",
+      desc: "Your vehicle is serviced, and you're ready to go! AUTO LINKX makes it easy to keep your car in top condition with minimal hassle, leaving you with peace of mind.",
     },
   ];
 
@@ -57,7 +57,7 @@ const HowAutoConnect = () => {
               );
             })}
             <div className="self-center mt-9">
-              <CusButton type={"primary"} text={"Know More"} />
+              <CusButton href={"/aboutus"} type={"primary"} text={"Know More"} />
             </div>
           </div>
         </div>

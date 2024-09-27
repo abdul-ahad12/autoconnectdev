@@ -19,7 +19,7 @@ const Hero = () => {
             size={"regular"}
           />
           <div className="flex gap-5 items-center">
-            <CusButton type={"primary"} text={"Learn More"} />
+            <CusButton href={"/aboutus"} type={"primary"} text={"Learn More"} />
             <div className="w-[3rem] h-[3rem] rounded-full flex justify-center items-center bg-customwhite shadow-md hover:cursor-pointer hover:scale-105">
               <svg
                 width="24"
@@ -38,7 +38,7 @@ const Hero = () => {
                 />
               </svg>
             </div>
-            <Link href={"/"}>Learn More</Link>
+            <Link href={"/aboutus"}>Learn More</Link>
           </div>
         </div>
         <div className="w-[100%]  lg:w-[45%] flex justify-start   lg:justify-end">

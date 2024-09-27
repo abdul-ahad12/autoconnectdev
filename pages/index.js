@@ -12,6 +12,7 @@ import Footer from "@/components/layout/Footer";
 // import { parseCookies } from "nookies";
 import { useEffect } from "react";
 import axios from "axios";
+import OurCommitment from "../components/home/OurCommitment";
 
 // const poppins = Poppins({ subsets: ['latin'] })
 
@@ -26,6 +27,7 @@ export default function Home() {
       <Hero />
       <Form />
       <CarServices />
+      <OurCommitment />
       <HowAutoConnect />
       <WhyChooseAuto />
       <SmartApp />

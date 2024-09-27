@@ -12,7 +12,7 @@ const Values = () => {
       img: "/icons/lightbulb.svg",
 
       title: "Values",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.e world to more aggressively tackle the challenge of climate change. We will do this by offering riders more ways to ride green, helping drivers go electric, making",
+      desc: "At AUTO LINKX, we strive to lead the automotive world toward a more sustainable future. We do this by offering customers eco-friendly service options, supporting electric vehicles, and constantly innovating to reduce our carbon footprint.",
     },
     {
       img: "/icons/Scales.svg",
