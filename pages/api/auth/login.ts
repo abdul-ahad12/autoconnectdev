@@ -13,12 +13,12 @@ export default async function handler(
 ) {
   const dbConnector = new MongoDBConnector();
   const user: User = req.body;
-  console.log(user);
+  
 
   const userAlreadyExists = await dbConnector.find(UserModel, {
     email: user.email,
   });
-  console.log("user details:",userAlreadyExists)
+  
 
   if (!userAlreadyExists) {
     res.status(400).json({ message: "User doesn't exists" });
@@ -33,7 +33,7 @@ export default async function handler(
         return;
       }
       if (result) {
-        console.log(result)
+        
         const { accessToken, refreshToken } = issueToken({
           id: userAlreadyExists[0]._id,
           role: userAlreadyExists[0].role,

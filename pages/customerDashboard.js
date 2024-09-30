@@ -11,9 +11,9 @@ const CustomerDashboard = () => {
   const [userRole, setUserRole] = useState();
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
-  console.log(userRole);
+  
 
-  console.log("bookings", bookings);
+  
   useEffect(() => {
     // Define your fetch function
     const fetchBookings = async () => {

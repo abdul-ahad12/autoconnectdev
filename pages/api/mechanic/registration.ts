@@ -18,7 +18,7 @@ export default async function handler(
       const dbConnector = new MongoDBConnector();
       const user = req["user"]; // Extract user ID from the authorization middleware
 
-      console.log("IN HERE", user);
+      
       const {
         address,
         googleMapsLocation,
@@ -65,7 +65,7 @@ export default async function handler(
 
       // Save the MechanicRegistration document
       const registeredMechanic = await mechanicRegistration.save();
-      console.log(registeredMechanic);
+      
 
       // Update user role to MECHANIC
       userFromDb.role = UserRoles.MECHANIC;

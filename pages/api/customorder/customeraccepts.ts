@@ -48,7 +48,7 @@ export default async function handler(
             .json({ message: "Mechanic not found for the provided user ID" });
         }
 
-        console.log("mech", mechanic);
+        
 
         // Find the offer corresponding to the selected mechanic
         const mechanicOffer = customOrder.mechanicOffers.find(

@@ -59,7 +59,7 @@ import RequestAdmin from "./RequestAdmin";
 
 const Requests = () => {
   const [mechanics, setMechanics] = useState([]);
-  console.log(mechanics);
+  
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -173,14 +173,14 @@ const Requests = () => {
                 service={order.service}
                 mechanicid={order._id}
                 firstname={order.name}
-                // lastname={mechanic.name}
                 phonenumber={order.abn}
                 Aboutus={order.aboutus}
-                email={order?.email}
                 street={order.address.street}
                 suburb={order.address.suburb}
                 state={order.address.state}
                 pincode={order.address.pinCode}
+                link={order.googleMapsLocation}
+                abn={order.abn}
               />
             </div>
           ))}

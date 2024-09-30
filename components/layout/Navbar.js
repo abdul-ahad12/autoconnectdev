@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CusButton from "../section/button";
 import Link from "next/link";
-import { useAuth } from "../context/AuthProvider";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import MobileLogo from "../../public/navbar/mobile.svg";
+import MobileLogo from "../../public/navbar/mobile.png";
+import Hamburger from "../../public/navbar/burger.svg";
 import axios from "axios";
 
 const Navbar = () => {
@@ -13,14 +13,14 @@ const Navbar = () => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
-  console.log(userData);
+  
   const [isAdmin, setIsAdmin] = useState(null);
   const [isCustomer, setIsCustomer] = useState(null);
   const [isMechanic, setIsMechanic] = useState(null);
 
-  console.log("admin", isAdmin);
-  console.log("customer", isCustomer);
-  console.log("isMechanic", isMechanic);
+  
+  
+  
 
   useEffect(() => {
     axios
@@ -30,7 +30,7 @@ const Navbar = () => {
         if (data.success) {
           setIsAdmin(true);
         } else {
-          console.log("here"); // Redirect to login page if not authorized
+          
         }
       })
       .catch((error) => {
@@ -46,7 +46,7 @@ const Navbar = () => {
         if (data.success) {
           setIsCustomer(true);
         } else {
-          console.log("here"); // Redirect to login page if not authorized
+          
         }
       })
       .catch((error) => {
@@ -62,7 +62,7 @@ const Navbar = () => {
         if (data.success) {
           setIsMechanic(true);
         } else {
-          console.log("here"); // Redirect to login page if not authorized
+          
         }
       })
       .catch((error) => {
@@ -107,10 +107,6 @@ const Navbar = () => {
       href: "/aboutus",
     },
     {
-      title: "Services",
-      href: "/services",
-    },
-    {
       title: "FAQ's",
       href: "/aboutus#faqs",
     },
@@ -125,37 +121,30 @@ const Navbar = () => {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("id");
     localStorage.removeItem("role");
-  
+
     // Clear cookies
     document.cookie = "access-token=; path=/;";
     document.cookie = "refresh-token=; path=/;";
-  
+
     // Redirect to login page
     router.push("/login");
   };
-  
 
   return (
     <div
       className={`w-full text-graycolor bg-primary flex justify-center py-[1rem] ${
-        isAdmin || isMechanic && "absolute"
+        isAdmin || (isMechanic && "absolute")
       }   top-0 z-20`}
     >
-      <div className="w-[90%] grid grid-cols-12">
+      <div className="w-[90%] lg:grid base:flex justify-between  grid-cols-12">
         {/* logo */}
         <Link
-          href={
-            isCustomer
-              ? "/"
-              : isAdmin
-              ? "#"
-              : isMechanic
-              ? "#"
-              : "/"
-          }
-          className="lg:text-[2rem] base:text-[1.2rem] z-50 row-span-full col-start-1 col-end-3 font-semibold "
+          href={isCustomer ? "/" : isAdmin ? "#" : isMechanic ? "#" : "/"}
+          className="lg:text-[2rem] base:text-[1.2rem] z-50 row-span-full col-start-1 col-end-3 font-semibold w-[7rem]"
         >
-          Auto<span className="text-secondary">connect</span>
+          <Image alt="logo" src={MobileLogo} />
+
+          {/* Auto<span className="text-secondary">connect</span> */}
         </Link>
         {/* mobile hamburger */}
         <div
@@ -165,13 +154,16 @@ const Navbar = () => {
           {mobileNav ? (
             <div className="">X</div>
           ) : (
-            <div class=" curser-pointer z-[100000000000000000000]">
-              <Image alt="mobilelogo" src={MobileLogo} />
-            </div>
+            <Link
+              href={"/"}
+              class=" curser-pointer z-[100000000000000000000] w-full flex justify-center items-center"
+            >
+              <Image className="w-[2rem]" alt="mobilelogo" src={Hamburger} />
+            </Link>
           )}
         </div>
 
-        { mobileNav == true && (
+        {mobileNav == true && (
           <div class="flex flex-col gap-8 h-screen min-w-[300px] w-full z-[100000000000000000000] lg:hidden">
             <div className="flex flex-col gap-6 mt-10 ">
               {menu.map((data, idx) => (

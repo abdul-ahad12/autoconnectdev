@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import CusButton from "../section/button";
+import MobileLogo from "../../public/navbar/mobile.png";
+import Image from "next/image";
 
 const Footer = () => {
   const navigationlinks = [
@@ -11,10 +12,10 @@ const Footer = () => {
           title: "About Us",
           href: "/aboutus",
         },
-        {
-          title: "Services",
-          href: "/services",
-        },
+        // {
+        //   title: "Services",
+        //   href: "/services",
+        // },
         {
           title: "FAQ",
           href: "/",
@@ -29,65 +30,23 @@ const Footer = () => {
       title: "Company",
       links: [
         {
-          title: "About Us",
-          href: "/aboutus",
+          title: "Terms And Conditions",
+          href: "/termsandconditions",
         },
-        {
-          title: "Services",
-          href: "/services",
-        },
-        {
-          title: "FAQ",
-          href: "/",
-        },
-        {
-          title: "Contact Us",
-          href: "/",
-        },
+        // {
+        //   title: "Services",
+        //   href: "/services",
+        // },
+        // {
+        //   title: "FAQ",
+        //   href: "/",
+        // },
+        // {
+        //   title: "Contact Us",
+        //   href: "/",
+        // },
       ],
     },
-    // {
-    //   title: "Company",
-    //   links: [
-    //     {
-    //       title: "About Us",
-    //       href: "/aboutus",
-    //     },
-    //     {
-    //       title: "Services",
-    //       href: "/services",
-    //     },
-    //     {
-    //       title: "FAQ",
-    //       href: "/",
-    //     },
-    //     {
-    //       title: "Contact Us",
-    //       href: "/",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Company",
-    //   links: [
-    //     {
-    //       title: "About Us",
-    //       href: "/aboutus",
-    //     },
-    //     {
-    //       title: "Services",
-    //       href: "/services",
-    //     },
-    //     {
-    //       title: "FAQ",
-    //       href: "/",
-    //     },
-    //     {
-    //       title: "Contact Us",
-    //       href: "/",
-    //     },
-    //   ],
-    // },
   ];
 
   const socials = [
@@ -99,21 +58,14 @@ const Footer = () => {
       src: "/socials/twitter.svg",
       url: "https://www.instagram.com/autolinkx/",
     },
-    // {
-    //   src: "/socials/vimeo.svg",
-    //   url: "/",
-    // },
-    // {
-    //   src: "/socials/youtube.svg",
-    //   url: "/",
-    // },
   ];
 
   return (
     <div className="bg-primary flex justify-center w-full">
       <div className="w-[90%] max-w-[1440px] lg:text-[min(1rem,1vw)]">
         <div className="text-[2rem] py-[3rem] row-span-full text-customwhite col-start-1 col-end-13 font-semibold ">
-          Auto<span className="text-secondary">connect</span>
+          <Image src={MobileLogo} />
+          {/* Auto<span className="text-secondary">connect</span> */}
         </div>
         {/*  */}
         <div className=" grid text-customwhite base:grid-cols-1 gap-y-10 lg:gap-y-0  lg:grid-cols-[1fr_1fr_1fr_1fr_1.3fr] lg:gap-6">

@@ -7,7 +7,7 @@ const MechanicsUser = () => {
     role: "mechanic",
   };
   const [users, setUsers] = useState([]);
-  console.log("USERS", users);
+  
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +33,7 @@ const MechanicsUser = () => {
 
     fetchUsers();
   }, [currentPage]);
-  // console.log("created at", users.data.createdAt);
+  // 
 
   return (
     <div>
@@ -47,9 +47,9 @@ const MechanicsUser = () => {
       </div>
       {users.map((data, idx) => {
         // let formatedDate = data.createdAt;
-        // console.log("heo", formatedDate);
+        // 
         let formatedDate = new Date(data.createdAt).toLocaleDateString("en-GB");
-        console.log("heo", formatedDate);
+        
 
         return (
           <div key={idx} className="">

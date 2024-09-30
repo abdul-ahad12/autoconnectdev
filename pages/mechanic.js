@@ -56,13 +56,13 @@ const Mechanic = () => {
     setQuery({ selectedServices: servicesArray, location: locationData });
   }, [router.query]);
 
-  console.log(query);
+  
   const [mechanics, setMechanics] = useState([]);
 
-  console.log(mechanics);
+  
 
   useLayoutEffect(() => {
-    console.log(query);
+    
     // Extract query parameters
     const location = query?.location?.location ? query?.location?.location : "";
     const selectedServices = query.selectedServices;

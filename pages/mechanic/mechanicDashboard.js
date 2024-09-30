@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 
 const MechanicDashboard = () => {
   const [bookings, setBookings] = useState([]);
-  console.log(bookings);
+  
   useEffect(() => {
     // Define your fetch function
     const fetchBookings = async () => {

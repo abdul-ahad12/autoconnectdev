@@ -13,14 +13,14 @@ export default async function handler(
     authorize(req, res, async () => {
       const user = req["user"]; // Extract user ID from the authorization middleware
       const userId = user.id;
-      console.log("UserId", userId);
+      
 
       // Find the mechanic ID based on the user ID
       const mechanic = await MechanicRegistrationModel.findOne({
         user: userId,
       });
 
-      console.log("mechanic", mechanic);
+      
 
       if (!mechanic) {
         // Mechanic not found for the given user ID

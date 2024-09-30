@@ -16,14 +16,14 @@ const ServicesWeProvide = () => {
   const [services, setservices] = useState();
 
   const [servicesArray, setServicesArray] = useState([]);
-  console.log(selectedServices);
+  
 
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/services");
-        console.log(response);
+        
         const serviceData = response.data.services.map((service) => ({
           title: service.name,
           img: "/services/airconditioningbg.jpg",
@@ -38,7 +38,7 @@ const ServicesWeProvide = () => {
     fetchData();
   }, []);
 
-  console.log(servicesArray);
+  
 
   const handleServiceSelection = (serviceId) => {
     if (selectedServices.includes(serviceId)) {
@@ -86,7 +86,7 @@ const ServicesWeProvide = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async (formData) => {
-    console.log(formData);
+    
     try {
       const response = await axios.post(
         "/api/customorder/customerbooking",

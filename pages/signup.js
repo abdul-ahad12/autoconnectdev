@@ -66,7 +66,7 @@
 //         const { accessToken, refreshToken } = data;
 //         // Store tokens in localStorage or session storage as needed
 //         const userData = decodeAccessToken(accessToken);
-//         console.log(userData); // Access user id
+//         
 
 //         localStorage.setItem("accessToken", accessToken);
 //         localStorage.setItem("refreshToken", refreshToken);

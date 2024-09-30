@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Description from "../section/Description";
 import CusButton from "../section/button";
@@ -30,13 +30,78 @@ export const melbourneSuburbs = [
   "Glen Iris",
   "Elwood",
   "Albert Park",
+  "Abbotsford",
+  "Armadale",
+  "Balaclava",
+  "Bentleigh",
+  "Brighton",
+  "Burnley",
+  "Caulfield",
+  "Cheltenham",
+  "Clifton Hill",
+  "Doncaster",
+  "East Melbourne",
+  "Elsternwick",
+  "Glen Waverley",
+  "Heidelberg",
+  "Ivanhoe",
+  "Kensington",
+  "Mitcham",
+  "Mont Albert",
+  "Murrumbeena",
+  "Oakleigh",
+  "Parkville",
+  "Sandringham",
+  "Southbank",
+  "South Melbourne",
+  "Surrey Hills",
+  "Toorak",
+  "West Footscray",
+  "Yarraville",
+  "Altona",
+  "Brighton East",
+  "Clayton",
+  "Dandenong",
+  "Docklands",
+  "Frankston",
+  "Glen Huntly",
+  "Hoppers Crossing",
+  "Laverton",
+  "Newport",
+  "Reservoir",
+  "Rowville",
+  "Sunshine",
+  "Tarneit",
+  "Tullamarine",
+  "Werribee",
+  "Williams Landing",
+  "Windsor",
 ];
 
 const Form = () => {
   const [city, setCity] = useState("");
   const [suburb, setSuburb] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Check if access token exists in localStorage
+      const accessToken = localStorage.getItem("accessToken");
+      const id = localStorage.getItem("id");
+      const role = localStorage.getItem("role");
+      if (accessToken && id && role) {
+        setIsLoggedIn(true);
+        setUserData({ id, role });
+      }
+      setIsLoading(false); // Set isLoading to false after fetching data
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = () => {
     // Validation
@@ -53,8 +118,10 @@ const Form = () => {
     // Construct query string
     const queryString = `?location=${suburb}`;
 
+    isLoggedIn?router.push(`/services${queryString}`):alert("You have to login to continue")
+
     // Navigate to "/service" route with query string
-    router.push(`/services${queryString}`);
+    ;
   };
 
   return (
@@ -81,22 +148,23 @@ const Form = () => {
               value={"Melbourne"}
             />
           </div>
-          
+
           <div className="flex flex-col gap-1">
-          <Description text={"Suburb"} />
-          {/* Suburb */}
-          <select
-            className="input-class border-black border"
-            value={suburb}
-            onChange={(e) => setSuburb(e.target.value)}
-          >
-            <option className="input-class">Select Suburb</option>
-            {melbourneSuburbs.map((suburb) => (
-              <option className="input-class" key={suburb} value={suburb}>
-                {suburb}
-              </option>
-            ))}
-          </select></div>
+            <Description text={"Suburb"} />
+            {/* Suburb */}
+            <select
+              className="input-class border-black border"
+              value={suburb}
+              onChange={(e) => setSuburb(e.target.value)}
+            >
+              <option className="input-class">Select Suburb</option>
+              {melbourneSuburbs.map((suburb) => (
+                <option className="input-class" key={suburb} value={suburb}>
+                  {suburb}
+                </option>
+              ))}
+            </select>
+          </div>
           {/* Fuel Type  */}
           <div className="flex flex-col gap-1">
             <Description text={"Postal Code"} />

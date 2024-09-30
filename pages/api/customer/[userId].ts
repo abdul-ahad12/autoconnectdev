@@ -4,7 +4,7 @@ import { UserModel } from "../../../lib/models/user"; // Assuming the path to th
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { userId } = req.query;
-    console.log("user",userId)
+    
 
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });

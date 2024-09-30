@@ -4,24 +4,22 @@ import Swal from "sweetalert2";
 import Modal from "../services/ReusableModal";
 
 const RequestAdmin = ({
-  orderNumber,
   dateTime,
   acmotors,
   index,
   mechanicid,
   firstname,
-  // lastname,
   phonenumber,
-  email,
   Aboutus,
   street,
   suburb,
   state,
   pincode,
   link,
+  abn,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  console.log(mechanicid);
+  
 
   const handleButtonClick = () => {
     setModalOpen(true);
@@ -52,7 +50,7 @@ const RequestAdmin = ({
                 "success"
               );
             } else {
-              console.log(response);
+              
               // If request fails, show error message
               Swal.fire("Error!", "Failed to approve the request.", "error");
             }
@@ -93,7 +91,7 @@ const RequestAdmin = ({
                 "success"
               );
             } else {
-              console.log(response);
+              
               // If request fails, show error message
               Swal.fire("Error!", "Failed to approve the request.", "error");
             }
@@ -121,15 +119,14 @@ const RequestAdmin = ({
   };
   const fields = [
     { name: "field1", label: "First Name", value: firstname },
-    // { name: "field2", label: "Last Name", value: lastname },
     { name: "field2", label: "Phone Number", value: phonenumber },
-    { name: "field2", label: "Email", value: email },
     { name: "field2", label: "About Us", value: Aboutus },
     { name: "field2", label: "Street", value: street },
     { name: "field2", label: "Subrub", value: suburb },
     { name: "field2", label: "State", value: state },
     { name: "field2", label: "Pincode", value: pincode },
     { name: "field2", label: "Link", value: link },
+    { name: "field2", label: "ABN", value: abn },
   ];
 
   return (

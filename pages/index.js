@@ -26,7 +26,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Form />
-      <CarServices />
+      {/* <CarServices /> */}
       <OurCommitment />
       <HowAutoConnect />
       <WhyChooseAuto />

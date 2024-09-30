@@ -9,14 +9,14 @@ const AdminServices = () => {
   const [selectedServiceText, setSelectedServiceText] = useState("");
   const [selectedServiceIndex, setSelectedServiceIndex] = useState(null);
   const [servicesArray, setServicesArray] = useState([]);
-  console.log(servicesArray);
+  
 
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/services");
-        console.log(response);
+        
         setServicesArray(response.data.services);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -76,7 +76,7 @@ const AdminServices = () => {
         text: "New Services Updated Succesfully",
       });
 
-      console.log("Services updated successfully");
+      
     } catch (error) {
       Swal.fire({
         icon: "error",

@@ -8,7 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.query);
+  
   try {
     const {
       location,
@@ -23,7 +23,7 @@ export default async function handler(
       ? rawServices
       : rawServices.split(",").map((service) => service.trim());
 
-    console.log(services);
+    
 
     // Parse query parameters
     const city = location;

@@ -14,7 +14,7 @@ export default async function handler(
     // Extract the access token from cookies
     const refreshToken = cookies["refresh-token"];
 
-    console.log(refreshToken)
+    
 
     if (!refreshToken) {
       return res.status(401).json({ message: "Access token not found" });
@@ -22,7 +22,7 @@ export default async function handler(
 
     // Verify and decode the access token
     const decodedToken = jwt.verify(refreshToken, process.env.SECRET_TOKEN) as JwtPayload;
-    console.log(decodedToken)
+    
 
     if (!decodedToken || typeof decodedToken === 'string') {
       return res.status(401).json({ message: "Invalid access token" });

@@ -50,7 +50,7 @@ const Login = () => {
 
         // Decode access token and store user details in localStorage
         const userData = decodeAccessToken(accessToken);
-        console.log(userData); // Access user id
+        
 
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("id", userData.id);

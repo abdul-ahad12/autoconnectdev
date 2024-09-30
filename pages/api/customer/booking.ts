@@ -17,7 +17,7 @@ export default async function handler(
     authorize(req, res, async () => {
       // Extract userId from the request object after authorization
       const userId = req["user"];
-      console.log("USER ID",userId.id)
+      
 
       const {
         page = "1",

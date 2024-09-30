@@ -20,16 +20,16 @@ const Bookmechanic = () => {
   const [selectedMode, setSelectedMode] = useState("TO_MECHANIC");
   const [customNote, setcustomNote] = useState();
 
-  // console.log(selectedMode);
+  // 
   const handleCheckboxChange = (mode) => {
     setSelectedMode(mode);
   };
 
   const [selectedDay, setSelectedDay] = useState();
-  console.log(selectedDay);
-  // console.log(selectedTime);
+  
+  // 
   const [userData, setUserData] = useState();
-  console.log(userData);
+  
   const [timings, setTimings] = useState();
   const [display, setDisplay] = useState(false);
 
@@ -39,9 +39,9 @@ const Bookmechanic = () => {
     ? JSON.parse(decodeURIComponent(selectedServices))
     : [];
 
-  console.log("selectedServices", selectedServicesData);
+  
 
-  // console.log(userData, mechanicData);
+  // 
   const [date, setDate] = React.useState(new Date());
   const [daysofweek, setdaysofweek] = useState();
   const [address, setAddress] = useState({
@@ -73,7 +73,7 @@ const Bookmechanic = () => {
     if (mechanicId !== undefined) {
       const fn = async () => {
         const response = await fetchUserData();
-        console.log(response);
+        
         setUserData(response);
         setDisplay(true);
       };
@@ -133,7 +133,7 @@ const Bookmechanic = () => {
       };
 
       const response = await axios.post("/api/bookings/registerABooking", obj);
-      console.log(response.data); // This will log the response from the server
+      
 
       // Display a SweetAlert pop-up for success
       Swal.fire({

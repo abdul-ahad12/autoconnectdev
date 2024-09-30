@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import Modal from "../services/ReusableModal";
 
 const Order = ({ bookings, role }) => {
-  console.log("orders", bookings);
+  
   const ordersData = [
     {
       orderNumber: "Order #2416",
@@ -58,7 +58,7 @@ const Order = ({ bookings, role }) => {
 
     fetchOrders();
   }, [currentPage]);
-  console.log(bookings);
+  
 
   // request admin array
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -333,7 +333,7 @@ const OrderItem = ({
           src="../dashboard/receipt.svg"
           alt="receipt"
           onClick={
-            orderStatus ? () => console.log("here") : handleCompleteBooking
+            orderStatus ? () => 
           }
         />
         {/* Clicking on cancel icon triggers cancellation of the booking */}

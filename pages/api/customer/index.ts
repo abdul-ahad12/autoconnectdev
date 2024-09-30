@@ -12,7 +12,7 @@ export default async function handler(
       const dbConnector = new MongoDBConnector();
       const userId = req["user"]; // Extract user ID from the authorization middleware
 
-      console.log("USERID:", userId);
+      
       if (!userId) {
         return res.status(400).json({ message: "User ID is required" });
       }

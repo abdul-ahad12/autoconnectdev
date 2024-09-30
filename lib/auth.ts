@@ -41,7 +41,7 @@ async function authorize(
             secretToken,
             async (refreshErr: Error, decodedRefreshToken: any) => {
               if (refreshErr) {
-                console.log(refreshErr);
+                
                 return sendError(res, "Error: Invalid refresh token");
               }
 
@@ -64,7 +64,7 @@ async function authorize(
             }
           );
         } else if (err) {
-          console.log(err);
+          
           return sendError(res, "Error: Broken Token");
         } else {
           // Set user information in req.user
@@ -76,13 +76,13 @@ async function authorize(
       }
     );
   } catch (err) {
-    console.log(err);
+    
     return res.status(500).json({ message: "Server Error Occurred" });
   }
 }
 
 function issueToken(user) {
-  console.log(user);
+  
   const accessToken = jwt.sign({ id: user.id, role: user.role }, secretToken, {
     expiresIn: accessTokenExpiryTime,
   });

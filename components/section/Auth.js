@@ -5,7 +5,7 @@ const Auth = ({ children }) => {
   const router = useRouter();
   const isMechanic = router.query.mechanic === "true";
 
-  console.log(isMechanic)
+  
 
   const handlemechanic = () => {
     const accessToken = localStorage.getItem("accessToken");

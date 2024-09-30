@@ -1,8 +1,6 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/common/Tabs";
-import RequestAdmin from "./RequestAdmin";
 import Requests from "./Requests";
-import MechanicInfo from "./MechanicInfo";
 
 const RequestTabs = ({ bookings }) => {
   return (
@@ -17,22 +15,16 @@ const RequestTabs = ({ bookings }) => {
               {" "}
               New
             </TabsTrigger>
-            {/* <TabsTrigger disabled className="w-[100px]" value="password">
-              Customs
-            </TabsTrigger> */}
           </TabsList>
           <TabsContent value="new" className="flex flex-col gap-16 ">
-            {/* <Order bookings={bookings} /> */}
             <Requests bookings={bookings} />
-            {/* <MechanicInfo /> */}
           </TabsContent>
           <TabsContent aria-disabled value="password">
             get
           </TabsContent>
         </Tabs>
 
-        {/* <Order />
-        <Order /> */}
+
       </div>
     </div>
   );

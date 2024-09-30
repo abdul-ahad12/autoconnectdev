@@ -21,7 +21,7 @@ const Form = () => {
   const [services, setservices] = useState();
   const [servicesArray, setServicesArray] = useState();
 
-  console.log(userRole);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,16 +38,16 @@ const Form = () => {
 
     fetchData();
   }, []);
-  // console.log(userData);
+  // 
 
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/services");
-        console.log(response);
+        
         setServicesArray(response.data.services);
-        console.log(response);
+        
         const serviceData = response.data.services.map(
           (service) => service.name
         );
@@ -146,7 +146,7 @@ const Form = () => {
     services: [],
     deliveryMode: [],
   });
-  console.log(formData);
+  
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
     if (name.startsWith("deliveryMode")) {
@@ -303,7 +303,7 @@ const Form = () => {
 
       if (response.status === 201) {
         const data = response.data;
-        console.log("Registration successful:", data);
+        
 
         // localStorage.setItem("role", "MECHANIC");
         // localStorage.setItem("mechanicId", data.id);

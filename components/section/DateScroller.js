@@ -60,7 +60,7 @@ const MechanicAvailability = ({ mechanicId }) => {
   // Update availability status for the selected time slot
   const updateTimeSlotAvailability = (timeSlot) => {
     const updatedAvailability = { ...availability };
-    console.log("hello", updatedAvailability);
+    
     const updatedTimings = [...updatedAvailability[selectedDay].timings];
 
     if (updatedTimings.includes(timeSlot)) {

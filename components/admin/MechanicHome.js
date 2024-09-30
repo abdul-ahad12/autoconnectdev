@@ -8,7 +8,7 @@ import CusButton from "../section/button";
 
 const MechanicHome = () => {
   const [stats, setStats] = useState(null);
-  console.log(stats);
+  
 
   useEffect(() => {
     async function fetchStats() {

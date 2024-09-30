@@ -20,7 +20,7 @@ const MechanicsACOrders = () => {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [approvedMechanics, setApprovedMechanics] = useState([]);
-  console.log(approvedMechanics);
+  
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 

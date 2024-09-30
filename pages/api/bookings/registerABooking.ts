@@ -22,7 +22,7 @@ export default async function handler(
         // Extract user ID from the authorization middleware
         const userId = user.id;
 
-        console.log("user", userId);
+        
 
         // Validate required fields
         if (

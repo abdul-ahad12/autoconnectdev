@@ -16,7 +16,7 @@ class MongoDBConnector {
     });
 
     this.connection.once("open", () => {
-      console.log("Connected to MongoDB Atlas");
+      
     });
   }
 
@@ -71,7 +71,7 @@ class MongoDBConnector {
   async close(): Promise<void> {
     try {
       await mongoose.disconnect();
-      console.log("MongoDB connection closed");
+      
     } catch (err) {
       throw new Error(`Error closing MongoDB connection: ${err}`);
     }
@@ -80,7 +80,7 @@ class MongoDBConnector {
   async seedInitialData<T extends Document>(model: Model<T>, data: T[]): Promise<void> {
     try {
       await model.insertMany(data);
-      console.log("Initial data seeded successfully");
+      
     } catch (err) {
       console.error("Error seeding initial data:", err);
       throw new Error(`Error seeding initial data: ${err}`);

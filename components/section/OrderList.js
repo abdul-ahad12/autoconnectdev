@@ -46,7 +46,7 @@ export default OrdersList;
 // mechanic dashboard
 export const CustomOrder = () => {
   const [customOrders, setCustomOrders] = useState([]);
-  console.log(customOrders);
+  
   const [price, setPrice] = useState("");
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -178,7 +178,7 @@ export const CustomOrder = () => {
 // customerdashboard
 export const CustomOrderCustomer = () => {
   const [customOrders, setCustomOrders] = useState([]);
-  console.log(customOrders);
+  
 
   // Function to handle accepting a custom booking
   const acceptBooking = async (orderId, mechanicUserId) => {

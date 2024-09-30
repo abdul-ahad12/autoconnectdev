@@ -14,11 +14,11 @@ export default async function handler(
         const userId = req["user"];
 
         const { id } = req.query;
-        console.log("id", id);
+        
         // Find the booking by ID
         const booking = await BookingModel.findById(id);
 
-        console.log(booking)
+        
 
         // Check if the booking exists
         if (!booking) {
@@ -44,12 +44,12 @@ export default async function handler(
     }
     if (req.query.action === "complete") {
       const { id } = req.query;
-      console.log("id",id)
+      
 
       // Find the booking by ID
       const booking = await BookingModel.findById(id);
 
-      console.log(booking)
+      
 
       // Check if the booking exists
       if (!booking) {

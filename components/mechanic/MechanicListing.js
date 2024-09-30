@@ -77,7 +77,7 @@ const Modal = ({ setmodalstate, modalContent }) => {
   const selectedServicesData = modalContent.services.filter((service) =>
     selectedServices.includes(service.name)
   );
-  console.log("selectedServices", selectedServicesData);
+  
 
   // Calculate the total price
   const totalPrice = selectedServicesData.reduce(
