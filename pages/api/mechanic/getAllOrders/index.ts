@@ -13,14 +13,11 @@ export default async function handler(
     authorize(req, res, async () => {
       const user = req["user"]; // Extract user ID from the authorization middleware
       const userId = user.id;
-      
 
       // Find the mechanic ID based on the user ID
       const mechanic = await MechanicRegistrationModel.findOne({
         user: userId,
       });
-
-      
 
       if (!mechanic) {
         // Mechanic not found for the given user ID
@@ -31,7 +28,9 @@ export default async function handler(
       const mechanicId = mechanic._id;
 
       // Find all bookings associated with the mechanic ID
-      const bookings = await BookingModel.find({ mechanic: mechanicId });
+      const bookings = await BookingModel.find({
+        mechanic: mechanicId,
+      }).populate("user");
 
       res.status(200).json({ bookings });
     });

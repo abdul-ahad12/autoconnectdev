@@ -4,34 +4,8 @@ import Swal from "sweetalert2";
 import Modal from "../services/ReusableModal";
 
 const Order = ({ bookings, role }) => {
-  
-  const ordersData = [
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      status: "Aug 17, 2023",
-      service: "Mobile mechanic",
-    },
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      status: "Aug 17, 2023",
-      service: "Mobile mechanic",
-    },
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      status: "Aug 17, 2023",
-      service: "Mobile mechanic",
-    },
-    {
-      orderNumber: "Order #2416",
-      dateTime: "Aug 17, 2024, 2:56:31 PM",
-      status: "Aug 17, 2023",
-      service: "Mobile mechanic",
-    },
-    // Add data for the remaining orders here...
-  ];
+  console.log("orders", bookings);
+
   const [orders, setOrders] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +32,7 @@ const Order = ({ bookings, role }) => {
 
     fetchOrders();
   }, [currentPage]);
-  
+  console.log(bookings);
 
   // request admin array
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -164,10 +138,10 @@ const Order = ({ bookings, role }) => {
                 orderStatus={data.isCompleted}
                 modeOfService={data.deliveryMode}
                 bookingId={data._id}
-                firstname={data.customNote}
-                aboutus={data.deliveryMode}
-                email={data.mechanic}
-                number={data.address.street}
+                firstname={data.user.name}
+                email={data.user.email}
+                number={data.user.phoneNumber}
+                
               />
             </div>
           );
@@ -333,7 +307,7 @@ const OrderItem = ({
           src="../dashboard/receipt.svg"
           alt="receipt"
           onClick={
-            orderStatus ? () => 
+            orderStatus ? () => console.log("here") : handleCompleteBooking
           }
         />
         {/* Clicking on cancel icon triggers cancellation of the booking */}

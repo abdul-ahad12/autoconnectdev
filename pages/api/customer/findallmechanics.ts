@@ -8,7 +8,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  
   try {
     const {
       location,
@@ -18,12 +17,12 @@ export default async function handler(
       limit: rawLimit,
     } = req.query;
 
+    console.log("query", req.query);
+
     // Parse services into an array if it's a string with commas
     const services = Array.isArray(rawServices)
       ? rawServices
       : rawServices.split(",").map((service) => service.trim());
-
-    
 
     // Parse query parameters
     const city = location;
@@ -67,7 +66,7 @@ export default async function handler(
     query.approvalStatus = ApprovalStatus.APPROVED;
 
     // Find mechanics based on the query criteria
-    const mechanics = await MechanicRegistrationModel.find(query)
+    const mechanics = await MechanicRegistrationModel.find()
       .skip((page - 1) * limit)
       .limit(limit);
 

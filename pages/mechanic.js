@@ -6,7 +6,6 @@ import MechanicListing from "@/components/mechanic/MechanicListing";
 import MechanicTop from "@/components/mechanic/MechanicTop";
 import React from "react";
 import axios from "axios";
-import { useLayoutEffect } from "react";
 
 const Mechanic = () => {
   const router = useRouter();
@@ -61,7 +60,7 @@ const Mechanic = () => {
 
   
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     
     // Extract query parameters
     const location = query?.location?.location ? query?.location?.location : "";
