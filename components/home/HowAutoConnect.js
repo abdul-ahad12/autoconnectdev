@@ -28,7 +28,7 @@ const HowAutoConnect = () => {
     <div className="w-full flex flex-col items-center justify-center py-[6rem] bg-[#fbfbfb]">
       <div className="w-[90%]">
         <TitleDesc
-          title={"How AutoConnect"}
+          title={"How AutoLinkx"}
           titleColor={"Works"}
           desc={
             "Enjoy convenient car repair and maintenance at your home or office. Its never been this easy!"

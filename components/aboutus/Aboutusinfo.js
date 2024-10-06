@@ -17,7 +17,7 @@ const Aboutusinfo = () => {
           <Description
             size={"regular"}
             text={
-              "Welcome to AUTO LINKX, your trusted platform for seamless car maintenance and add ons, As a forward-thinking startup, we specialize in connecting customers with a wide array of car service providers, offering unparalleled flexibility and convenience. Whether you prefer mobile services, onsite services, or third-party pick and drop-off services, we ensure your car gets the care it needs, when and where you need it."
+              "Mr. Jay, a passionate enthusiast of cars and bikes, has always had a natural curiosity for machines and a love for the open road. With an entrepreneurial mindset, he is driven by a desire to innovate and solve real-world problems using technology. Identifying a gap in the automotive service industry, he realized that customers often struggle to find reliable and convenient service providers. This challenge sparked his idea for *Auto Linkx*, a platform designed to bridge the gap between customers and car service providers."
             }
           />
         </div>

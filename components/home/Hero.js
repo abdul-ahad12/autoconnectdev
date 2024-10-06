@@ -12,12 +12,7 @@ const Hero = () => {
           <div className="font-[Bebas] base:text-[min(6vw,25px)] tracking-wide lg:text-[min(4.5rem,4.5vw)] mt-10 lg:mt-1 text-primary lg:w-[70%] lg:leading-[min(5vw,5rem)]">
             Where Convenience meets quality
           </div>
-          <Description
-            text={
-              "Car rent services for various terrain with guaranteed quality"
-            }
-            size={"regular"}
-          />
+       
           <div className="flex gap-5 items-center">
             <CusButton href={"/aboutus"} type={"primary"} text={"Learn More"} />
             <div className="w-[3rem] h-[3rem] rounded-full flex justify-center items-center bg-customwhite shadow-md hover:cursor-pointer hover:scale-105">

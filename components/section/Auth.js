@@ -31,7 +31,7 @@ const Auth = ({ children }) => {
             onClick={handlemechanic}
             className="flex text-center mt-6 underline font-medium text-secondary cursor-pointer"
           >
-            {!isMechanic && <div>Are you a Mechanic? Register now !!</div>}
+            {!isMechanic && <div>Are you a Service Provider? Register now !!</div>}
           </div>
         </div>
         <div className="base:w-full lg:w-[70%] lg:h-[95%] rounded-lg  bg-customwhite  flex justify-center py-7">

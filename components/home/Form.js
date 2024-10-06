@@ -178,7 +178,7 @@ const Form = () => {
           <div className="flex justify-end w-full">
             {" "}
             <CusButton
-              text={"Get Mechanic"}
+              text={"Get Vendors"}
               type={"secondary"}
               onClick={handleSubmit}
             />

@@ -26,7 +26,7 @@ const terms = [
           services for their vehicles.
         </li>
         <li>
-          <strong>Vendor</strong>: Refers to businesses or individuals
+          <strong>Provider</strong>: Refers to businesses or individuals
           offering automotive services registered on the Auto LinkX platform.
         </li>
       </ul>

@@ -6,7 +6,7 @@ const ContactUs = () => {
     {
       img: "/icons/email.png",
       title: "Email",
-      desc: "support@autolinkx.com",
+      desc: "enquiries@autolinkx.com",
     },
     {
       img: "/icons/phone.png",
