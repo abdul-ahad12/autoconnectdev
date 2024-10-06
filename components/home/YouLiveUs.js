@@ -12,7 +12,7 @@ const YouLiveUs = () => {
       stars: 5,
     },
     {
-      img: "/testimonial/dp2.jpg",
+      img: "/testimonial/dp1.jpg",
       name: "Sophia",
       designation: "Marketing Manager",
       title: "Great Support and Expertise",
@@ -20,7 +20,7 @@ const YouLiveUs = () => {
       stars: 4,
     },
     {
-      img: "/testimonial/dp3.jpg",
+      img: "/testimonial/dp1.jpg",
       name: "Michael",
       designation: "Business Analyst",
       title: "Very Professional",
@@ -28,7 +28,7 @@ const YouLiveUs = () => {
       stars: 4,
     },
     {
-      img: "/testimonial/dp4.jpg",
+      img: "/testimonial/dp1.jpg",
       name: "Emily",
       designation: "Product Manager",
       title: "Highly Satisfied",
