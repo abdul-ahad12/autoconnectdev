@@ -229,7 +229,7 @@ const ServicesWeProvide = () => {
                 src="/services/dummycar.png"
                 alt="Dummy Car"
               />
-              <div className="flex gap-6">
+              {/* <div className="flex gap-6">
                 <div className="flex flex-col items-center">
                   <div className="font-semibold text-[1rem]">--select--</div>
                   <div className="text-[0.7rem]">Location</div>
@@ -238,7 +238,7 @@ const ServicesWeProvide = () => {
                   <div className="font-semibold text-[1rem]">--select--</div>
                   <div className="text-[0.7rem]">Fuel Type</div>
                 </div>
-              </div>
+              </div> */}
             </div>
             {/* Selected services */}
             <div className="p-[2rem] flex flex-col gap-3 items-center rounded-b-lg">
