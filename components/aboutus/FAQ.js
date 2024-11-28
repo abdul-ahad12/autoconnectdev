@@ -12,7 +12,7 @@ const FAQ = () => {
     {
       question: "What is AUTO LINKX?",
       answer:
-        "AUTO LINKX is an online platform that connects customers with a wide range of certified car service providers. We offer options for mobile services, onsite services, and third-party pick-and-drop-off services to suit your needs and convenience.",
+        "AUTO LINKX is an online platform that connects users with a wide range of certified car service providers. We offer options for mobile services, onsite services, and third-party pick-and-drop-off services to suit your needs and convenience.",
     },
     {
       question: "How does AUTO LINKX work?",
@@ -32,7 +32,7 @@ const FAQ = () => {
     {
       question: "How do I know which service provider to choose?",
       answer:
-        "Our platform provides detailed profiles, customer reviews, and ratings for each service provider. This information helps you make an informed decision based on the experiences of other customers.",
+        "Our platform provides detailed profiles, user reviews, and ratings for each service provider. This information helps you make an informed decision based on the experiences of other users.",
     },
     {
       question: "Can I request a specific service provider?",
@@ -66,15 +66,15 @@ const FAQ = () => {
     },
     {
       question: "What if I'm not satisfied with the service?",
-      answer: "Your satisfaction is our priority. If you are not happy with the service, please contact our customer support team. We will work with the service provider to address your concerns and find a suitable resolution.",
+      answer: "Your satisfaction is our priority. If you are not happy with the service, please contact our user support team. We will work with the service provider to address your concerns and find a suitable resolution.",
     },
     {
-      question: "How can I contact customer support?",
-      answer: "You can reach our customer support team via email at support@AUTO LINKX.com or call us at [0415599996]. Our team is available [9 am to 6 pm Mon to Fri, Public holidays may vary] to assist you with any queries or issues.",
+      question: "How can I contact user support?",
+      answer: "You can reach our user support team via email at support@AUTO LINKX.com or call us at [0415599996]. Our team is available [9 am to 6 pm Mon to Fri, Public holidays may vary] to assist you with any queries or issues.",
     },
     {
       question: "How do I leave a review for a service provider?",
-      answer: "After your service is complete, you will receive an email with a link to leave a review. Your feedback helps other customers and allows us to maintain high service standards.",
+      answer: "After your service is complete, you will receive an email with a link to leave a review. Your feedback helps other users and allows us to maintain high service standards.",
     },
   ];
 

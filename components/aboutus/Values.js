@@ -6,13 +6,13 @@ const Values = () => {
       img: "/icons/Accuracy.svg",
 
       title: "Mission",
-      desc: "Our mission is to transform the auto service industry by providing a versatile and efficient platform that meets the diverse needs of car owners. We aim to deliver top-quality service options, exceptional customer experiences, and foster a network of reliable and professional service providers.",
+      desc: "Our mission is to transform the auto service industry by providing a versatile and efficient platform that meets the diverse needs of car owners. We aim to deliver top-quality service options, exceptional user experiences, and foster a network of reliable and professional service providers.",
     },
     {
       img: "/icons/lightbulb.svg",
 
       title: "Values",
-      desc: "At AUTO LINKX, we strive to lead the automotive world toward a more sustainable future. We do this by offering customers eco-friendly service options, supporting electric vehicles, and constantly innovating to reduce our carbon footprint.",
+      desc: "At AUTO LINKX, we strive to lead the automotive world toward a more sustainable future. We do this by offering users eco-friendly service options, supporting electric vehicles, and constantly innovating to reduce our carbon footprint.",
     },
     {
       img: "/icons/Scales.svg",

@@ -16,7 +16,7 @@ const OurCommitment = () => {
           <TitleDesc title={"OUR"} titleColor={"COMMITMENT"} left />
           <Description
             size={"regular"}
-            text="At AUTO LINKX, we are committed to Quality and Excellence: Ensuring every service meets the highest standards of quality and professionalism; Customer Satisfaction: Prioritizing your needs and satisfaction with every interaction and service booked; and Innovation: Continuously enhancing our platform and services to provide the best user experience and stay ahead of industry trends. Thank you for choosing AUTO LINKX. We are excited to provide you with exceptional car service solutions and look forward to helping you keep your vehicle in top condition with ease and confidence."
+            text="At AUTO LINKX, we are committed to Quality and Excellence: Ensuring every service meets the highest standards of quality and professionalism; user Satisfaction: Prioritizing your needs and satisfaction with every interaction and service booked; and Innovation: Continuously enhancing our platform and services to provide the best user experience and stay ahead of industry trends. Thank you for choosing AUTO LINKX. We are excited to provide you with exceptional car service solutions and look forward to helping you keep your vehicle in top condition with ease and confidence."
           />
         </div>
       </div>

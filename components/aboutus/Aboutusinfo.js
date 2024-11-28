@@ -17,7 +17,7 @@ const Aboutusinfo = () => {
           <Description
             size={"regular"}
             text={
-              "Mr. Jay, a passionate enthusiast of cars and bikes, has always had a natural curiosity for machines and a love for the open road. With an entrepreneurial mindset, he is driven by a desire to innovate and solve real-world problems using technology. Identifying a gap in the automotive service industry, he realized that customers often struggle to find reliable and convenient service providers. This challenge sparked his idea for *Auto Linkx*, a platform designed to bridge the gap between customers and car service providers."
+              "Mr. Jay, a passionate enthusiast of cars and bikes, has always had a natural curiosity for machines and a love for the open road. With an entrepreneurial mindset, he is driven by a desire to innovate and solve real-world problems using technology. Identifying a gap in the automotive service industry, he realized that users often struggle to find reliable and convenient service providers. This challenge sparked his idea for *Auto Linkx*, a platform designed to bridge the gap between users and car service providers."
             }
           />
         </div>

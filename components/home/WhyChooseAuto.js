@@ -16,12 +16,12 @@ const WhyChooseAuto = () => {
     {
       img: "/whychooseus/Sanitizer.svg",
       title: "Transparency and Trust",
-      desc: "Our platform offers clear pricing, detailed service descriptions, and genuine customer reviews to help you make informed decisions.",
+      desc: "Our platform offers clear pricing, detailed service descriptions, and genuine user reviews to help you make informed decisions.",
     },
     {
       img: "/whychooseus/Taxi.svg",
       title: "Convenience",
-      desc: "Simplify your life with our intuitive booking system designed for a smooth and efficient experience. Comprehensive Support: Benefit from our dedicated customer support team, always ready to assist you with any queries or concerns.",
+      desc: "Simplify your life with our intuitive booking system designed for a smooth and efficient experience. Comprehensive Support: Benefit from our dedicated user support team, always ready to assist you with any queries or concerns.",
     }
   ];
 

@@ -287,7 +287,7 @@ const Bookmechanic = () => {
 
               <div className="flex flex-col font-normal gap-4  lg:text-[1.2rem] ">
                 <div className="flex flex-row gap-7 items-center">
-                  <label htmlFor="toMechanic">To Mechanic</label>
+                  <label htmlFor="toMechanic">To Provider</label>
                   <input
                     type="checkbox"
                     id="toMechanic"
@@ -297,7 +297,7 @@ const Bookmechanic = () => {
                   />
                 </div>
                 <div className="flex flex-row gap-11 items-center">
-                  <label htmlFor="thirdParty">Third Party</label>
+                  {/* <label htmlFor="thirdParty">Third Party</label>
 
                   <input
                     type="checkbox"
@@ -305,16 +305,8 @@ const Bookmechanic = () => {
                     value="TO_CUSTOMER"
                     checked={selectedMode === "TO_CUSTOMER"}
                     onChange={() => handleCheckboxChange("TO_CUSTOMER")}
-                  />
-                  {/* <label htmlFor="toCustomer">To Customer</label>
+                  /> */}
 
-                <input
-                  type="checkbox"
-                  id="thirdParty"
-                  value="THIRD_PARTY"
-                  checked={selectedMode === "THIRD_PARTY"}
-                  onChange={() => handleCheckboxChange("THIRD_PARTY")}
-                /> */}
                 </div>
               </div>
               {/* <div className="my-5">
