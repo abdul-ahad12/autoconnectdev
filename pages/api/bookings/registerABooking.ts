@@ -18,8 +18,7 @@ export default async function handler(
           address,
           customNote,
         } = req.body;
-        const user = req["user"]; // Extract user ID from the authorization middleware
-        // Extract user ID from the authorization middleware
+        const user = req["user"]; 
         const userId = user.id;
 
         

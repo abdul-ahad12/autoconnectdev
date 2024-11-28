@@ -96,6 +96,7 @@ const AdminServices = () => {
       {servicesArray.length === 0 && (
         <div className="w-full flex justify-center ">No Service</div>
       )}
+      <div className="min-h-[60vh] overflow-y-scroll z-[10]">
       {servicesArray.map((service, index) => (
         <SingleService
           key={index}
@@ -103,7 +104,7 @@ const AdminServices = () => {
           onEditClick={() => handleEditClick(service.name, index)}
           onDeleteClick={() => handleDeleteService(index)}
         />
-      ))}
+      ))}</div>
 
       <CusButton onClick={handleUpdate} type={"primary"} text={"Update"} />
       {/* Edit Service Modal */}

@@ -1,3 +1,5 @@
+// models/User.ts
+
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { MongoDBConnector } from "../database";
 
@@ -8,13 +10,13 @@ enum UserRoles {
   MECHANIC = "MECHANIC",
 }
 
-// Define an interface for the User document
 export interface User extends Document {
   name: string;
   password: string;
   phoneNumber: string;
   email: string;
   role: UserRoles;
+  ban: boolean; 
 }
 
 // Create a Mongoose schema for the User
@@ -29,6 +31,7 @@ const userSchema: Schema<User> = new mongoose.Schema(
       enum: Object.values(UserRoles),
       default: UserRoles.CUSTOMER,
     },
+    ban: { type: Boolean, default: false }, 
   },
   {
     timestamps: true,

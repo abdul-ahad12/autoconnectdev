@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import CusButton from "./button";
 import OrdersList from "./OrderList";
 import MyProfile from "./MyProfile";
 import MyVehicles from "./MyVehicles";
 import Tab from "./Tab";
-import MyAvailability from "./MyAvailability";
 import MyAvailibility from "./MyAvailability";
+import MyServices from "./MyServices";
 
 const Dashboard = ({ bookings, role }) => {
   const [current, setCurrent] = useState("Orders");
@@ -38,6 +37,10 @@ const Dashboard = ({ bookings, role }) => {
       {
         title: "My Availability",
         icons: "/icons/accesstime.png",
+      },
+      {
+        title: "My Services",
+        icons: "/mechanic/bgmech.svg",
       },
     ];
   } else if (role === "ADMIN") {
@@ -149,6 +152,7 @@ const Dashboard = ({ bookings, role }) => {
             {current == "My Profile" && <MyProfile />}
             {current == "My Vehicles" && <MyVehicles />}
             {current == "My Availability" && <MyAvailibility />}
+            {current == "My Services" && <MyServices />}
 
             <img
               className="absolute bottom-0 right-[-10%] z-0 opacity-30 w-[80%]"
@@ -162,3 +166,5 @@ const Dashboard = ({ bookings, role }) => {
 };
 
 export default Dashboard;
+
+

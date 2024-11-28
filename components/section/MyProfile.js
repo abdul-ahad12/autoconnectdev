@@ -1,79 +1,153 @@
+// components/MyProfile.jsx
+
 import React, { useEffect, useState } from "react";
 import Description from "./Description";
-import { fetchUserData } from "../../lib/utils";
+import { fetchUserData, updateUserData } from "../../lib/utils";
 import { formatDate } from "../../lib/supportingFncs";
 
 const MyProfile = () => {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(null);
+  const [editableData, setEditableData] = useState({
+    name: "",
+    phoneNumber: "",
+    alternate: "",
+  });
+  const [isUpdating, setIsUpdating] = useState(false);
+
   useEffect(() => {
-    const fn = async () => {
+    const fetchData = async () => {
       const response = await fetchUserData();
-      setUserData(response);
+      if (response) {
+        setUserData(response);
+        setEditableData({
+          name: response.name || "",
+          phoneNumber: response.phoneNumber || "",
+          alternate: response.alternate || "",
+        });
+      }
     };
-    fn();
+    fetchData();
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditableData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    try {
+      const updatedUser = await updateUserData(editableData);
+      if (updatedUser) {
+        setUserData(updatedUser);
+        alert("Profile updated successfully!");
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to update profile.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  if (!userData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex w-full justify-center">
-      <div className="w-[80%] bg-white rounded-lg py-[5rem] px-[2rem]">
-        {/* form */}
-        <form className="w-full flex flex-col gap-6">
-          <div className="flex gap-2 w-full">
-            <div className="w-full">
-              <Description text={"Name"} size={"inputlabel"} />
-              <div>
-                <input
-                  value={userData?.name}
-                  className="input-class border border-gray-400"
-                />
-              </div>
-            </div>
-            {/* <div className="w-full">
-              <Description text={"LastName"} size={"inputlabel"} />
-              <div>
-                <input className="input-class border border-gray-400" />
-              </div>
-            </div> */}
-          </div>
+    <div className="flex w-full justify-center p-6  min-h-screen">
+      <div className="w-full max-w-3xl bg-white rounded-lg py-10 px-8 shadow-md">
+        <h1 className="text-3xl font-bold mb-6 text-center">My Profile</h1>
+
+        {/* Toast Container */}
+        {/* <ToastContainer /> */}
+
+        {/* Profile Form */}
+        <form className="w-full flex flex-col gap-6" onSubmit={handleSave}>
+          {/* Name */}
           <div>
-            <Description text={"Email Address"} size={"inputlabel"} />
-            <div>
-              <input
-                value={userData?.email}
-                className="input-class border border-gray-400"
-              />
-            </div>
+            <Description text="Name" size="inputlabel" />
+            <input
+              type="text"
+              name="name"
+              value={editableData.name}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
-          <div className="flex lg:flex-row base:flex-col gap-2 w-full">
-            <div className="w-full">
-              <Description text={"Phone Number"} size={"inputlabel"} />
-              <div>
-                <input
-                  value={userData?.phoneNumber}
-                  className="input-class border border-gray-400"
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <Description text={"Alternate"} size={"inputlabel"} />
-              <div>
-                <input className="input-class border border-gray-400" />
-              </div>
-            </div>
+
+          {/* Email Address (Read-Only) */}
+          <div>
+            <Description text="Email Address" size="inputlabel" />
+            <input
+              type="email"
+              value={userData.email}
+              readOnly
+              className="w-full p-3 border border-gray-400 rounded bg-gray-100 cursor-not-allowed"
+            />
           </div>
-          <div className="w-full">
-            <Description text={"Account Created On"} size={"inputlabel"} />
-            <div>
-              <input
-                value={formatDate(userData?.createdAt)}
-                className="input-class border border-gray-400"
-              />
-            </div>
+
+          {/* Phone Number */}
+          <div>
+            <Description text="Phone Number" size="inputlabel" />
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={editableData.phoneNumber}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Alternate */}
+          <div>
+            <Description text="Alternate Phone Number" size="inputlabel" />
+            <input
+              type="tel"
+              name="alternate"
+              value={editableData.alternate}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Account Created On (Read-Only) */}
+          <div>
+            <Description text="Account Created On" size="inputlabel" />
+            <input
+              type="text"
+              value={formatDate(userData.createdAt)}
+              readOnly
+              className="w-full p-3 border border-gray-400 rounded bg-gray-100 cursor-not-allowed"
+            />
+          </div>
+
+          {/* Save Button */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className={`bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isUpdating ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isUpdating}
+            >
+              {isUpdating ? "Saving..." : "Save Changes"}
+            </button>
           </div>
         </form>
 
-        {/* <div className="text-secondary font-semibold text-[1.2rem] py-14 cursor-pointer">
-          Forgot Password ?
+        {/* Optional: Change Password or Other Features */}
+        {/* <div className="text-secondary font-semibold text-lg py-6 cursor-pointer">
+          Forgot Password?
         </div> */}
       </div>
     </div>
