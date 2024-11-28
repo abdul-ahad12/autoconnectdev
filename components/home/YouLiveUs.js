@@ -64,7 +64,7 @@ const YouLiveUs = () => {
                   <div className="text-[1.5rem] font-semibold">{data.name}</div>
                   <div className="flex lg:flex-row base:flex-col gap-3">
                     <div className="text-[0.6rem]">{data.designation}</div>
-                    <div className="flex gap-1">{renderStars(data.stars)}</div>
+                    {/* <div className="flex gap-1 w-[2vw]">{renderStars(data.stars)}</div> */}
                   </div>
                 </div>
               </div>

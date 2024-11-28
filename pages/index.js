@@ -24,8 +24,8 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <Hero />
-      <Form />
+      <div className="lg:min-h-screen flex flex-col items-center justify-around pt-4"><Hero />
+      <Form /></div>
       {/* <CarServices /> */}
       <OurCommitment />
       <HowAutoConnect />
