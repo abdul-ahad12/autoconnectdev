@@ -68,7 +68,7 @@ const Footer = () => {
     <div className="bg-primary flex justify-center w-full">
       <div className="w-[90%] max-w-[1440px] lg:text-[min(1rem,1vw)]">
         <div className="text-[2rem] py-[3rem] row-span-full text-customwhite col-start-1 col-end-13 font-semibold ">
-          <Image src={MobileLogo} />
+          <Image className="lg:w-[8rem]" src={MobileLogo} />
           {/* Auto<span className="text-secondary">connect</span> */}
         </div>
         {/*  */}
