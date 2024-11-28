@@ -58,6 +58,10 @@ const Footer = () => {
       src: "/socials/twitter.svg",
       url: "https://www.instagram.com/autolinkx/",
     },
+    {
+      src: "/socials/instagram.svg",
+      url: "https://www.instagram.com/autolinkx/",
+    },
   ];
 
   return (
