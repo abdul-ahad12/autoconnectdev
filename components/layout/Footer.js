@@ -55,12 +55,12 @@ const Footer = () => {
       url: "https://www.facebook.com/autolinkx?_rdr",
     },
     {
-      src: "/socials/twitter.svg",
+      src: "/socials/instagram.svg",
       url: "https://www.instagram.com/autolinkx/",
     },
     {
-      src: "/socials/instagram.svg",
-      url: "https://www.instagram.com/autolinkx/",
+      src: "/socials/youtube.svg",
+      url: "https://www.youtube.com/",
     },
   ];
 
@@ -100,7 +100,7 @@ const Footer = () => {
         <div className="flex gap-[6vw] py-[7rem]">
           {socials.map((data, idx) => (
             <Link key={idx} href={data.url}>
-              <img className="h-6" src={data.src} />
+              <img className="h-6 w-6" src={data.src} />
             </Link>
           ))}
         </div>
