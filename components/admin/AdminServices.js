@@ -96,7 +96,7 @@ const AdminServices = () => {
       {servicesArray.length === 0 && (
         <div className="w-full flex justify-center ">No Service</div>
       )}
-      <div className="min-h-[60vh] overflow-y-scroll z-[10]">
+      <div className="max-h-[50vh] overflow-y-scroll z-[10]">
       {servicesArray.map((service, index) => (
         <SingleService
           key={index}

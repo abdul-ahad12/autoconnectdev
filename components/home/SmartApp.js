@@ -18,8 +18,8 @@ const SmartApp = () => {
           <img className="rounded-lg" src="/smartApp/googleplay.jpg" />
           <img className="rounded-lg" src="/smartApp/appstore.jpg" />
         </div>
-        <img src="/smartApp/gear.svg" className="absolute top-[-8rem] right-0 lg:flex hidden" />
-        <img src="/smartApp/graphite.png" className="absolute  bottom-[-20rem] right-[5rem] lg:flex hidden" />
+        {/* <img src="/smartApp/gear.svg" className="absolute top-[-8rem] right-0 lg:flex hidden" />
+        <img src="/smartApp/graphite.png" className="absolute  bottom-[-20rem] right-[5rem] lg:flex hidden" /> */}
       </div>
     </div>
   );
