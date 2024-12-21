@@ -161,7 +161,7 @@ const Bookmechanic = () => {
       <Navbar />
       <div className="w-[90%]">
         <MechanicTop
-          title={"Isra , you’re just a few steps"}
+          title={"Hey , you’re just a few steps"}
           titleColor={" away!"}
         />
         <div></div>;

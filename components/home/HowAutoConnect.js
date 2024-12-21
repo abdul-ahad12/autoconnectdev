@@ -1,7 +1,7 @@
 import React from "react";
 import TitleDesc from "../section/TitleDesc";
 import CusButton from "../section/button";
-import AboutusInfo from "../../public/aboutus/aboutusinfo.png";
+import AboutusInfo from "../../public/illustrations/mechanic.jpg";
 import Image from "next/image";
 
 const HowAutoConnect = () => {

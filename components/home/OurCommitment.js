@@ -8,7 +8,7 @@ const OurCommitment = () => {
       <div className="w-[90%] flex lg:flex-row-reverse base:flex-col">
         {/* left component */}
         <div className="lg:w-[50%] flex justify-center ">
-          <img className="w-[80%]" src="/aboutus/aboutusinfo.png" />
+          <img className="w-[80%]" src="/illustrations/mechanic.jpg" />
         </div>
 
         {/* right componenet */}
